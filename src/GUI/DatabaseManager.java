@@ -9,7 +9,6 @@ import GameEntities.Player;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,11 +40,12 @@ public class DatabaseManager
 
     
     /**
+     * Loads the player from the database based on the index.
      * 
      * @param index
      * @return 
      */
-    public Player loadPlayerFromDatabase(int index) {
+    public Player loadPlayerFromDatabase(String player) {
         return null;
     }
     

@@ -16,32 +16,35 @@ import javax.swing.border.EtchedBorder;
  */
 public class DesignAttributes
 {
+
     public Color primaryColor, secondaryColor, tertiaryColor;
-    public Border raisedBevel, loweredBevel, lineBorder, emptyBorder;
+    public Border raisedBevel, loweredBevel, lineBorder, emptyBorder, marginBorder;
 
     /**
      * Default Design
      */
     public DesignAttributes()
     {
-        
+
         // Setting up the Colours
         this.primaryColor = new Color(35, 31, 32); // Black
-        this.secondaryColor = new Color(120,120,120); // Gray
-        this.tertiaryColor = new Color(245,245,245); // WhiteSmoke
+        this.secondaryColor = new Color(120, 120, 120); // Gray
+        this.tertiaryColor = new Color(245, 245, 245); // WhiteSmoke
 
         // Setting up the Border Styles
         this.raisedBevel = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         this.loweredBevel = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         this.lineBorder = BorderFactory.createLineBorder(this.primaryColor, 1);
         this.emptyBorder = BorderFactory.createEmptyBorder();
+        this.marginBorder = BorderFactory.createEmptyBorder(16, 16, 16, 16);
     }
 
     /**
-     * 
+     *
+     *
      * @param primaryColor
      * @param secondaryColor
-     * @param tertiaryColor 
+     * @param tertiaryColor
      */
     public void setColorScheme(Color primaryColor, Color secondaryColor, Color tertiaryColor)
     {
@@ -57,5 +60,21 @@ public class DesignAttributes
         {
             this.tertiaryColor = tertiaryColor;
         }
+    }
+
+    /**
+     *
+     *
+     * @param top
+     * @param left
+     * @param bottom
+     * @param right
+     * @return
+     */
+    public Border createMarginBorder(int top, int left, int bottom, int right)
+    {
+        Border createdMarginBorder
+                = BorderFactory.createEmptyBorder(top, left, bottom, right);
+        return createdMarginBorder;
     }
 }
