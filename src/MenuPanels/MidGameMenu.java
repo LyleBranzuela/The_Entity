@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -50,7 +49,7 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
         // Setting up the Menu List
         String[] labels =
         {
-            "Continue", "Save Game", "Load Game", "Options", "Exit"
+            "Resume", "Save Checkpoint", "Load Checkpoint", "Options", "Exit"
         };
         this.model = new DefaultListModel();
         for (Object p : labels)
@@ -112,9 +111,9 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
     @Override
     public void valueChanged(ListSelectionEvent e)
     {
-        if (this.menuList.getSelectedValue() == "Continue")
+        if (this.menuList.getSelectedValue() == "Resume")
         {
-
+            
         }
         // Goes to the list of save files
         else if (this.menuList.getSelectedValue() == "Save Game")
@@ -124,7 +123,7 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
         // Goes to the list of Saved files that can be loaded
         else if (this.menuList.getSelectedValue() == "Load Game")
         {
-            Credits creditsPanel = new Credits();
+            
         }
         else if (this.menuList.getSelectedValue() == "Options")
         {

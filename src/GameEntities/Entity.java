@@ -42,7 +42,7 @@ public abstract class Entity implements Serializable
      * 
      * @param name specified name sent.
      */
-    public void getName(String name)
+    public void setName(String name)
     {
         this.name = name;
     }

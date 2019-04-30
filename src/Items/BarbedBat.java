@@ -20,7 +20,7 @@ public class BarbedBat extends Item implements Weapon
      */
     public BarbedBat()
     {
-        super("Barbed Bat");
+        super("Barbed Bat", 1);
     }
 
     /**
@@ -53,7 +53,7 @@ public class BarbedBat extends Item implements Weapon
     {
         return batSeq; //Returns int to adjust parry difficulty
     }
-    
+
     /**
      * Prints out the description of the barbed bat.
      * 

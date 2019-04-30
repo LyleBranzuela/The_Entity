@@ -34,7 +34,7 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
     private JLabel gameName;
     private JScrollPane menuScrollPane;
     private JList menuList;
-    private JPanel menuListPanel, creditsPanel, optionsPanel;
+    private JPanel menuListPanel, creditsPanel, optionsPanel, continuePanel;
     public static JPanel menuCardPanel;
     private DefaultListModel model;
     private DesignAttributes designAttributes;
@@ -47,15 +47,15 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
         setBorder(designAttributes.marginBorder);
-
+        
         this.gameName = new JLabel("The Entity");
         this.gameName.setFont(new Font("Tahoma", Font.BOLD, 64));
         this.gameName.setForeground(this.designAttributes.primaryColor);
-
+            
         // Setting up the Menu List
         String[] labels =
         {
-            "New Game", "Load Game", "Options", "Credits", "Exit"
+            "Continue", "New Game", "Load Checkpoint", "Options", "Credits", "Exit"
         };
         this.model = new DefaultListModel();
         for (Object p : labels)
@@ -87,6 +87,7 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         this.creditsPanel = new Credits();
         this.optionsPanel = new Options();
         menuCardPanel = new JPanel(new CardLayout());
+        // menuCardPanel.add(this.continueGamePanel, "CONTINUEGAME");
         // menuCardPanel.add(this.stage1Panel, "STARTNEWGAME");
         // menuCardPanel.add(this.loadScreenPanel, "LOADSCREEN");
         menuCardPanel.add(this.menuListPanel, "MAINMENU");
@@ -129,7 +130,11 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
     public void valueChanged(ListSelectionEvent e)
     {
         CardLayout cl = (CardLayout) (menuCardPanel.getLayout());
-        if (this.menuList.getSelectedValue() == "New Game")
+        if (this.menuList.getSelectedValue() == "Continue")
+        {
+            cl.show(menuCardPanel, "CONTINUEGAME");
+        }
+        else if (this.menuList.getSelectedValue() == "New Game")
         {
             cl.show(menuCardPanel, "STARTNEWGAME");
         }

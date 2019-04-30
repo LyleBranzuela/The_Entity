@@ -5,7 +5,7 @@
  */
 package Stages;
 
-import CUI.Entity_Package.Player;
+import GameEntities.Player;
 import java.io.Serializable;
 
 /**
@@ -20,29 +20,30 @@ public abstract class Stage implements Serializable
     /**
      * Method to determine a stage level.
      * @param stage 
+     * @return  
      */
-//    public void determineStageLevel(Stage stage) {
-//        if (stage instanceof Stage_1)
-//        {
-//            this.stageLevel = 1;
-//        }
-//        else if (stage instanceof Stage_2)
-//        {
-//            this.stageLevel = 2;
-//        }
-//        else if (stage instanceof Stage_3)
-//        {
-//            this.stageLevel = 3;
-//        }
-//        else if (stage instanceof Stage_4)
-//        {
-//            this.stageLevel = 4;
-//        }
-//        else
-//        {
-//            this.stageLevel = 0;
-//        }
-//    }             
+    public int determineStageLevel(Stage stage) {
+        if (stage instanceof Stage_1)
+        {
+            this.stageLevel = 1;
+        }
+        else if (stage instanceof Stage_2)
+        {
+            this.stageLevel = 2;
+        }
+        else if (stage instanceof Stage_3)
+        {
+            this.stageLevel = 3;
+        }
+        else if (stage instanceof Stage_4)
+        {
+            this.stageLevel = 4;
+        }
+        else
+        {
+            this.stageLevel = 1;
+        }
+    }             
     /**
      * Returns the stage level of the stage.
      *

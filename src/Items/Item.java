@@ -14,14 +14,16 @@ import java.io.Serializable;
 public abstract class Item implements Serializable
 {
     public String name;
+    public int itemID;
     
     /**
      * Constructor for the abstract Item class.
      * 
      * @param name name of the item.
      */
-    public Item (String name) {
+    public Item (String name, int itemID) {
         this.name = name;
+        this.itemID = itemID;
     }
     
     /**
@@ -36,6 +38,10 @@ public abstract class Item implements Serializable
      */
     public String getName() {
         return this.name;
+    }
+    
+    public int getItemID() {
+        return this.itemID;
     }
     
     abstract public String printDescription();

@@ -36,7 +36,7 @@ public class Options extends JPanel implements ActionListener
         super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
         
-        // Text of Credits on the Top
+        // Text of Options on the Top
         this.optionLabel = new JLabel("Options");
         this.optionLabel.setFont(new Font("Tahoma", Font.BOLD, 64));
         this.optionLabel.setForeground(this.designAttributes.primaryColor);

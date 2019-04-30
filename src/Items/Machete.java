@@ -22,7 +22,7 @@ public class Machete extends Item implements Weapon
      */
     public Machete()
     {
-        super("Machete");
+        super("Machete", 3);
     }
 
     /**
@@ -56,6 +56,7 @@ public class Machete extends Item implements Weapon
 
         return this.machSeq; //Returns int to adjust parry difficulty
     }
+
 
     /**
      * Prints out the description of the machete.

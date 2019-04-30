@@ -17,7 +17,7 @@ public class Blindfold extends Item
 
     public Blindfold()
     {
-        super("Blindfold");
+        super("Blindfold", 4);
         this.worn = false;
     }
 

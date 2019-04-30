@@ -12,13 +12,14 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 /**
+ * Main driver of the game.
  * 
  * @author lyleb and khoap
  */
 public class MainDriver 
 {
     /**
-     * 
+     * Main driver of the game.
      * 
      * @param args 
      */

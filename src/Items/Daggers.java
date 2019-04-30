@@ -20,7 +20,7 @@ public class Daggers extends Item implements Weapon
      */
     public Daggers()
     {
-        super("Dual Daggers");
+        super("Dual Daggers", 2);
     }
 
     /**

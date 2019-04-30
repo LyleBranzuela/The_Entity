@@ -5,8 +5,9 @@
  */
 package Stages;
 
-import CUI.Entity_Package.Player;
-import CUI.GameOverScreen;
+import GameEntities.Player;
+import GameOverScreen;
+import GameEntities.Player;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -172,4 +173,5 @@ public class Stage_1 extends Stage
             Thread.currentThread().interrupt(); // restore interrupted status
         }
     }
+
 }
