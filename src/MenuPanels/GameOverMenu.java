@@ -5,11 +5,13 @@
  */
 package MenuPanels;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author lyleb
  */
-public class GameOverMenu
+public class GameOverMenu extends JPanel
 {
     
 }

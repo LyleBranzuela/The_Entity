@@ -40,6 +40,7 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
      */
     public MidGameMenu()
     {
+        super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
 
         this.pausedScreen = new JLabel("PAUSED");
@@ -76,6 +77,7 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
         this.menuListPanel.add(this.pausedScreen);
         this.menuListPanel.add(this.menuScrollPane);
         this.menuListPanel.setLayout(new BoxLayout(this.menuListPanel, BoxLayout.Y_AXIS));
+        this.menuListPanel.setBorder(designAttributes.marginBorder);
         
         add(this.menuListPanel, BorderLayout.CENTER);
     }

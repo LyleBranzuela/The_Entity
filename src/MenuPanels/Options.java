@@ -7,7 +7,6 @@ package MenuPanels;
 
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
-import static MenuPanels.StartMenu.menuCardPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -50,6 +49,7 @@ public class Options extends JPanel implements ActionListener
         this.optionPanel.add(this.optionLabel);
         this.optionPanel.add(this.backButton);
         this.optionPanel.setLayout(new BoxLayout(this.optionPanel, BoxLayout.Y_AXIS));
+        this.optionPanel.setBorder(designAttributes.marginBorder);
         
         add(this.optionPanel, BorderLayout.WEST);
     }
@@ -64,8 +64,8 @@ public class Options extends JPanel implements ActionListener
         Object source = (Object) e.getSource();
         if (source == this.backButton)
         {
-            CardLayout cl = (CardLayout)(menuCardPanel.getLayout());
-            cl.show(menuCardPanel, "MAINMENU");
+            CardLayout cl = (CardLayout)(PanelManager.menuCardPanel.getLayout());
+            cl.show(PanelManager.menuCardPanel, "MAINMENU");
         }
     }
     

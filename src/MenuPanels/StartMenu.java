@@ -9,7 +9,6 @@ import GUI.DesignAttributes;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,12 +29,10 @@ import javax.swing.event.ListSelectionListener;
  */
 public class StartMenu extends JPanel implements ActionListener, ListSelectionListener
 {
-
     private JLabel gameName;
     private JScrollPane menuScrollPane;
     private JList menuList;
-    private JPanel menuListPanel, creditsPanel, optionsPanel, continuePanel;
-    public static JPanel menuCardPanel;
+    private JPanel menuListPanel;
     private DefaultListModel model;
     private DesignAttributes designAttributes;
 
@@ -46,7 +43,6 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
     {
         super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
-        setBorder(designAttributes.marginBorder);
         
         this.gameName = new JLabel("The Entity");
         this.gameName.setFont(new Font("Tahoma", Font.BOLD, 64));
@@ -55,7 +51,7 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         // Setting up the Menu List
         String[] labels =
         {
-            "Continue", "New Game", "Load Checkpoint", "Options", "Credits", "Exit"
+            "Continue", "New Game", "Load Game", "Options", "Credits", "Exit"
         };
         this.model = new DefaultListModel();
         for (Object p : labels)
@@ -82,19 +78,9 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         this.menuListPanel.add(this.gameName);
         this.menuListPanel.add(this.menuScrollPane);
         this.menuListPanel.setLayout(new BoxLayout(this.menuListPanel, BoxLayout.Y_AXIS));
+        this.menuListPanel.setBorder(designAttributes.marginBorder);
 
-        // Making the Card Menu Panel
-        this.creditsPanel = new Credits();
-        this.optionsPanel = new Options();
-        menuCardPanel = new JPanel(new CardLayout());
-        // menuCardPanel.add(this.continueGamePanel, "CONTINUEGAME");
-        // menuCardPanel.add(this.stage1Panel, "STARTNEWGAME");
-        // menuCardPanel.add(this.loadScreenPanel, "LOADSCREEN");
-        menuCardPanel.add(this.menuListPanel, "MAINMENU");
-        menuCardPanel.add(this.optionsPanel, "OPTIONSCREEN");
-        menuCardPanel.add(this.creditsPanel, "CREDITSCREEN");
-
-        add(menuCardPanel, BorderLayout.WEST);
+        add(this.menuListPanel, BorderLayout.WEST);
     }
 
     public class OpaqueCellRenderer extends DefaultListCellRenderer
@@ -129,28 +115,28 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
     @Override
     public void valueChanged(ListSelectionEvent e)
     {
-        CardLayout cl = (CardLayout) (menuCardPanel.getLayout());
+        CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
         if (this.menuList.getSelectedValue() == "Continue")
         {
-            cl.show(menuCardPanel, "CONTINUEGAME");
+            cl.show(PanelManager.menuCardPanel, "CONTINUEGAME");
         }
         else if (this.menuList.getSelectedValue() == "New Game")
         {
-            cl.show(menuCardPanel, "STARTNEWGAME");
+            cl.show(PanelManager.menuCardPanel, "STARTNEWGAME");
         }
         else if (this.menuList.getSelectedValue() == "Load Game")
         {
-            cl.show(menuCardPanel, "LOADSCREEN");
+            cl.show(PanelManager.menuCardPanel, "LOADSCREEN");
         }
         // Goes to the Options Panel
         else if (this.menuList.getSelectedValue() == "Options")
         {
-            cl.show(menuCardPanel, "OPTIONSCREEN");
+            cl.show(PanelManager.menuCardPanel, "OPTIONSCREEN");
         }
         // Goes to the Credits Panel
         else if (this.menuList.getSelectedValue() == "Credits")
         {
-            cl.show(menuCardPanel, "CREDITSCREEN");
+            cl.show(PanelManager.menuCardPanel, "CREDITSCREEN");
         }
         // Exits the GUI
         else if (this.menuList.getSelectedValue() == "Exit")

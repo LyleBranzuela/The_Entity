@@ -6,6 +6,7 @@
 package Stages;
 
 import GameEntities.Player;
+import MenuPanels.PanelManager;
 import java.io.Serializable;
 
 /**
@@ -13,16 +14,19 @@ import java.io.Serializable;
  *
  * @author lyleb and khoap
  */
-public abstract class Stage implements Serializable
+public abstract class Stage extends PanelManager implements Serializable
 {
+
     protected int stageLevel;
-    
+
     /**
      * Method to determine a stage level.
-     * @param stage 
-     * @return  
+     *
+     * @param stage
+     * @return
      */
-    public int determineStageLevel(Stage stage) {
+    public int determineStageLevel(Stage stage)
+    {
         if (stage instanceof Stage_1)
         {
             this.stageLevel = 1;
@@ -43,7 +47,9 @@ public abstract class Stage implements Serializable
         {
             this.stageLevel = 1;
         }
-    }             
+        return this.stageLevel;
+    }
+
     /**
      * Returns the stage level of the stage.
      *
@@ -56,10 +62,9 @@ public abstract class Stage implements Serializable
 
     /**
      * Abstract function to be filled with to initiate the stage rooms.
-     * 
+     *
      * @param player
      */
     abstract public void initiateStage(Player player);
-    
 
 }

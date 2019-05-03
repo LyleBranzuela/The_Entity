@@ -5,7 +5,8 @@
  */
 package GUI;
 
-import MenuPanels.StartMenu;
+import GameEntities.Player;
+import MenuPanels.PanelManager;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -25,7 +26,13 @@ public class MainDriver
      */
     public static void main(String[] args)
     {
-        StartMenu myPanel = new StartMenu();
+        // Connect to the Database
+        DatabaseManager.connectToPlayerDatabase();
+        DatabaseManager.createPlayerSaveDatabase();
+        DatabaseManager.savePlayerToDatabase(new Player("John"));
+        
+        // Instantiate Panel Manager
+        PanelManager myPanel = new PanelManager();
         JFrame frame = new JFrame("The Entity");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(myPanel);

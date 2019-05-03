@@ -15,48 +15,59 @@ import Stages.Stage_3;
 import Stages.Stage_4;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Singleton class for handling Databases.
  *
  * @author lyleb and khoap
  */
 public class DatabaseManager
 {
-    private Connection conn = null;
-    private final String url = "jdbc:derby://localhost:1527/TheEntityDB; create=true"; 
-    private final String username = "entity"; 
-    private final String password = "entity"; 
+
+    private static Connection conn = null;
+    private static final String URL = "jdbc:derby://localhost:1527/PlayerDatabase; create=true";
+    private static final String USERNAME = "entity";
+    private static final String PASSWORD = "entity";
 
     /**
-     * 
+     * Connects to the player database if it still hasn't yet.
      */
-    public void connectToPlayerDatabase()
+    public static void connectToPlayerDatabase()
     {
-        try
+        if (conn == null)
         {
-            this.conn = DriverManager.getConnection(this.url, this.username, this.password);
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            try
+            {
+                conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            }
+            catch (SQLException ex)
+            {
+                Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
     /**
-     * 
+     *
      */
-    public void createPlayerSaveDatabase()
+    public static void createPlayerSaveDatabase()
     {
         try
         {
-            DatabaseMetaData dbmd = this.conn.getMetaData();
-            Statement statement = this.conn.createStatement();
+            DatabaseMetaData dbmd = conn.getMetaData();
+            Statement statement = conn.createStatement();
+            // Check if the table already exists
             ResultSet tables = dbmd.getTables(null, null, "PLAYERSAVES", null);
             if (tables.next())
             {
@@ -70,14 +81,26 @@ public class DatabaseManager
             System.err.println("SQLException: " + ex.getMessage());
         }
     }
-    
-    public Player loadPlayerFromDatabase() {
-        Player loadedPlayer = new Player(url);
 
-        return loadedPlayer;
+    /**
+     *
+     * @return
+     */
+    public static ResultSet getAllPlayers()
+    {
+        ResultSet rs = null;
+        try
+        {
+            Statement statement = conn.createStatement();
+            String sqlQuery = "SELECT * FROM PLAYERSAVES ORDER BY SAVEDATE";
+            rs = statement.executeQuery(sqlQuery);
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (rs);
     }
-    
-        
 
     /**
      *
@@ -87,10 +110,10 @@ public class DatabaseManager
      * @param itemID
      * @return the generated player.
      */
-    public Player databaseToPlayer(String playerName, int stageLevel, boolean hasBlindfold, int itemID)
+    public static Player databaseToPlayer(String playerName, int stageLevel, boolean hasBlindfold, int itemID)
     {
         Player generatedPlayer = new Player(playerName);
-        
+
         // Set Stage from database to the Player
         switch (stageLevel)
         {
@@ -110,11 +133,11 @@ public class DatabaseManager
                 generatedPlayer.setCurrentStageLevel(new Stage_1());
                 break;
         }
-        
+
         generatedPlayer.hasBlindfold = hasBlindfold;
-        
+
         // Set Item from Database to Player
-        switch(itemID)
+        switch (itemID)
         {
             case 1:
                 generatedPlayer.pickupItem(new BarbedBat());
@@ -128,30 +151,98 @@ public class DatabaseManager
             default:
                 break;
         }
-        
-        return(generatedPlayer);
+
+        return (generatedPlayer);
     }
 
     /**
-     * 
+     *
      * @param player
-     * @return 
+     * @return
      */
-    public String playerToDatabase(Player player)
+    public static String playerToDatabase(Player player)
     {
+        // CREATE
+        // A 
+        // NULL 
+        // STATEMENT
+        // FOR TURNING PLAYER TO A DATABASE
         String playerName = "\'" + player.getName() + "\'";
         int stageLevel = player.getCurrentStage().determineStageLevel(player.getCurrentStage());
         boolean blindfoldCheck = player.hasBlindfold;
-        int hasBlindFold = blindfoldCheck ? 1:0;
-        int itemID = player.getWeapon().getItemID();
- 
-        return "("+ playerName + ", " + stageLevel + ", " + hasBlindFold + ", " + itemID + ")";
+        int hasBlindFold = blindfoldCheck ? 1 : 0;
+        int itemID = player.getWeapon() == null ? 0 : player.getWeapon().getItemID();
+
+        return (playerName + ", " + stageLevel + ", " + hasBlindFold + ", " + itemID);
     }
+
     /**
-     * 
+     *
+     * @param playerName
+     * @return
+     */
+    public static Player loadPlayerFromDatabase(String playerName)
+    {
+        Player loadedPlayer = new Player("");
+        try
+        {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM PLAYERSAVES WHERE PLAYERNAME = ?");
+            pstmt.setString(1, playerName);
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return loadedPlayer;
+    }
+
+    /**
+     *
      * @param player
      */
-    public void savePlayerToDatabase(Player player) {
-        
+    public static void savePlayerToDatabase(Player player)
+    {
+        try
+        {
+            Calendar cal = Calendar.getInstance();
+            Date date = new Date(cal.getTimeInMillis());
+
+            java.util.Date uDate = new java.util.Date();
+            java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+            DateFormat df = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
+            String getPlayerDetails
+                    = "INSERT INTO PLAYERSAVES VALUES (" + playerToDatabase(player) + ", ?)";
+
+            System.out.println(getPlayerDetails);
+            PreparedStatement pstmt = conn.prepareStatement(getPlayerDetails);
+            pstmt.setDate(1, sDate);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     *
+     * @param player
+     */
+    public static void deletePlayerFromDatabase(Player player)
+    {
+        try
+        {
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM PLAYERSAVES WHERE PLAYERNAME = ?");
+            pstmt.setString(1, player.getName());
+
+            pstmt.executeUpdate();
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

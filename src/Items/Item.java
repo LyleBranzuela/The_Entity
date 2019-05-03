@@ -20,6 +20,7 @@ public abstract class Item implements Serializable
      * Constructor for the abstract Item class.
      * 
      * @param name name of the item.
+     * @param itemID
      */
     public Item (String name, int itemID) {
         this.name = name;

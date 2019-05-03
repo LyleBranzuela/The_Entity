@@ -8,7 +8,6 @@ package GameEntities;
 import Items.*;
 import Stages.*;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 /**
  * Class for the main character of the game.
