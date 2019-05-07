@@ -6,8 +6,6 @@
 package Stages;
 
 import GameEntities.Player;
-import GameOverScreen;
-import GameEntities.Player;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -135,7 +133,7 @@ public class Stage_1 extends Stage
                         System.out.println("5 Minutes have passed.");
                         System.out.println("The guards get suspicious and looks inside the room.");
                         System.out.println();
-                        GameOverScreen.printGameOverScreen(player, "You have been detected!");
+                        //GameOverScreen.printGameOverScreen(player, "You have been detected!");
                     }
                     else if (userInput != password)
                     {
@@ -157,7 +155,7 @@ public class Stage_1 extends Stage
                         Thread.sleep(2000);
                         System.out.println("The alarm goes off and the guard notices you.");
                         System.out.println();
-                        GameOverScreen.printGameOverScreen(player, "You have been detected!");
+                        //GameOverScreen.printGameOverScreen(player, "You have been detected!");
                     }
                 }
             }

@@ -6,6 +6,7 @@
 package MenuPanels;
 
 import GUI.DesignAttributes;
+import GameEntities.Player;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -18,12 +19,15 @@ public class PanelManager extends JPanel
 {
     // Controls What Panel is showing
     public static JPanel menuCardPanel;
-    private JPanel mainMenuPanel, creditsPanel, optionsPanel, continuePanel, loadMenuPanel;
+    private static Player player;
+    private JPanel mainMenuPanel, creditsPanel, optionsPanel, gamePanel, loadMenuPanel;
     
+    /**
+     * 
+     */
     public PanelManager()
     {
         super(new BorderLayout());
-        DesignAttributes designAttributes = new DesignAttributes();
         
         // Making the Card Menu Panel
         this.mainMenuPanel = new StartMenu();
@@ -34,8 +38,7 @@ public class PanelManager extends JPanel
         // Adding them to the Card Layout JPanel 
         menuCardPanel = new JPanel(new CardLayout());
         menuCardPanel.add(this.mainMenuPanel, "MAINMENU");
-        // menuCardPanel.add(this.continueGamePanel, "CONTINUEGAME");
-        // menuCardPanel.add(this.stage1Panel, "STARTNEWGAME");
+        // menuCardPanel.add(this.gamePanel, "GAMEPANEL");
         menuCardPanel.add(this.loadMenuPanel, "LOADSCREEN");
         menuCardPanel.add(this.optionsPanel, "OPTIONSCREEN");
         menuCardPanel.add(this.creditsPanel, "CREDITSCREEN");
@@ -43,5 +46,25 @@ public class PanelManager extends JPanel
         CardLayout cl = (CardLayout)(menuCardPanel.getLayout());
         add(menuCardPanel);
         cl.show(menuCardPanel, "MAINMENU");
+    }
+    
+    /**
+     * Sets a new player to a current player.
+     * 
+     * @param newPlayer new player to be a current player.
+     */
+    public static void setCurrentPlayer(Player newPlayer)
+    {
+        player = newPlayer;
+    }
+    
+    /**
+     * Returns the current player
+     * 
+     * @return the current player.
+     */
+    public static Player getCurrentPlayer()
+    {
+        return player;
     }
 }

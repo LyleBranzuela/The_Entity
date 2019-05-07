@@ -9,12 +9,14 @@ import GUI.DatabaseManager;
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,9 +28,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -55,19 +61,19 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         
         // Loads the Selected Save
         this.loadSaveButton = UtilityMethods.generateButton("Load Save", 32, 
-                this.designAttributes.secondaryColor, null, true);
+                this.designAttributes.primaryColor, null, true);
         this.loadSaveButton.setEnabled(false);
         this.loadSaveButton.addActionListener(this);
         
         // Deletes the Selected Save
         this.deleteSaveButton = UtilityMethods.generateButton("Delete Save", 32, 
-                this.designAttributes.secondaryColor, null, true);
+                this.designAttributes.primaryColor, null, true);
         this.deleteSaveButton.addActionListener(this);
         this.deleteSaveButton.setEnabled(false);
         
         // Goes back to the main menu
         this.backButton = UtilityMethods.generateButton("Back", 32, 
-                this.designAttributes.secondaryColor, null, true);
+                this.designAttributes.primaryColor, null, true);
         this.backButton.addActionListener(this);
         
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -85,22 +91,24 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         String[] columnNames = {"Player Name", "Stage Level", "Date"};
         this.tableModel = new DefaultTableModel(this.data, columnNames);
         this.playerJTable = new JTable(this.tableModel);
+        this.playerJTable.getSelectionModel().addListSelectionListener(this);
         JScrollPane tableScrollPane = new JScrollPane();
         tableScrollPane.setViewportView(this.playerJTable);
         updatePlayerSaves();
         
+        // Add them all together
         this.loadMenuListPanel = new JPanel();
         this.loadMenuListPanel.add(this.loadGameLabel);
         this.loadMenuListPanel.add(tableScrollPane);
         this.loadMenuListPanel.add(this.buttonPanel);
         this.loadMenuListPanel.setLayout(new BoxLayout(this.loadMenuListPanel, BoxLayout.Y_AXIS));
         this.loadMenuListPanel.setBorder(this.designAttributes.marginBorder);
-        
+
         add(this.loadMenuListPanel, BorderLayout.CENTER);
     }
 
     /**
-     * 
+     * Updates the player save table based on the database
      */
     public void updatePlayerSaves()  
     {
@@ -112,6 +120,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         
         // Connect to the Database
         ResultSet rs = DatabaseManager.getAllPlayers();
+        
         // Add all the rows back
         try
         {
@@ -119,9 +128,10 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
             {
                  String playerName = rs.getString("PLAYERNAME");
                  int stageLevel = rs.getInt("CURRENTSTAGE");
-                 Date saveDate = new Date(rs.getDate("SAVEDATE").getTime());
+                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy [HH:mm:ss]");
+                 Timestamp saveDate = rs.getTimestamp("SAVEDATE");
                  
-                 Object[] rowData = {playerName, stageLevel, saveDate};
+                 Object[] rowData = {playerName, stageLevel, sdf.format(saveDate)};
                  this.tableModel.addRow(rowData);
             }
         }
@@ -129,6 +139,14 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         {
             Logger.getLogger(LoadMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.tableModel);
+        this.playerJTable.setRowSorter(sorter);
+
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(2, SortOrder.DESCENDING));
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+        sorter.setSortKeys(sortKeys);
     }
     
     /**
@@ -138,13 +156,33 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Object source = e.getSource();
+        CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+        if (source == this.loadSaveButton)
+        {
+            String playerName = (String) this.tableModel.getValueAt(this.playerJTable.getSelectedRow(), 0);
+            PanelManager.setCurrentPlayer(DatabaseManager.loadPlayerFromDatabase(playerName));
+            System.out.println(DatabaseManager.playerToDatabase(PanelManager.getCurrentPlayer()));
+        }
+        else if (source == this.deleteSaveButton)
+        {
+            String playerName = (String) this.tableModel.getValueAt(this.playerJTable.getSelectedRow(), 0);
+            DatabaseManager.deletePlayerFromDatabase(playerName);
+        }
+        else if (source == this.backButton)
+        {
+            cl.show(PanelManager.menuCardPanel, "MAINMENU");
+        }
+        updatePlayerSaves();
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Object source = e.getSource();
+        boolean isRowSelected = this.playerJTable.getSelectionModel().isSelectionEmpty();
+        this.loadSaveButton.setEnabled(!isRowSelected);
+        this.deleteSaveButton.setEnabled(!isRowSelected);
     }
-    
+
 }

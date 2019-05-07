@@ -8,13 +8,14 @@ package Stages;
 import GameEntities.Player;
 import MenuPanels.PanelManager;
 import java.io.Serializable;
+import javax.swing.JPanel;
 
 /**
  * Abstract parent class for all the stages.
  *
  * @author lyleb and khoap
  */
-public abstract class Stage extends PanelManager implements Serializable
+public abstract class Stage extends JPanel implements Serializable
 {
 
     protected int stageLevel;

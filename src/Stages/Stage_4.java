@@ -5,13 +5,12 @@
  */
 package Stages;
 
-import CUI.Entity_Package.Entity;
-import CUI.Entity_Package.Monster;
-import CUI.Entity_Package.Player;
-import CUI.GameOverScreen;
-import CUI.Items.Blindfold;
-import CUI.Items.Item;
-import CUI.UtilityMethods;
+import GameEntities.*;
+import GUI.GameOverScreen;
+import Items.Blindfold;
+import Items.Item;
+import GUI.UtilityMethods;
+import Items.Weapon;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -249,6 +248,7 @@ public class Stage_4 extends Stage
             String userInput = "";
             int userAction;
             Item blindfold = new Blindfold();
+            Weapon playerWeapon = (Weapon) player.getWeapon();
             
             
             addMoves();
@@ -352,7 +352,7 @@ public class Stage_4 extends Stage
             {
                 System.out.println("");
                 Thread.sleep(2000);
-                System.out.println("The monster used the following move: " + genParry(player.showWeapon().parrySeq()));
+                System.out.println("The monster used the following move: " + playerWeapon.parrySeq());
                 System.out.print("Parry the attack: ");
                 
                 do
@@ -370,7 +370,7 @@ public class Stage_4 extends Stage
                     {
                         player.setHealth(0);
                         // Starts all over from the Check Point
-                        GameOverScreen.printGameOverScreen(checkPointPlayer, "Game over! You failed to counter the attack.");
+                        //GameOverScreen.printGameOverScreen(checkPointPlayer, "Game over! You failed to counter the attack.");
                         break;
                     }
                     else
@@ -403,8 +403,8 @@ public class Stage_4 extends Stage
                                     }
                                     else
                                     {
-                                        System.out.println("You dealt " + player.showWeapon().attack() + " damage to the Entity");
-                                        monster.setHealth(monster.getHealth() - player.showWeapon().attack());
+                                        System.out.println("You dealt " + playerWeapon.attack() + " damage to the Entity");
+                                        monster.setHealth(monster.getHealth() - playerWeapon.attack());
                                         isMoveCorrect = true;
                                     }
                                 }
@@ -437,7 +437,7 @@ public class Stage_4 extends Stage
             else if(player.getHealth() == 0)
             {
                 System.out.println("");
-                GameOverScreen.printGameOverScreen(checkPointPlayer, "Game over! You failed to dodge the entity's attack...");
+                //GameOverScreen.printGameOverScreen(checkPointPlayer, "Game over! You failed to dodge the entity's attack...");
             }
         } 
         catch(InterruptedException ex)

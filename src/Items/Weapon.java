@@ -11,7 +11,7 @@ package Items;
  * 
  * @author lyleb and khoap
  */
-public interface Weapon
+public interface Weapon 
 {
     public int attack();
     public int parrySeq();

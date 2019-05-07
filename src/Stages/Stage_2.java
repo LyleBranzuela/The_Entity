@@ -5,9 +5,9 @@
  */
 package Stages;
 
-import CUI.Entity_Package.Player;
-import CUI.GameOverScreen;
-import CUI.UtilityMethods;
+import GameEntities.Player;
+import GUI.GameOverScreen;
+import GUI.UtilityMethods;
 import java.util.Scanner;
 
 /**
@@ -70,7 +70,7 @@ public class Stage_2 extends Stage
                 else
                 {
                     System.out.println("");
-                    GameOverScreen.printGameOverScreen(this.player, "Game Over! You have been detected!");
+                    //GameOverScreen.printGameOverScreen(this.player, "Game Over! You have been detected!");
                     isCorrect = false;
                     this.isCompleted = false;
                 }
@@ -84,7 +84,7 @@ public class Stage_2 extends Stage
                 else
                 {
                     System.out.println("");
-                    GameOverScreen.printGameOverScreen(this.player, "Game Over! You have been detected!");
+                    //GameOverScreen.printGameOverScreen(this.player, "Game Over! You have been detected!");
                     isCorrect = false;
                     this.isCompleted = false;
                 }
@@ -98,7 +98,7 @@ public class Stage_2 extends Stage
                 else
                 {
                     System.out.println("");
-                    GameOverScreen.printGameOverScreen(this.player, "Game Over! You have been detected!");
+                    //GameOverScreen.printGameOverScreen(this.player, "Game Over! You have been detected!");
                     isCorrect = false;
                     this.isCompleted = false;
                 }

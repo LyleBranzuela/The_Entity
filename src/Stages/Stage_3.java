@@ -5,8 +5,8 @@
  */
 package Stages;
 
-import CUI.Entity_Package.Player;
-import CUI.Items.*;
+import GameEntities.Player;
+import Items.*;
 import java.util.Scanner;
 
 /**

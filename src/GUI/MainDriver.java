@@ -23,13 +23,15 @@ public class MainDriver
      * Main driver of the game.
      * 
      * @param args 
-     */
+         */
     public static void main(String[] args)
     {
         // Connect to the Database
         DatabaseManager.connectToPlayerDatabase();
         DatabaseManager.createPlayerSaveDatabase();
-        DatabaseManager.savePlayerToDatabase(new Player("John"));
+        DatabaseManager.savePlayerToDatabase(new Player("Lyle"));
+        DatabaseManager.savePlayerToDatabase(new Player("Cody"));
+        
         
         // Instantiate Panel Manager
         PanelManager myPanel = new PanelManager();

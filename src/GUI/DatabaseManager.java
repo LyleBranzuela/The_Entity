@@ -15,15 +15,13 @@ import Stages.Stage_3;
 import Stages.Stage_4;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +34,7 @@ public class DatabaseManager
 {
 
     private static Connection conn = null;
-    private static final String URL = "jdbc:derby://localhost:1527/PlayerDatabase; create=true";
+    private static final String URL = "jdbc:derby://localhost:1527/PlayerDatabase;create=true";
     private static final String USERNAME = "entity";
     private static final String PASSWORD = "entity";
 
@@ -45,16 +43,13 @@ public class DatabaseManager
      */
     public static void connectToPlayerDatabase()
     {
-        if (conn == null)
+        try
         {
-            try
-            {
-                conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            }
-            catch (SQLException ex)
-            {
-                Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -69,12 +64,12 @@ public class DatabaseManager
             Statement statement = conn.createStatement();
             // Check if the table already exists
             ResultSet tables = dbmd.getTables(null, null, "PLAYERSAVES", null);
-            if (tables.next())
+            if (!tables.next())
             {
-                statement.executeUpdate("DROP TABLE PLAYERSAVES");
+                // statement.executeUpdate("DROP TABLE PLAYERSAVES");
+                String sqlCreateTable = "CREATE TABLE PLAYERSAVES (PLAYERNAME VARCHAR(20), CURRENTSTAGE INT, HASBLINDFOLD INT, ITEM_ID INT, SAVEDATE TIMESTAMP)";
+                statement.executeUpdate(sqlCreateTable);
             }
-            String sqlCreateTable = "CREATE TABLE PLAYERSAVES (PLAYERNAME VARCHAR(20), CURRENTSTAGE INT, HASBLINDFOLD INT, ITEM_ID INT, SAVEDATE DATE)";
-            statement.executeUpdate(sqlCreateTable);
         }
         catch (SQLException ex)
         {
@@ -82,6 +77,20 @@ public class DatabaseManager
         }
     }
 
+    /**
+     * 
+     */
+    public static void clearPlayerDatabase() {
+        try
+        {
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("DROP TABLE PLAYERSAVES");
+        }
+        catch (SQLException ex)
+        {
+            System.err.println("SQLException: " + ex.getMessage());
+        }
+    }
     /**
      *
      * @return
@@ -184,12 +193,21 @@ public class DatabaseManager
     public static Player loadPlayerFromDatabase(String playerName)
     {
         Player loadedPlayer = new Player("");
+        ResultSet rs = null;
         try
         {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM PLAYERSAVES WHERE PLAYERNAME = ?");
+            String loadPlayerSQL = "SELECT * FROM PLAYERSAVES WHERE PLAYERNAME = ?";
+            PreparedStatement pstmt = conn.prepareStatement(loadPlayerSQL);
             pstmt.setString(1, playerName);
-
-            pstmt.executeUpdate();
+            rs = pstmt.executeQuery();            
+            while (rs.next()) {
+                String loadedName = rs.getString("PLAYERNAME");
+                int stageLevel = rs.getInt("CURRENTSTAGE");
+                boolean hasBlindFold = rs.getBoolean("HASBLINDFOLD");
+                int itemID = rs.getInt("ITEM_ID");
+                
+                loadedPlayer = databaseToPlayer(loadedName, stageLevel, hasBlindFold, itemID);
+            }
         }
         catch (SQLException ex)
         {
@@ -207,18 +225,19 @@ public class DatabaseManager
     {
         try
         {
-            Calendar cal = Calendar.getInstance();
-            Date date = new Date(cal.getTimeInMillis());
-
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            
+            
             java.util.Date uDate = new java.util.Date();
+            // Convert Jave Date to SQL Date
             java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-            DateFormat df = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
             String getPlayerDetails
                     = "INSERT INTO PLAYERSAVES VALUES (" + playerToDatabase(player) + ", ?)";
 
             System.out.println(getPlayerDetails);
             PreparedStatement pstmt = conn.prepareStatement(getPlayerDetails);
-            pstmt.setDate(1, sDate);
+            //pstmt.setDate(1, sDate);
+            pstmt.setTimestamp(1, timestamp);
             pstmt.executeUpdate();
         }
         catch (SQLException ex)
@@ -229,14 +248,14 @@ public class DatabaseManager
 
     /**
      *
-     * @param player
+     * @param playerName
      */
-    public static void deletePlayerFromDatabase(Player player)
+    public static void deletePlayerFromDatabase(String playerName)
     {
         try
         {
             PreparedStatement pstmt = conn.prepareStatement("DELETE FROM PLAYERSAVES WHERE PLAYERNAME = ?");
-            pstmt.setString(1, player.getName());
+            pstmt.setString(1, playerName);
 
             pstmt.executeUpdate();
         }
