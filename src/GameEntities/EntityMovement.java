@@ -74,6 +74,7 @@ public class EntityMovement
 
     /**
      * Moves the entity based on the direction parameter.
+     * 
      * @param direction which direction the entity moves.
      */
     public void moveEntity(int direction)
