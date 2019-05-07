@@ -10,7 +10,7 @@ import java.awt.Graphics;
 /**
  * Created enemy Class, monster type.
  * 
- * @author lyleb and khoap.
+ * @author lyleb and khoap
  */
 public class HiddenMonster extends Entity implements Enemy
 {

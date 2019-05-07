@@ -5,7 +5,6 @@
  */
 package MenuPanels;
 
-import GUI.DesignAttributes;
 import GameEntities.Player;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -13,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author lyleb
+ * @author lyleb and khoap
  */
 public class PanelManager extends JPanel
 {

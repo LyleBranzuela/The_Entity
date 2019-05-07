@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author lyleb
+ * @author lyleb and khoap
  */
 public class GameOverMenu extends JPanel
 {

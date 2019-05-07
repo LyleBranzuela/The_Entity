@@ -7,7 +7,7 @@ package GUI;
 
 /**
  *
- * @author lyleb
+ * @author lyleb and khoap
  */
 public class GameOverScreen
 {

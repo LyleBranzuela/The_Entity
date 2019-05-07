@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionListener;
 
 /**
  *
- * @author lyleb
+ * @author lyleb and khoap
  */
 public class MidGameMenu extends JPanel implements ActionListener, ListSelectionListener
 {

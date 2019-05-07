@@ -12,7 +12,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author lyleb
+ * @author lyleb and khoap
  */
 public class UtilityMethods
 {

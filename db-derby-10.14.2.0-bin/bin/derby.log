@@ -1,7 +1,7 @@
-Tue May 07 20:55:10 NZST 2019 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Wed May 08 01:25:39 NZST 2019 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue May 07 20:55:14 NZST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016a-9180-f903-ffffacc6721f 
+Wed May 08 01:25:44 NZST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016a-9278-9a9f-ffffacc6721f 
 on database directory C:\Users\lyleb\Downloads\AUT Stuff\2nd Year\The_Entity\db-derby-10.14.2.0-bin\bin\PlayerDatabase with class loader sun.misc.Launcher$AppClassLoader@610455d6 
 Loaded from file:/C:/Users/lyleb/Downloads/AUT%20Stuff/2nd%20Year/The_Entity/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
