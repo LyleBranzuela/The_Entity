@@ -5,8 +5,7 @@
  */
 package Stages;
 
-import GameEntities.Player;
-import GUI.GameOverScreen;
+import GameEntities.Player; 
 import GUI.UtilityMethods;
 import java.util.Scanner;
 

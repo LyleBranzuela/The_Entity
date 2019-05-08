@@ -5,17 +5,26 @@
  */
 package MenuPanels;
 
+import GUI.DatabaseManager;
 import GUI.DesignAttributes;
+import GUI.UtilityMethods;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -50,7 +59,7 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
         // Setting up the Menu List
         String[] labels =
         {
-            "Resume", "Save Checkpoint", "Load Checkpoint", "Options", "Exit"
+            "Resume", "Save Checkpoint", "Load Checkpoint", "Options", "Main Menu", "Exit"
         };
         this.model = new DefaultListModel();
         for (Object p : labels)
@@ -113,28 +122,63 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
     @Override
     public void valueChanged(ListSelectionEvent e)
     {
+        CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
         if (this.menuList.getSelectedValue() == "Resume")
         {
             
         }
-        // Goes to the list of save files
+        // Saves the player name
         else if (this.menuList.getSelectedValue() == "Save Game")
         {
+            // Storing all the player's names in the Arraylist to check for duplicates later
+            ResultSet rs = DatabaseManager.getAllPlayers();
+            ArrayList<String> playersInDatabase = new ArrayList<>();
+            try
+            {
+                while (rs.next())
+                {
+                     String playerName = rs.getString("PLAYERNAME");
+                     playersInDatabase.add(playerName);
+                }
+            }
+            catch (SQLException ex)
+            {
+                Logger.getLogger(LoadMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
+            // Checks if the current player's name is in the Array List, meaning it's in the database.
+            if (playersInDatabase.contains(PanelManager.getCurrentPlayer().getName()))
+            {
+                DatabaseManager.savePlayerToDatabase(PanelManager.getCurrentPlayer(), true);
+            }
+            else
+            {
+                int confirmDialog = JOptionPane.showConfirmDialog (null, "Found Duplicate: Overwrite Save?", "Warning", JOptionPane.YES_NO_OPTION);
+                if (confirmDialog == JOptionPane.YES_OPTION)
+                {
+                    DatabaseManager.savePlayerToDatabase(PanelManager.getCurrentPlayer(), false);
+                }
+            }
         }
         // Goes to the list of Saved files that can be loaded
         else if (this.menuList.getSelectedValue() == "Load Game")
         {
-            
+            PanelManager.setBackToMainMenu(false);
+            cl.show(PanelManager.menuCardPanel, "LOADSCREEN");
         }
         else if (this.menuList.getSelectedValue() == "Options")
         {
-            
+            PanelManager.setBackToMainMenu(false);
+            cl.show(PanelManager.menuCardPanel, "OPTIONSCREEN");
+        }
+        else if (this.menuList.getSelectedValue() == "Main Menu")
+        {
+            cl.show(PanelManager.menuCardPanel, "MAINMENU");
         }
         // Exits the GUI
         else if (this.menuList.getSelectedValue() == "Exit")
         {
-            System.exit(0);
+            UtilityMethods.exitConfirmation();
         }
     }
 }

@@ -53,7 +53,7 @@ public class DatabaseManager
     }
 
     /**
-     *
+     * Creates the PlayerSaves table if it didn't exist yet.
      */
     public static void createPlayerSaveDatabase()
     {
@@ -77,7 +77,7 @@ public class DatabaseManager
     }
 
     /**
-     * 
+     * Clears the database of the players.
      */
     public static void clearPlayerDatabase() {
         try
@@ -91,8 +91,9 @@ public class DatabaseManager
         }
     }
     /**
-     *
-     * @return
+     * Returns a result set about all the players in the database.
+     * 
+     * @return a result set of the database.
      */
     public static ResultSet getAllPlayers()
     {
@@ -111,11 +112,12 @@ public class DatabaseManager
     }
 
     /**
-     *
-     * @param playerName
-     * @param stageLevel
-     * @param hasBlindfold
-     * @param itemID
+     * Converts a database string version to a player object version.
+     * 
+     * @param playerName the name of the player object.
+     * @param stageLevel current stage level of the player object.
+     * @param hasBlindfold does the player have a blindfold.
+     * @param itemID what weapon is the player currently have.
      * @return the generated player.
      */
     public static Player databaseToPlayer(String playerName, int stageLevel, boolean hasBlindfold, int itemID)
@@ -164,30 +166,28 @@ public class DatabaseManager
     }
 
     /**
-     *
-     * @param player
-     * @return
+     * Converts the player object into a string, that can be used in the database.
+     * 
+     * @param player to be converted to a string.
+     * @return string version of the player object.
      */
     public static String playerToDatabase(Player player)
     {
-        // CREATE
-        // A 
-        // NULL 
-        // STATEMENT
-        // FOR TURNING PLAYER TO A DATABASE
         String playerName = "\'" + player.getName() + "\'";
         int stageLevel = player.getCurrentStage().determineStageLevel(player.getCurrentStage());
-        boolean blindfoldCheck = player.hasBlindfold;
-        int hasBlindFold = blindfoldCheck ? 1 : 0;
+        // 1 - True, 0 - False
+        int hasBlindFold = player.hasBlindfold ? 1 : 0;
+        // 0 - No Items, 1 - Barbed Bat, 2 - Dual Daggers, 3 - Machete
         int itemID = player.getWeapon() == null ? 0 : player.getWeapon().getItemID();
 
         return (playerName + ", " + stageLevel + ", " + hasBlindFold + ", " + itemID);
     }
 
     /**
-     *
-     * @param playerName
-     * @return
+     * Loads player from the database based on their name.
+     * 
+     * @param playerName the name of the player to be retrieved.
+     * @return the player object from the database.
      */
     public static Player loadPlayerFromDatabase(String playerName)
     {
@@ -217,26 +217,41 @@ public class DatabaseManager
     }
 
     /**
-     *
-     * @param player
+     * Saves the player to the PlayerDatabase.
+     * 
+     * @param player which player to save.
+     * @param newPlayer whether it's a new player or not.
      */
-    public static void savePlayerToDatabase(Player player)
+    public static void savePlayerToDatabase(Player player, boolean newPlayer)
     {
         try
         {
+            // Get current System time
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String getPlayerDetails;
+            PreparedStatement pstmt;
             
-            
-            java.util.Date uDate = new java.util.Date();
-            // Convert Jave Date to SQL Date
-            java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-            String getPlayerDetails
-                    = "INSERT INTO PLAYERSAVES VALUES (" + playerToDatabase(player) + ", ?)";
-
+            // If it's a new player
+            if (newPlayer)
+            {
+                getPlayerDetails = "INSERT INTO PLAYERSAVES VALUES (" + playerToDatabase(player) + ", ?)";
+                pstmt = conn.prepareStatement(getPlayerDetails);
+                pstmt.setTimestamp(1, timestamp);
+            }
+            // Update the player database
+            else
+            {
+                int hasBlindFold = player.hasBlindfold ? 1 : 0;
+                int itemID = player.getWeapon() == null ? 0 : player.getWeapon().getItemID();
+                getPlayerDetails
+                        = "UPDATE PLAYERSAVES SET CURRENTSTAGE = ?, HASBLINDFOLD = ?, ITEM_ID = ?, SAVEDATE = ? WHERE PLAYERNAME = \'" + player.getName() + "\'";
+                pstmt = conn.prepareStatement(getPlayerDetails);
+                pstmt.setInt(1, player.getCurrentStage().getStageLevel());
+                pstmt.setInt(2, hasBlindFold);
+                pstmt.setInt(3, itemID);
+                pstmt.setTimestamp(4, timestamp);
+            }
             System.out.println(getPlayerDetails);
-            PreparedStatement pstmt = conn.prepareStatement(getPlayerDetails);
-            //pstmt.setDate(1, sDate);
-            pstmt.setTimestamp(1, timestamp);
             pstmt.executeUpdate();
         }
         catch (SQLException ex)
@@ -246,8 +261,9 @@ public class DatabaseManager
     }
 
     /**
-     *
-     * @param playerName
+     * Deletes a specified player from the database.
+     * 
+     * @param playerName name of the player to be deleted.
      */
     public static void deletePlayerFromDatabase(String playerName)
     {

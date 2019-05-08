@@ -6,7 +6,6 @@
 package Stages;
 
 import GameEntities.*;
-import GUI.GameOverScreen;
 import Items.Blindfold;
 import Items.Item;
 import GUI.UtilityMethods;

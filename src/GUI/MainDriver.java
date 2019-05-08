@@ -26,13 +26,12 @@ public class MainDriver
          */
     public static void main(String[] args)
     {
-        // Connect to the Database
+        // Connect to the To the PlayerDatabase();
         DatabaseManager.connectToPlayerDatabase();
         DatabaseManager.createPlayerSaveDatabase();
-        DatabaseManager.savePlayerToDatabase(new Player("Lyle"));
-        DatabaseManager.savePlayerToDatabase(new Player("Cody"));
-        
-        
+        DatabaseManager.savePlayerToDatabase(new Player("Lyle"), false);
+        DatabaseManager.savePlayerToDatabase(new Player("Cody"), false);
+
         // Instantiate Panel Manager
         PanelManager myPanel = new PanelManager();
         JFrame frame = new JFrame("The Entity");

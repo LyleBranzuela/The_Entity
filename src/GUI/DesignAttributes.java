@@ -11,7 +11,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
 /**
- *
+ * Design Attributes of a JPanel.
+ * 
  * @author lyleb and khoap
  */
 public class DesignAttributes
@@ -21,7 +22,7 @@ public class DesignAttributes
     public Border raisedBevel, loweredBevel, lineBorder, emptyBorder, marginBorder;
 
     /**
-     * Default Design
+     * Default Design of the Design Attributes Class.
      */
     public DesignAttributes()
     {
@@ -40,11 +41,11 @@ public class DesignAttributes
     }
 
     /**
+     * Set the color scheme of the design attributes.
      *
-     *
-     * @param primaryColor
-     * @param secondaryColor
-     * @param tertiaryColor
+     * @param primaryColor of the design theme.
+     * @param secondaryColor of the design theme.
+     * @param tertiaryColor of the design theme.
      */
     public void setColorScheme(Color primaryColor, Color secondaryColor, Color tertiaryColor)
     {
@@ -63,13 +64,13 @@ public class DesignAttributes
     }
 
     /**
+     * Generates a margin border based on the margins specified.
      *
-     *
-     * @param top
-     * @param left
-     * @param bottom
-     * @param right
-     * @return
+     * @param top margin from the top.
+     * @param left margin from the left.
+     * @param bottom margin from the bottom.
+     * @param right margin from the right.
+     * @return the generated border.
      */
     public Border createMarginBorder(int top, int left, int bottom, int right)
     {

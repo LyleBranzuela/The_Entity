@@ -10,6 +10,7 @@ import GUI.DesignAttributes;
 import GUI.UtilityMethods;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -28,8 +30,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -43,7 +49,6 @@ import javax.swing.table.TableRowSorter;
 public class LoadMenu extends JPanel implements ActionListener, ListSelectionListener
 {
     private JTable playerJTable;
-    private JLabel loadGameLabel;
     private JPanel loadMenuListPanel, buttonPanel;
     private JButton loadSaveButton, deleteSaveButton, backButton;
     private DesignAttributes designAttributes;
@@ -54,27 +59,23 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
         
-        // Text of Load Screen on the Top
-        this.loadGameLabel = new JLabel("Load Game");
-        this.loadGameLabel.setFont(new Font("Tahoma", Font.BOLD, 64));
-        this.loadGameLabel.setForeground(this.designAttributes.primaryColor);
-        
         // Loads the Selected Save
-        this.loadSaveButton = UtilityMethods.generateButton("Load Save", 32, 
+        this.loadSaveButton = UtilityMethods.generateButton("Load Save", 30, 
                 this.designAttributes.primaryColor, null, true);
         this.loadSaveButton.setEnabled(false);
         this.loadSaveButton.addActionListener(this);
         
         // Deletes the Selected Save
-        this.deleteSaveButton = UtilityMethods.generateButton("Delete Save", 32, 
+        this.deleteSaveButton = UtilityMethods.generateButton("Delete Save", 30, 
                 this.designAttributes.primaryColor, null, true);
         this.deleteSaveButton.addActionListener(this);
         this.deleteSaveButton.setEnabled(false);
         
         // Goes back to the main menu
-        this.backButton = UtilityMethods.generateButton("Back", 32, 
+        this.backButton = UtilityMethods.generateButton("Back", 30, 
                 this.designAttributes.primaryColor, null, true);
         this.backButton.addActionListener(this);
+        this.backButton.setRolloverEnabled(true);
         
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(this.loadSaveButton);
@@ -89,21 +90,41 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         
         // Creating the Save List Table
         String[] columnNames = {"Player Name", "Stage Level", "Date"};
-        this.tableModel = new DefaultTableModel(this.data, columnNames);
+        this.tableModel = new DefaultTableModel(this.data, columnNames){
+            /**
+             * Makes all the cells not editable.
+             * 
+             * @param row which row.
+             * @param column which column.
+             * @return makes all cells not editable, no matter row or column.
+             */
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               return false;
+            }
+        };
         this.playerJTable = new JTable(this.tableModel);
         this.playerJTable.getSelectionModel().addListSelectionListener(this);
+        this.playerJTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // Set the columns of the table to be unmovable or unorderable
+        this.playerJTable.getTableHeader().setReorderingAllowed(false); 
         JScrollPane tableScrollPane = new JScrollPane();
         tableScrollPane.setViewportView(this.playerJTable);
         updatePlayerSaves();
         
+        // Making The Title Border
+        Border titledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
+                                                            "Load Screen", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 58));
+        
         // Add them all together
         this.loadMenuListPanel = new JPanel();
-        this.loadMenuListPanel.add(this.loadGameLabel);
+        this.loadMenuListPanel.setBorder(new CompoundBorder(titledBorder, this.designAttributes.marginBorder));
+        this.loadMenuListPanel.setBackground(Color.BLACK);
         this.loadMenuListPanel.add(tableScrollPane);
-        this.loadMenuListPanel.add(this.buttonPanel);
+        // this.loadMenuListPanel.add(this.buttonPanel);
         this.loadMenuListPanel.setLayout(new BoxLayout(this.loadMenuListPanel, BoxLayout.Y_AXIS));
-        this.loadMenuListPanel.setBorder(this.designAttributes.marginBorder);
 
+        add(this.buttonPanel, BorderLayout.SOUTH);
         add(this.loadMenuListPanel, BorderLayout.CENTER);
     }
 
@@ -128,7 +149,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
             {
                  String playerName = rs.getString("PLAYERNAME");
                  int stageLevel = rs.getInt("CURRENTSTAGE");
-                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy [HH:mm:ss]");
+                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy [hh:mm:ss a]");
                  Timestamp saveDate = rs.getTimestamp("SAVEDATE");
                  
                  Object[] rowData = {playerName, stageLevel, sdf.format(saveDate)};
@@ -150,8 +171,9 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
     }
     
     /**
+     * Listens for actions for the JPanel's buttons.
      * 
-     * @param e 
+     * @param e source of the event.
      */
     @Override
     public void actionPerformed(ActionEvent e)
@@ -171,18 +193,29 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         }
         else if (source == this.backButton)
         {
-            cl.show(PanelManager.menuCardPanel, "MAINMENU");
+            if (PanelManager.backToMainMenu)
+            {
+                cl.show(PanelManager.menuCardPanel, "MAINMENU");
+            }
+            else
+            {
+                cl.show(PanelManager.menuCardPanel, "MIDGAMEMENU");
+            }
         }
         updatePlayerSaves();
     }
 
+    /**
+     * Listens to changes in the values of the JTable it's assigned to.
+     * 
+     * @param e source of the event.
+     */
     @Override
     public void valueChanged(ListSelectionEvent e)
     {
-        Object source = e.getSource();
+        // Determines whether there is a row selected before enabling load and delete buttons.
         boolean isRowSelected = this.playerJTable.getSelectionModel().isSelectionEmpty();
         this.loadSaveButton.setEnabled(!isRowSelected);
         this.deleteSaveButton.setEnabled(!isRowSelected);
     }
-
 }

@@ -6,8 +6,10 @@
 package MenuPanels;
 
 import GUI.DesignAttributes;
+import GUI.UtilityMethods;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -29,6 +31,7 @@ import javax.swing.event.ListSelectionListener;
  */
 public class StartMenu extends JPanel implements ActionListener, ListSelectionListener
 {
+
     private JLabel gameName;
     private JScrollPane menuScrollPane;
     private JList menuList;
@@ -43,11 +46,11 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
     {
         super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
-        
+
         this.gameName = new JLabel("The Entity");
         this.gameName.setFont(new Font("Tahoma", Font.BOLD, 64));
         this.gameName.setForeground(this.designAttributes.primaryColor);
-            
+
         // Setting up the Menu List
         String[] labels =
         {
@@ -83,6 +86,9 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         add(this.menuListPanel, BorderLayout.WEST);
     }
 
+    /**
+     *
+     */
     public class OpaqueCellRenderer extends DefaultListCellRenderer
     {
 
@@ -91,6 +97,16 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             setOpaque(isSelected);
+//            System.out.println("Is Selecetd: " + isSelected);
+//            System.out.println("Cell Has Focus: " + cellHasFocus);
+//            if (isSelected)
+//            {
+//                setForeground(Color.WHITE);
+//            }
+//            else
+//            {
+//                setForeground(designAttributes.secondaryColor);
+//            }
             return this;
         }
 
@@ -126,22 +142,25 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         }
         else if (this.menuList.getSelectedValue() == "Load Game")
         {
+            PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "LOADSCREEN");
         }
         // Goes to the Options Panel
         else if (this.menuList.getSelectedValue() == "Options")
         {
+            PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "OPTIONSCREEN");
         }
         // Goes to the Credits Panel
         else if (this.menuList.getSelectedValue() == "Credits")
         {
+            PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "CREDITSCREEN");
         }
         // Exits the GUI
         else if (this.menuList.getSelectedValue() == "Exit")
         {
-            System.exit(0);
+            UtilityMethods.exitConfirmation();
         }
         this.menuList.clearSelection();
     }

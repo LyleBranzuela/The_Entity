@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Random;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -31,6 +33,7 @@ public class UtilityMethods
     }
     
     /**
+     * 
      * 
      * @param fontName
      * @param fontSize
@@ -57,7 +60,35 @@ public class UtilityMethods
             generatedButton.setContentAreaFilled(false);
             generatedButton.setBorderPainted(false);
         }
+        
+        generatedButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                generatedButton.setBackground(Color.WHITE);
+            }
 
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                generatedButton.setBackground(UIManager.getColor("control"));
+            }
+        });
+        
+        
         return generatedButton;
+    }
+    
+    /**
+     * 
+     */
+    public static void exitConfirmation()
+    {
+        int confirmDialog = JOptionPane.showConfirmDialog (null, "Would You Like To Exit?", "Warning", JOptionPane.YES_NO_OPTION);
+        if (confirmDialog == JOptionPane.YES_OPTION)
+        {
+            System.exit(0);
+        }
     }
 }
