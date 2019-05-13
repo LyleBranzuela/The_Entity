@@ -20,7 +20,19 @@ import java.util.Scanner;
 public class Stage_1 extends Stage
 {
     /**
+     * 
+     * @param player 
+     */
+    public Stage_1(Player player)
+    {
+        super(player);
+        repaint();
+    }
+    
+    /**
      * Create the content for stage 1.
+     * 
+     * @param player current player playing;
      */
     @Override
     public void initiateStage(Player player)
@@ -163,8 +175,7 @@ public class Stage_1 extends Stage
             System.out.println("The dots flashed green and the door opened. You peek through the door to spot three patrolling guards.");
             System.out.println("======================================================================================================");
             // Sets the stage level into Stage 2 and Iniate it with the Player Object
-            player.setCurrentStageLevel(new Stage_2());
-            player.getCurrentStage().initiateStage(player);
+            player.setCurrentStageLevel(new Stage_2(player));
         }
         catch (InterruptedException ex)
         {

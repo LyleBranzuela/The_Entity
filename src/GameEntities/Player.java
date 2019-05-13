@@ -7,6 +7,8 @@ package GameEntities;
 
 import Items.*;
 import Stages.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -16,7 +18,6 @@ import java.awt.Graphics;
  */
 public class Player extends Entity
 {
-
     private Item weaponHolding;
     private Stage playerStage;
     public boolean hasBlindfold;
@@ -28,8 +29,9 @@ public class Player extends Entity
      */
     public Player(String name)
     {
+        // Default attributes when a player is initalized
         super(name, 1);
-        this.playerStage = new Stage_1();
+        this.playerStage = new Stage_1(this);
         this.weaponHolding = null;
         this.hasBlindfold = false;
     }
@@ -82,14 +84,23 @@ public class Player extends Entity
         return this.playerStage;
     }
     
-    
+           
     /**
-     *
-     * @param g
+     * Method the player object.
+     * 
+     * @param g graphics from a drawing panel.
      */
     @Override
     public void draw(Graphics g)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.setColor(Color.BLACK);
+        // Center of the Circle    
+        int x = super.entityMovement.getXMovement();
+        int y = super.entityMovement.getYMovement();
+        g.fillOval(x, y+10, 80, 30);
+        
+        g.setColor(new Color(255,219,172));
+        g.fillOval(x+18, y, 45, 45);
+        g.setColor(Color.BLACK);
     }
 }

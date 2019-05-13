@@ -21,12 +21,39 @@ import java.util.Scanner;
  */
 public class Stage_4 extends Stage
 {
-
+    private Monster monster;
+    private Player player;
+    private int playerX, playerY, monsterX, monsterY;
     public int x, parryDiff;
     private ArrayList<String> easyParry;
     private ArrayList<String> mediumParry;
     private ArrayList<String> hardParry;
+    
+    /**
+     * 
+     * @param player 
+     */
+    public Stage_4(Player player)
+    {
+        super(player);
+        this.player = player;
+        this.monster = new Monster("THE ENTITY");
+        updateLocationAttributes();
+        super.entityList.add(this.monster);
+        super.stageJPanel.updateEntityList(super.entityList);
+        repaint();
+    }
 
+    /**
+     * Updates the location attributes of the class.
+     */
+    private void updateLocationAttributes()
+    {
+        this.playerX = this.player.entityMovement.getXMovement();
+        this.playerY = this.player.entityMovement.getYMovement();
+        this.monsterX = this.monster.entityMovement.getXMovement();
+        this.monsterY = this.monster.entityMovement.getYMovement();
+    }
     /**
      * Function to add monster's attacks and solutions to arrays
      * 
@@ -89,7 +116,6 @@ public class Stage_4 extends Stage
             default:
                 break;
         }
-
         return currentMove;
     }
 
@@ -129,7 +155,8 @@ public class Stage_4 extends Stage
      */
     public int getXDiff(Player player, Entity monster)
     {
-        int xDiff = monster.x_coord - player.x_coord;
+        updateLocationAttributes();
+        int xDiff = this.monsterX - this.playerX;
 
         return xDiff;
     }
@@ -143,7 +170,8 @@ public class Stage_4 extends Stage
      */
     public int getYDiff(Player player, Entity monster)
     {
-        int yDiff = monster.y_coord - player.y_coord;
+        updateLocationAttributes();
+        int yDiff = this.monsterY - this.playerY;
 
         return yDiff;
     }
@@ -241,25 +269,25 @@ public class Stage_4 extends Stage
         {
             super.stageLevel = 4;
             Player checkPointPlayer = player;
+            this.player = player;
             Scanner scan = new Scanner(System.in);
             Random rand = new Random();
-            Entity monster = new Monster("THE ENTITY");
             String userInput = "";
             int userAction;
             Item blindfold = new Blindfold();
-            Weapon playerWeapon = (Weapon) player.getWeapon();
-            
-            
+            Weapon playerWeapon = (Weapon) this.player.getWeapon();
+
             addMoves();
             
             boolean isMoveValid = false;
             boolean isMoveCorrect = false;
             int parrySuccess = 0;
             
-            monster.setHealth(3);
-            player.setHealth(1);
-            monster.setLocation(rand.nextInt(5) + 3, 3);
-            player.setLocation(5, 0);
+            this.monster.setHealth(3);
+            this.player.setHealth(1);
+            this.monster.entityMovement.setLocation(rand.nextInt(5) + 3, 3);
+            this.player.entityMovement.setLocation(5, 0);
+            updateLocationAttributes();
             
             System.out.println("You followed the footprints and howls to a large room...");
             System.out.println("");
@@ -300,10 +328,10 @@ public class Stage_4 extends Stage
             System.out.println("");
             Thread.sleep(2000);
             
-            while (player.x_coord != monster.x_coord || player.y_coord != monster.y_coord)
+            while (this.playerX != this.monsterX|| this.playerY != this.monsterY)
             {
-                printHorizon(player, monster);
-                printVertical(player, monster);
+                printHorizon(this.player, this.monster);
+                printVertical(this.player, this.monster);
                 
                 System.out.print("Your move(W/A/S/D): ");
                 do
@@ -325,16 +353,16 @@ public class Stage_4 extends Stage
                 switch (userInput)
                 {
                     case "W":
-                        player.y_coord = player.y_coord + 1;
+                        this.playerY = this.playerY + 1;
                         break;
                     case "S":
-                        player.y_coord = player.y_coord - 1;
+                        this.playerY = this.playerY - 1;
                         break;
                     case "A":
-                        player.x_coord = player.x_coord - 1;
+                        this.playerX= this.playerX - 1;
                         break;
                     case "D":
-                        player.x_coord = player.x_coord + 1;
+                        this.playerX = this.playerX + 1;
                         break;
                     default:
                         break;
@@ -347,7 +375,7 @@ public class Stage_4 extends Stage
             Thread.sleep(2000);
             System.out.println("You found THE ENTITY! Reverse its attacks to parry and look for openings!");
             
-            while (monster.getHealth() > 0 && player.getHealth() != 0)
+            while (this.monster.getHealth() > 0 && this.player.getHealth() != 0)
             {
                 System.out.println("");
                 Thread.sleep(2000);
@@ -367,7 +395,7 @@ public class Stage_4 extends Stage
                             && !userInput.equalsIgnoreCase("SS") && !userInput.equalsIgnoreCase("SD") && !userInput.equalsIgnoreCase("SA")
                             && !userInput.equalsIgnoreCase("SDA") && !userInput.equalsIgnoreCase("SSD") && !userInput.equalsIgnoreCase("SSA"))
                     {
-                        player.setHealth(0);
+                        this.player.setHealth(0);
                         // Starts all over from the Check Point
                         //GameOverScreen.printGameOverScreen(checkPointPlayer, "Game over! You failed to counter the attack.");
                         break;
@@ -403,7 +431,7 @@ public class Stage_4 extends Stage
                                     else
                                     {
                                         System.out.println("You dealt " + playerWeapon.attack() + " damage to the Entity");
-                                        monster.setHealth(monster.getHealth() - playerWeapon.attack());
+                                        this.monster.setHealth(this.monster.getHealth() - playerWeapon.attack());
                                         isMoveCorrect = true;
                                     }
                                 }
@@ -420,11 +448,13 @@ public class Stage_4 extends Stage
                 }
                 
                 else
-                    player.setHealth(0); //Kills player if he fails to parry
+                {
+                    this.player.setHealth(0); //Kills player if he fails to parry
+                }
             }
             
             
-            if (monster.getHealth() <= 0 && player.getHealth() > 0)
+            if (this.monster.getHealth() <= 0 && this.player.getHealth() > 0)
             {
                 Thread.sleep(2000);
                 System.out.println("");
@@ -433,7 +463,7 @@ public class Stage_4 extends Stage
                 System.out.println("The apocalypse is finally over.");
                 System.out.println("================================================================================");
             }
-            else if(player.getHealth() == 0)
+            else if(this.player.getHealth() == 0)
             {
                 System.out.println("");
                 //GameOverScreen.printGameOverScreen(checkPointPlayer, "Game over! You failed to dodge the entity's attack...");

@@ -37,9 +37,8 @@ public class EntityMovement
      */
     public EntityMovement(int x, int y)
     {
-        this.x = x;
-        this.y = y;
-        point = new Point(this.x, this.y);
+        this.point = new Point();
+        setLocation(x, y);
     }
 
     /**
@@ -70,6 +69,19 @@ public class EntityMovement
     public Point getPointMovement()
     {
         return this.point;
+    }
+    
+    /**
+     * Sets the location on where the entity is.
+     * 
+     * @param x parameter for the x-axis of the JPanel.
+     * @param y parameter for the y-axis of the JPanel.
+     */
+    public void setLocation(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+        this.point.setLocation(this.x, this.y);
     }
 
     /**

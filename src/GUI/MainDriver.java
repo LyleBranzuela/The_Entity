@@ -30,7 +30,7 @@ public class MainDriver
         DatabaseManager.connectToPlayerDatabase();
         DatabaseManager.createPlayerSaveDatabase();
         DatabaseManager.savePlayerToDatabase(new Player("Lyle"), false);
-        DatabaseManager.savePlayerToDatabase(new Player("Cody"), false);
+        // DatabaseManager.savePlayerToDatabase(new Player("Cody"), true);
 
         // Instantiate Panel Manager
         PanelManager myPanel = new PanelManager();
