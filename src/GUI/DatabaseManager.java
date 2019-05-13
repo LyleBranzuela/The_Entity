@@ -124,26 +124,6 @@ public class DatabaseManager
     {
         Player generatedPlayer = new Player(playerName);
 
-        // Set Stage from database to the Player
-        switch (stageLevel)
-        {
-            case 1:
-                generatedPlayer.setCurrentStageLevel(new Stage_1());
-                break;
-            case 2:
-                generatedPlayer.setCurrentStageLevel(new Stage_2());
-                break;
-            case 3:
-                generatedPlayer.setCurrentStageLevel(new Stage_3());
-                break;
-            case 4:
-                generatedPlayer.setCurrentStageLevel(new Stage_4());
-                break;
-            default:
-                generatedPlayer.setCurrentStageLevel(new Stage_1());
-                break;
-        }
-
         generatedPlayer.hasBlindfold = hasBlindfold;
 
         // Set Item from Database to Player
@@ -159,6 +139,26 @@ public class DatabaseManager
                 generatedPlayer.pickupItem(new Machete());
                 break;
             default:
+                break;
+        }
+        
+        // Set Stage from database to the Player
+        switch (stageLevel)
+        {
+            case 1:
+                generatedPlayer.setCurrentStageLevel(new Stage_1(generatedPlayer));
+                break;
+            case 2:
+                generatedPlayer.setCurrentStageLevel(new Stage_2(generatedPlayer));
+                break;
+            case 3:
+                generatedPlayer.setCurrentStageLevel(new Stage_3(generatedPlayer));
+                break;
+            case 4:
+                generatedPlayer.setCurrentStageLevel(new Stage_4(generatedPlayer));
+                break;
+            default:
+                generatedPlayer.setCurrentStageLevel(new Stage_1(generatedPlayer));
                 break;
         }
 

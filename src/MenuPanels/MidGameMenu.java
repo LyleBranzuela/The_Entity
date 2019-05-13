@@ -100,7 +100,6 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
             setOpaque(isSelected);
             return this;
         }
-
     }
 
     /**
@@ -125,7 +124,7 @@ public class MidGameMenu extends JPanel implements ActionListener, ListSelection
         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
         if (this.menuList.getSelectedValue() == "Resume")
         {
-            
+            cl.show(PanelManager.menuCardPanel, "GAMESCREEN");
         }
         // Saves the player name
         else if (this.menuList.getSelectedValue() == "Save Game")

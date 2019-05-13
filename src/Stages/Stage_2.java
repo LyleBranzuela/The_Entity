@@ -7,6 +7,7 @@ package Stages;
 
 import GameEntities.Player; 
 import GUI.UtilityMethods;
+import GameEntities.EnemyPatrol;
 import java.util.Scanner;
 
 /**
@@ -16,12 +17,31 @@ import java.util.Scanner;
  */
 public class Stage_2 extends Stage
 {
-
-    private Player player;
     private String userInput;
     private String guardMovement;
     private boolean isCompleted;
+    private EnemyPatrol enemyPatrol;
+    private EnemyPatrol enemyPatrol2;
+    private EnemyPatrol enemyPatrol3;
 
+    /**
+     * 
+     * @param player 
+     */
+    public Stage_2(Player player)
+    {
+        super(player);
+        this.enemyPatrol = new EnemyPatrol("Enemy Patrol 1", 0);
+        this.enemyPatrol2 = new EnemyPatrol("Enemy Patrol 2", 0);
+        this.enemyPatrol3 = new EnemyPatrol("Enemy Patrol 3", 0);
+
+        super.entityList.add(this.enemyPatrol);
+        super.entityList.add(this.enemyPatrol2);
+        super.entityList.add(this.enemyPatrol3);
+        super.stageJPanel.updateEntityList(super.entityList);
+        repaint();
+    }
+    
     /**
      * Generates movements from random numbers
      *
@@ -112,6 +132,7 @@ public class Stage_2 extends Stage
 
     /**
      * Create the content for stage 2.
+     * @param player
      */
     @Override
     public void initiateStage(Player player)
@@ -122,7 +143,6 @@ public class Stage_2 extends Stage
         this.userInput = "";
         this.guardMovement = "";
         this.isCompleted = true;
-        this.player = player;
         int successAttempt = 0;
         boolean isValid = false;
 
@@ -179,7 +199,7 @@ public class Stage_2 extends Stage
                 System.out.println("You head straight to a long hallway.");
                 System.out.println("==============================================================================");
 
-                player.setCurrentStageLevel(new Stage_3());
+                player.setCurrentStageLevel(new Stage_3(player));
                 player.getCurrentStage().initiateStage(player);
             }
         }

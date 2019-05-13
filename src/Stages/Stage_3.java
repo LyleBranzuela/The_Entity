@@ -16,7 +16,15 @@ import java.util.Scanner;
  */
 public class Stage_3 extends Stage
 {
-
+    /**
+     * 
+     * @param player 
+     */
+    public Stage_3(Player player)
+    {
+        super(player);
+        repaint();
+    }
     /*
      * Creates content for stage 3
      */
@@ -103,7 +111,7 @@ public class Stage_3 extends Stage
             System.out.println("With your new found determination, you walk out of the room and towards the howl.");
             System.out.println("=============================================================================================");
 
-            player.setCurrentStageLevel(new Stage_4());
+            player.setCurrentStageLevel(new Stage_4(player));
             player.getCurrentStage().initiateStage(player);
         }
         catch (InterruptedException ex)

@@ -17,8 +17,7 @@ public abstract class Entity implements Serializable
 {
     public String name;
     protected int health;
-    public int x_coord;
-    public int y_coord;
+    public EntityMovement entityMovement;
 
     /**
      * Constructor for the entity's name and health.
@@ -30,6 +29,7 @@ public abstract class Entity implements Serializable
     {
         this.name = name;
         this.health = health;
+        this.entityMovement = new EntityMovement(0, 0);
     }
 
     /**
@@ -77,19 +77,8 @@ public abstract class Entity implements Serializable
         this.health = health;
     }
     
-    /**
-     * 
-     * @param x
-     * @param y 
-     */
-    public void setLocation(int x, int y)
-    {
-        this.x_coord = x;
-        this.y_coord = y;
-    }
-    
      /**
-     * 
+     * Abstract function so that every entity can be drawn to the JPanel.
      * @param g 
      */
     public abstract void draw(Graphics g);
