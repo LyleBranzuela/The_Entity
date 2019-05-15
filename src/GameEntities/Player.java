@@ -101,6 +101,5 @@ public class Player extends Entity
         
         g.setColor(new Color(255,219,172));
         g.fillOval(x+18, y, 45, 45);
-        g.setColor(Color.BLACK);
     }
 }

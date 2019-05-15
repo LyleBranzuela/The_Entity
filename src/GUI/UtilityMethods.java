@@ -38,22 +38,25 @@ public class UtilityMethods
      * @param fontName
      * @param fontSize
      * @param fontColor
-     * @param buttonColor
+     * @param bgColor
      * @param opaque
      * @return 
      */
     public static JButton generateButton(String fontName, int fontSize,
-            Color fontColor, Color buttonColor, Boolean opaque)
+            Color fontColor, Color bgColor, Boolean opaque)
     {
         JButton generatedButton = new JButton(fontName);
         generatedButton.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         generatedButton.setForeground(fontColor);
-
-        if (buttonColor != null)
+        generatedButton.setFocusPainted(false);
+        
+        // If the caller wants to have a background 
+        if (bgColor != null)
         {
-            generatedButton.setBackground(buttonColor);
+            generatedButton.setBackground(bgColor);
         }
 
+        // If the caller wants the button to be opaque
         if (opaque)
         {
             generatedButton.setOpaque(false);
@@ -85,7 +88,7 @@ public class UtilityMethods
      */
     public static void exitConfirmation()
     {
-        int confirmDialog = JOptionPane.showConfirmDialog (null, "Would You Like To Exit?", "Warning", JOptionPane.YES_NO_OPTION);
+        int confirmDialog = JOptionPane.showConfirmDialog (null, "Would You Like To Exit?", "Warning", JOptionPane.OK_CANCEL_OPTION);
         if (confirmDialog == JOptionPane.YES_OPTION)
         {
             System.exit(0);

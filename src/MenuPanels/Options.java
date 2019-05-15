@@ -29,6 +29,7 @@ public class Options extends JPanel implements ActionListener
     private JPanel optionPanel;
     private DesignAttributes designAttributes;
     public static float volume;
+    public static boolean hasEarphones;
 
     /**
      *

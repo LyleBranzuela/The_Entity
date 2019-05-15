@@ -5,6 +5,7 @@
  */
 package GameEntities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -19,9 +20,21 @@ public class EnemyPatrol extends Entity
         super("Enemy Patrol", 3);
     }
     
+    /**
+     * Method the player object.
+     * 
+     * @param g graphics from a drawing panel.
+     */
     @Override
     public void draw(Graphics g)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        g.setColor(Color.BLACK);
+        // Center of the Circle    
+        int x = super.entityMovement.getXMovement();
+        int y = super.entityMovement.getYMovement();
+        g.fillOval(x, y+10, 60, 30);
+        
+        g.setColor(Color.BLACK);
+        g.fillOval(x+18, y, 45, 45);
     }
 }

@@ -243,15 +243,15 @@ public class DatabaseManager
             {
                 int hasBlindFold = player.hasBlindfold ? 1 : 0;
                 int itemID = player.getWeapon() == null ? 0 : player.getWeapon().getItemID();
+                int stageLevel = player.getCurrentStage().determineStageLevel(player.getCurrentStage());
                 getPlayerDetails
                         = "UPDATE PLAYERSAVES SET CURRENTSTAGE = ?, HASBLINDFOLD = ?, ITEM_ID = ?, SAVEDATE = ? WHERE PLAYERNAME = \'" + player.getName() + "\'";
                 pstmt = conn.prepareStatement(getPlayerDetails);
-                pstmt.setInt(1, player.getCurrentStage().getStageLevel());
+                pstmt.setInt(1, stageLevel);
                 pstmt.setInt(2, hasBlindFold);
                 pstmt.setInt(3, itemID);
                 pstmt.setTimestamp(4, timestamp);
             }
-            System.out.println(getPlayerDetails);
             pstmt.executeUpdate();
         }
         catch (SQLException ex)

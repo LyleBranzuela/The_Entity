@@ -6,6 +6,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -17,7 +18,7 @@ import javax.swing.border.EtchedBorder;
  */
 public class DesignAttributes
 {
-
+    public Font font;
     public Color primaryColor, secondaryColor, tertiaryColor;
     public Border raisedBevel, loweredBevel, lineBorder, emptyBorder, marginBorder;
 
@@ -28,16 +29,18 @@ public class DesignAttributes
     {
 
         // Setting up the Colours
-        this.primaryColor = new Color(35, 31, 32); // Black
-        this.secondaryColor = new Color(120, 120, 120); // Gray
-        this.tertiaryColor = new Color(245, 245, 245); // WhiteSmoke
+        // this.primaryColor = new Color(35, 31, 32); // Black
+        this.primaryColor = new Color(245,245,245); // White Smoke
+        this.secondaryColor = new Color(169,169,169); // Light Gray
+        this.tertiaryColor = new Color(120, 120, 120); // Gray
 
         // Setting up the Border Styles
         this.raisedBevel = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         this.loweredBevel = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         this.lineBorder = BorderFactory.createLineBorder(this.primaryColor, 1);
         this.emptyBorder = BorderFactory.createEmptyBorder();
-        this.marginBorder = BorderFactory.createEmptyBorder(16, 16, 16, 16);
+        this.marginBorder = BorderFactory.createEmptyBorder(8, 8, 8, 8);
+        
     }
 
     /**
@@ -77,5 +80,15 @@ public class DesignAttributes
         Border createdMarginBorder
                 = BorderFactory.createEmptyBorder(top, left, bottom, right);
         return createdMarginBorder;
+    }
+    
+    /**
+     * Sets the default font into something else.
+     * 
+     * @param font to be used to replace with.
+     */
+    public void setFont(Font font)
+    {
+        this.font = font;
     }
 }

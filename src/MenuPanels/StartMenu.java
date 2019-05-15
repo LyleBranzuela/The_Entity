@@ -15,8 +15,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -29,14 +31,12 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author lyleb and khoap
  */
-public class StartMenu extends JPanel implements ActionListener, ListSelectionListener
+public class StartMenu extends JPanel implements ActionListener
 {
 
     private JLabel gameName;
-    private JScrollPane menuScrollPane;
-    private JList menuList;
+    public JButton continueButton, newGameButton, loadGameButton, optionsButton, creditsButton, exitButton;
     private JPanel menuListPanel;
-    private DefaultListModel model;
     private DesignAttributes designAttributes;
 
     /**
@@ -50,40 +50,62 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
         this.gameName = new JLabel("The Entity");
         this.gameName.setFont(new Font("Tahoma", Font.BOLD, 64));
         this.gameName.setForeground(this.designAttributes.primaryColor);
+        this.gameName.setBorder(designAttributes.createMarginBorder(0, 8, 0, 8));
 
-        // Setting up the Menu List
-        String[] labels =
-        {
-            "Continue", "New Game", "Load Game", "Options", "Credits", "Exit"
-        };
-        this.model = new DefaultListModel();
-        for (Object p : labels)
-        {
-            this.model.addElement(p);
-        }
+        // Setting up the Buttons
+        // Continue Button
+        this.continueButton = UtilityMethods.generateButton("Continue", 32,
+                designAttributes.secondaryColor, null, true);
+        this.continueButton.addActionListener(this);
 
-        // Making the Menu List
-        this.menuList = new JList(this.model);
-        this.menuList.setLayoutOrientation(JList.VERTICAL);
-        this.menuList.addListSelectionListener(this);
-        this.menuList.setForeground(this.designAttributes.secondaryColor);
-        this.menuList.setOpaque(false);
-        this.menuList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.menuList.setFont(new Font("Tahoma", Font.BOLD, 32));
-        this.menuList.setCellRenderer(new OpaqueCellRenderer());
+        // New Game Button
+        this.newGameButton = UtilityMethods.generateButton("New Game", 32,
+                designAttributes.secondaryColor, null, true);
+        this.newGameButton.addActionListener(this);
 
-        this.menuScrollPane = new JScrollPane(this.menuList);
-        this.menuScrollPane.setOpaque(false);
-        this.menuScrollPane.setBorder(this.designAttributes.emptyBorder);
-        this.menuScrollPane.getViewport().setOpaque(false);
+        // Load Game Button
+        this.loadGameButton = UtilityMethods.generateButton("Load Game", 32,
+                designAttributes.secondaryColor, null, true);
+        this.loadGameButton.addActionListener(this);
 
+        // Options Button
+        this.optionsButton = UtilityMethods.generateButton("Options", 32,
+                designAttributes.secondaryColor, null, true);
+        this.optionsButton.addActionListener(this);
+
+        // Credits Button
+        this.creditsButton = UtilityMethods.generateButton("Credits", 32,
+                designAttributes.secondaryColor, null, true);
+        this.creditsButton.addActionListener(this);
+
+        // Exit Button
+        this.exitButton = UtilityMethods.generateButton("Exit", 32,
+                designAttributes.secondaryColor, null, true);
+        this.exitButton.addActionListener(this);
+
+        // Putting all the buttons into a Button Group
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(this.continueButton);
+        buttonGroup.add(this.newGameButton);
+        buttonGroup.add(this.loadGameButton);
+        buttonGroup.add(this.optionsButton);
+        buttonGroup.add(this.creditsButton);
+        buttonGroup.add(this.exitButton);
+        
+        // Combining all the components into a single JPanel
         this.menuListPanel = new JPanel();
         this.menuListPanel.add(this.gameName);
-        this.menuListPanel.add(this.menuScrollPane);
+        this.menuListPanel.add(this.continueButton);
+        this.menuListPanel.add(this.newGameButton);
+        this.menuListPanel.add(this.loadGameButton);
+        this.menuListPanel.add(this.optionsButton);
+        this.menuListPanel.add(this.creditsButton);
+        this.menuListPanel.add(this.exitButton);
+        this.menuListPanel.setBackground(Color.BLACK);
         this.menuListPanel.setLayout(new BoxLayout(this.menuListPanel, BoxLayout.Y_AXIS));
         this.menuListPanel.setBorder(designAttributes.marginBorder);
 
-        add(this.menuListPanel, BorderLayout.WEST);
+        add(this.menuListPanel);
     }
 
     /**
@@ -119,49 +141,39 @@ public class StartMenu extends JPanel implements ActionListener, ListSelectionLi
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
-        // Initializes a New Game
-    }
-
-    /**
-     * Listens to any activities that happens in the list, and act on it.
-     *
-     * @param e event in the list that changed or called.
-     */
-    @Override
-    public void valueChanged(ListSelectionEvent e)
-    {
+        Object source = e.getSource();
         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-        if (this.menuList.getSelectedValue() == "Continue")
+        if (source == this.continueButton)
         {
             cl.show(PanelManager.menuCardPanel, "CONTINUEGAME");
         }
-        else if (this.menuList.getSelectedValue() == "New Game")
+        // Continues the most recent Game
+        else if (source == this.newGameButton)
         {
             cl.show(PanelManager.menuCardPanel, "STARTNEWGAME");
         }
-        else if (this.menuList.getSelectedValue() == "Load Game")
+        // Creates a New Game
+        else if (source == this.loadGameButton)
         {
             PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "LOADSCREEN");
         }
         // Goes to the Options Panel
-        else if (this.menuList.getSelectedValue() == "Options")
+        else if (source == this.optionsButton)
         {
             PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "OPTIONSCREEN");
         }
         // Goes to the Credits Panel
-        else if (this.menuList.getSelectedValue() == "Credits")
+        else if (source == this.creditsButton)
         {
             PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "CREDITSCREEN");
         }
         // Exits the GUI
-        else if (this.menuList.getSelectedValue() == "Exit")
+        else if (source == this.exitButton)
         {
             UtilityMethods.exitConfirmation();
         }
-        this.menuList.clearSelection();
     }
 }

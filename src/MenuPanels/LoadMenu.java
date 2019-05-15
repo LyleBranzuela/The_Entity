@@ -59,19 +59,19 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         this.designAttributes = new DesignAttributes();
         
         // Loads the Selected Save
-        this.loadSaveButton = UtilityMethods.generateButton("Load Save", 30, 
+        this.loadSaveButton = UtilityMethods.generateButton("Load Save", 32, 
                 this.designAttributes.primaryColor, null, true);
         this.loadSaveButton.setEnabled(false);
         this.loadSaveButton.addActionListener(this);
         
         // Deletes the Selected Save
-        this.deleteSaveButton = UtilityMethods.generateButton("Delete Save", 30, 
+        this.deleteSaveButton = UtilityMethods.generateButton("Delete Save", 32, 
                 this.designAttributes.primaryColor, null, true);
         this.deleteSaveButton.addActionListener(this);
         this.deleteSaveButton.setEnabled(false);
         
         // Goes back to the main menu
-        this.backButton = UtilityMethods.generateButton("Back", 30, 
+        this.backButton = UtilityMethods.generateButton("Back", 32, 
                 this.designAttributes.primaryColor, null, true);
         this.backButton.addActionListener(this);
         this.backButton.setRolloverEnabled(true);
@@ -83,6 +83,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         
         // Adding the Buttons into a panel so that they dont become vertical
         this.buttonPanel = new JPanel();
+        this.buttonPanel.setBackground(Color.BLACK);
         this.buttonPanel.add(this.loadSaveButton);
         this.buttonPanel.add(this.deleteSaveButton);
         this.buttonPanel.add(this.backButton);
@@ -113,18 +114,17 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         
         // Making The Title Border
         Border titledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
-                                                            "Load Screen", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 58));
+                                                            "Load Screen", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 58), this.designAttributes.primaryColor);
         
         // Add them all together
         this.loadMenuListPanel = new JPanel();
         this.loadMenuListPanel.setBorder(new CompoundBorder(titledBorder, this.designAttributes.marginBorder));
         this.loadMenuListPanel.setBackground(Color.BLACK);
         this.loadMenuListPanel.add(tableScrollPane);
-        // this.loadMenuListPanel.add(this.buttonPanel);
         this.loadMenuListPanel.setLayout(new BoxLayout(this.loadMenuListPanel, BoxLayout.Y_AXIS));
-
-        add(this.buttonPanel, BorderLayout.SOUTH);
+        
         add(this.loadMenuListPanel, BorderLayout.CENTER);
+        add(this.buttonPanel, BorderLayout.SOUTH);
     }
 
     /**

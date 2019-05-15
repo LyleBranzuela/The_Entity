@@ -31,7 +31,7 @@ public abstract class Stage extends JPanel implements Serializable
     public Stage(Player player) {
         this.entityList = new ArrayList<>();
         this.entityList.add(player);
-        this.stageJPanel = new StageDrawingPanel(this.entityList);
+        // this.stageJPanel = new StageDrawingPanel(this.entityList);
     }
     
     /**
