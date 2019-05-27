@@ -59,6 +59,7 @@ public class StageDrawingPanel extends JPanel
         this.tileSetPanel.setBackground(Color.BLACK);
         this.tileSetPanel.setFocusable(true);
 
+        // Setup input map
         this.getInputMap(WIFW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("UP"), MOVE_FORWARD);
         this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("W"), MOVE_FORWARD);
