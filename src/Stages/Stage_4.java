@@ -41,7 +41,6 @@ public class Stage_4 extends Stage
         updateLocationAttributes();
         super.entityList.add(this.monster);
         super.stageJPanel.updateEntityList(super.entityList);
-        repaint();
     }
 
     /**

@@ -20,13 +20,9 @@ public class EntityMovement
     public static final int BACKWARD = 2;
     public static final int LEFT = 3;
     public static final int RIGHT = 4;
-    public static final int TOP_LEFT = 5;
-    public static final int TOP_RIGHT = 6;
-    public static final int BOTTOM_LEFT = 7;
-    public static final int BOTTOM_RIGHT = 8;
     
     // Actual parameter of the entity's location
-    private final int PIXELMOVEMENT = 5;
+    private final int PIXELMOVEMENT = 5; // How Fast They Move
     private int x, y;
     private Point point;    
 
@@ -109,26 +105,6 @@ public class EntityMovement
                 
             case RIGHT:
                 this.x+=PIXELMOVEMENT;
-                break;
-                
-            case TOP_LEFT:
-                this.x-=PIXELMOVEMENT;
-                this.y-=PIXELMOVEMENT;
-                break;
-                
-            case TOP_RIGHT:
-                this.x+=PIXELMOVEMENT;
-                this.y-=PIXELMOVEMENT;
-                break;
-                
-            case BOTTOM_LEFT:
-                this.x-=PIXELMOVEMENT;
-                this.y+=PIXELMOVEMENT;
-                break;
-                
-            case BOTTOM_RIGHT:
-                this.x+=PIXELMOVEMENT;
-                this.y+=PIXELMOVEMENT;
                 break;
                 
             default:

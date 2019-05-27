@@ -36,19 +36,22 @@ public class DatabaseManager
     private static final String URL = "jdbc:derby://localhost:1527/PlayerDatabase;create=true";
     private static final String USERNAME = "entity";
     private static final String PASSWORD = "entity";
-
+    
     /**
      * Connects to the player database if it still hasn't yet.
      */
-    public static void connectToPlayerDatabase()
+    synchronized public static void connectToPlayerDatabase()
     {
-        try
+        if (conn == null)
         {
-            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            try
+            {
+                conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            }
+            catch (SQLException ex)
+            {
+                Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -79,7 +82,8 @@ public class DatabaseManager
     /**
      * Clears the database of the players.
      */
-    public static void clearPlayerDatabase() {
+    public static void clearPlayerDatabase()
+    {
         try
         {
             Statement statement = conn.createStatement();
@@ -90,9 +94,10 @@ public class DatabaseManager
             System.err.println("SQLException: " + ex.getMessage());
         }
     }
+
     /**
      * Returns a result set about all the players in the database.
-     * 
+     *
      * @return a result set of the database.
      */
     public static ResultSet getAllPlayers()
@@ -113,7 +118,7 @@ public class DatabaseManager
 
     /**
      * Converts a database string version to a player object version.
-     * 
+     *
      * @param playerName the name of the player object.
      * @param stageLevel current stage level of the player object.
      * @param hasBlindfold does the player have a blindfold.
@@ -141,7 +146,7 @@ public class DatabaseManager
             default:
                 break;
         }
-        
+
         // Set Stage from database to the Player
         switch (stageLevel)
         {
@@ -166,8 +171,9 @@ public class DatabaseManager
     }
 
     /**
-     * Converts the player object into a string, that can be used in the database.
-     * 
+     * Converts the player object into a string, that can be used in the
+     * database.
+     *
      * @param player to be converted to a string.
      * @return string version of the player object.
      */
@@ -185,7 +191,7 @@ public class DatabaseManager
 
     /**
      * Loads player from the database based on their name.
-     * 
+     *
      * @param playerName the name of the player to be retrieved.
      * @return the player object from the database.
      */
@@ -198,13 +204,14 @@ public class DatabaseManager
             String loadPlayerSQL = "SELECT * FROM PLAYERSAVES WHERE PLAYERNAME = ?";
             PreparedStatement pstmt = conn.prepareStatement(loadPlayerSQL);
             pstmt.setString(1, playerName);
-            rs = pstmt.executeQuery();            
-            while (rs.next()) {
+            rs = pstmt.executeQuery();
+            while (rs.next())
+            {
                 String loadedName = rs.getString("PLAYERNAME");
                 int stageLevel = rs.getInt("CURRENTSTAGE");
                 boolean hasBlindFold = rs.getBoolean("HASBLINDFOLD");
                 int itemID = rs.getInt("ITEM_ID");
-                
+
                 loadedPlayer = databaseToPlayer(loadedName, stageLevel, hasBlindFold, itemID);
             }
         }
@@ -218,7 +225,7 @@ public class DatabaseManager
 
     /**
      * Saves the player to the PlayerDatabase.
-     * 
+     *
      * @param player which player to save.
      * @param newPlayer whether it's a new player or not.
      */
@@ -230,7 +237,7 @@ public class DatabaseManager
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             String getPlayerDetails;
             PreparedStatement pstmt;
-            
+
             // If it's a new player
             if (newPlayer)
             {
@@ -262,7 +269,7 @@ public class DatabaseManager
 
     /**
      * Deletes a specified player from the database.
-     * 
+     *
      * @param playerName name of the player to be deleted.
      */
     public static void deletePlayerFromDatabase(String playerName)

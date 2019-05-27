@@ -99,7 +99,8 @@ public class Player extends Entity
         int y = super.entityMovement.getYMovement();
         g.fillOval(x, y+10, 80, 30);
         
-        g.setColor(new Color(255,219,172));
+        //g.setColor(new Color(255,219,172));
+        g.setColor(Color.WHITE);
         g.fillOval(x+18, y, 45, 45);
     }
 }

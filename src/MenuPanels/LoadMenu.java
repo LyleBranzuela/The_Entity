@@ -49,7 +49,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
 {
     private JTable playerJTable;
     private JPanel loadMenuListPanel, buttonPanel;
-    private JButton loadSaveButton, deleteSaveButton, backButton;
+    private JButton loadSaveButton, deleteSaveButton, refreshSavesButton, backButton;
     private DesignAttributes designAttributes;
     private DefaultTableModel tableModel;
     private Object[][] data;
@@ -60,25 +60,31 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         
         // Loads the Selected Save
         this.loadSaveButton = UtilityMethods.generateButton("Load Save", 32, 
-                this.designAttributes.primaryColor, null, true);
+                this.designAttributes.secondaryColor, null, true);
         this.loadSaveButton.setEnabled(false);
         this.loadSaveButton.addActionListener(this);
         
         // Deletes the Selected Save
         this.deleteSaveButton = UtilityMethods.generateButton("Delete Save", 32, 
-                this.designAttributes.primaryColor, null, true);
+                this.designAttributes.secondaryColor, null, true);
         this.deleteSaveButton.addActionListener(this);
         this.deleteSaveButton.setEnabled(false);
         
+        // Refreshes the Save List
+        this.refreshSavesButton = UtilityMethods.generateButton("Refresh", 32, 
+                this.designAttributes.secondaryColor, null, true);
+        this.refreshSavesButton.addActionListener(this);
+        
         // Goes back to the main menu
         this.backButton = UtilityMethods.generateButton("Back", 32, 
-                this.designAttributes.primaryColor, null, true);
+                this.designAttributes.secondaryColor, null, true);
         this.backButton.addActionListener(this);
         this.backButton.setRolloverEnabled(true);
         
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(this.loadSaveButton);
         buttonGroup.add(this.deleteSaveButton);
+        buttonGroup.add(this.refreshSavesButton);
         buttonGroup.add(this.backButton);
         
         // Adding the Buttons into a panel so that they dont become vertical
@@ -86,7 +92,9 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         this.buttonPanel.setBackground(Color.BLACK);
         this.buttonPanel.add(this.loadSaveButton);
         this.buttonPanel.add(this.deleteSaveButton);
+        this.buttonPanel.add(this.refreshSavesButton);
         this.buttonPanel.add(this.backButton);
+        this.buttonPanel.setBorder(this.designAttributes.createMarginBorder(8, 0, 8, 16));
         
         // Creating the Save List Table
         String[] columnNames = {"Player Name", "Stage Level", "Date"};
@@ -106,6 +114,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         this.playerJTable = new JTable(this.tableModel);
         this.playerJTable.getSelectionModel().addListSelectionListener(this);
         this.playerJTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         // Set the columns of the table to be unmovable or unorderable
         this.playerJTable.getTableHeader().setReorderingAllowed(false); 
         JScrollPane tableScrollPane = new JScrollPane();
@@ -161,12 +170,11 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         }
         
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.tableModel);
-        this.playerJTable.setRowSorter(sorter);
-
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(2, SortOrder.DESCENDING));
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
         sorter.setSortKeys(sortKeys);
+        this.playerJTable.setRowSorter(sorter);
     }
     
     /**
@@ -179,17 +187,26 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
     {
         Object source = e.getSource();
         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+        int selectedRow = this.playerJTable.getSelectedRow();
+        // Loads the Selected Save
         if (source == this.loadSaveButton)
         {
-            String playerName = (String) this.tableModel.getValueAt(this.playerJTable.getSelectedRow(), 0);
+            String playerName = (String) this.tableModel.getValueAt(this.playerJTable.convertRowIndexToModel(selectedRow), 0);
             PanelManager.setCurrentPlayer(DatabaseManager.loadPlayerFromDatabase(playerName));
-            System.out.println(DatabaseManager.playerToDatabase(PanelManager.getCurrentPlayer()));
+            cl.show(PanelManager.menuCardPanel, "GAMEPANEL");
         }
+        // Deletes the Selected Save
         else if (source == this.deleteSaveButton)
         {
-            String playerName = (String) this.tableModel.getValueAt(this.playerJTable.getSelectedRow(), 0);
+            String playerName = (String) this.tableModel.getValueAt(this.playerJTable.convertRowIndexToModel(selectedRow), 0);
             DatabaseManager.deletePlayerFromDatabase(playerName);
         }
+        // Updates the Player List
+        else if (source == this.refreshSavesButton)
+        {
+            updatePlayerSaves();
+        }
+        // Goes back to the Main Menu / Mid Game Menu
         else if (source == this.backButton)
         {
             if (PanelManager.backToMainMenu)

@@ -39,7 +39,6 @@ public class Stage_2 extends Stage
         super.entityList.add(this.enemyPatrol2);
         super.entityList.add(this.enemyPatrol3);
         super.stageJPanel.updateEntityList(super.entityList);
-        repaint();
     }
     
     /**

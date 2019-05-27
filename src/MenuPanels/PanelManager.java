@@ -6,6 +6,8 @@
 package MenuPanels;
 
 import GameEntities.Player;
+import Stages.Stage;
+import Stages.StageDrawingPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -20,7 +22,7 @@ public class PanelManager extends JPanel
     public static JPanel menuCardPanel;
     public static boolean backToMainMenu;
     public static Player player;
-    private JPanel mainMenuPanel, midGameMenuPanel, creditsPanel, optionsPanel, gamePanel, loadMenuPanel;
+    public static JPanel mainMenuPanel, midGameMenuPanel, creditsPanel, optionsPanel,loadMenuPanel, gamePanel;
     
     /**
      * 
@@ -30,20 +32,22 @@ public class PanelManager extends JPanel
         super(new BorderLayout());
         
         // Making the Card Menu Panel
-        this.mainMenuPanel = new StartMenu();
-        this.midGameMenuPanel = new MidGameMenu();
-        this.loadMenuPanel = new LoadMenu();
-        this.optionsPanel = new Options();
-        this.creditsPanel = new Credits();
+        mainMenuPanel = new StartMenu();
+        midGameMenuPanel = new MidGameMenu();
+        loadMenuPanel = new LoadMenu();
+        optionsPanel = new Options();
+        creditsPanel = new Credits();
+        player = new Player("Placeholder");
+        gamePanel = new StageDrawingPanel();
         
         // Adding them to the Card Layout JPanel 
         menuCardPanel = new JPanel(new CardLayout());
-        menuCardPanel.add(this.mainMenuPanel, "MAINMENU");
-        menuCardPanel.add(this.midGameMenuPanel, "MIDGAMEMENU");
-        // menuCardPanel.add(this.gamePanel, "GAMEPANEL");
-        menuCardPanel.add(this.loadMenuPanel, "LOADSCREEN");
-        menuCardPanel.add(this.optionsPanel, "OPTIONSCREEN");
-        menuCardPanel.add(this.creditsPanel, "CREDITSCREEN");
+        menuCardPanel.add(mainMenuPanel, "MAINMENU");
+        menuCardPanel.add(midGameMenuPanel, "MIDGAMEMENU");
+        menuCardPanel.add(gamePanel, "GAMEPANEL");
+        menuCardPanel.add(loadMenuPanel, "LOADSCREEN");
+        menuCardPanel.add(optionsPanel, "OPTIONSCREEN");
+        menuCardPanel.add(creditsPanel, "CREDITSCREEN");
         
         // Specifies whether the back buttons should go to the main menu or game menu.
         backToMainMenu = true;
@@ -73,8 +77,20 @@ public class PanelManager extends JPanel
     }
     
     /**
+     * Load screen panel needs to be updated constantly, 
+     * this function is just to access it easier for other JPanels.
      * 
-     * @param bool 
+     * @return the load menu panel to be updated.
+     */
+    public static LoadMenu getLoadScreenPanel()
+    {
+        return (LoadMenu) loadMenuPanel;
+    }
+    
+    /**
+     * Sets whether the back button should go to main menu or mid game menu.
+     * 
+     * @param bool true to go back to main menu, false to go to mid game menu.
      */
     public static void setBackToMainMenu(boolean bool)
     {

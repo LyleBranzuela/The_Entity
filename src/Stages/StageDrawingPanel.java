@@ -16,11 +16,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 /**
  * A separate JPanel meant to handle all the painting and drawing of the
@@ -30,30 +34,58 @@ import javax.swing.JPanel;
  */
 public class StageDrawingPanel extends JPanel
 {
-
     public ArrayList<Entity> entityList;
     public Player currentPlayer;
     private TileSetPanel tileSetPanel;
-
+    private static final int WIFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
+    private static final String MOVE_FORWARD = "Move Up";
+    private static final String MOVE_BACKWARD = "Move Down";
+    private static final String MOVE_LEFT = "Move Left";
+    private static final String MOVE_RIGHT = "Move Right";
+    
     /**
      *
      * @param entityList
      * @param player
      */
-    public StageDrawingPanel(ArrayList<Entity> entityList, Player player)
+    public StageDrawingPanel()
     {
         super(new BorderLayout());
-        this.entityList = entityList;
-        this.currentPlayer = player;
+        this.currentPlayer = PanelManager.getCurrentPlayer();
+        this.currentPlayer.entityMovement.setLocation(50, 50);
+        this.entityList = this.currentPlayer.getCurrentStage().entityList;
 
         this.tileSetPanel = new TileSetPanel();
         this.tileSetPanel.setBackground(Color.BLACK);
-        this.tileSetPanel.addKeyListener(new KeyListenerHandler());
         this.tileSetPanel.setFocusable(true);
 
-        add(this.tileSetPanel, BorderLayout.CENTER);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("UP"), MOVE_FORWARD);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("W"), MOVE_FORWARD);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("DOWN"), MOVE_BACKWARD);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("S"), MOVE_BACKWARD);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("LEFT"), MOVE_LEFT);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("A"), MOVE_LEFT);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("RIGHT"), MOVE_RIGHT);
+        this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("D"), MOVE_RIGHT);
+        
+        Action escapeAction = new AbstractAction(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                cl.show(PanelManager.menuCardPanel, "MIDGAMEMENU");
+            }
+        };
+        this.getActionMap().put("Escape", escapeAction); 
+        this.getActionMap().put(MOVE_FORWARD, new MoveAction(EntityMovement.FORWARD));
+        this.getActionMap().put(MOVE_BACKWARD, new MoveAction(EntityMovement.BACKWARD));
+        this.getActionMap().put(MOVE_LEFT, new MoveAction(EntityMovement.LEFT));
+        this.getActionMap().put(MOVE_RIGHT, new MoveAction(EntityMovement.RIGHT));
+       
+        add(this.tileSetPanel);
     }
-
+    
     /**
      * Updates the entity list of the stage drawing panel.
      *
@@ -106,19 +138,27 @@ public class StageDrawingPanel extends JPanel
     /**
      *
      */
-    private class KeyListenerHandler implements KeyListener
+    private class MoveAction extends AbstractAction 
     {
 
         public boolean inGame, isMoving;
+        public int direction;
 
         /**
          *
          */
-        public KeyListenerHandler()
+        public MoveAction(int direction)
         {
-            this.inGame = false;
+            this.inGame = true;
             this.isMoving = false;
-            System.out.println("Yeet");
+            this.direction = direction;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            currentPlayer.entityMovement.moveEntity(this.direction);
+            repaint();
         }
 
         /**
@@ -129,88 +169,6 @@ public class StageDrawingPanel extends JPanel
         {
             return true;
         }
-
-        /**
-         *
-         * @param e
-         */
-        @Override
-        public void keyTyped(KeyEvent e)
-        {
-        }
-
-        /**
-         *
-         * @param e
-         */
-        @Override
-        public void keyPressed(KeyEvent e)
-        {
-            int KeyCode = e.getKeyCode();
-            if (KeyCode == KeyEvent.VK_ESCAPE)
-            {
-                this.inGame = false;
-                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-                cl.show(PanelManager.menuCardPanel, "MIDGAMEMENU");
-            }
-            else
-            {
-                if (checkPlayerInBoundary() && this.inGame)
-                {
-                    // TOP LEFT Movement
-                    if (KeyCode == KeyEvent.VK_W && KeyCode == KeyEvent.VK_A)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.TOP_LEFT);
-                    }
-                    // TOP RIGHT Movement
-                    else if (KeyCode == KeyEvent.VK_W && KeyCode == KeyEvent.VK_D)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.TOP_RIGHT);
-                    }
-                    // BOTTOM LEFT Movement
-                    else if (KeyCode == KeyEvent.VK_W && KeyCode == KeyEvent.VK_A)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.BOTTOM_LEFT);
-                    }
-                    // BOTTOM RIGHT Movement
-                    else if (KeyCode == KeyEvent.VK_S && KeyCode == KeyEvent.VK_D)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.BOTTOM_RIGHT);
-                    }
-                    // FORWARD Movement
-                    else if (KeyCode == KeyEvent.VK_W)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.FORWARD);
-                    }
-                    // LEFT Movement
-                    else if (KeyCode == KeyEvent.VK_A)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.LEFT);
-                    }
-                    // BACKWARD Movement
-                    else if (KeyCode == KeyEvent.VK_S)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.BACKWARD);
-                    }
-                    // RIGHT Movement
-                    else if (KeyCode == KeyEvent.VK_D)
-                    {
-                        currentPlayer.entityMovement.moveEntity(EntityMovement.RIGHT);
-                    }
-                    this.isMoving = true;
-                    repaint();
-                }
-                else
-                {
-                    this.isMoving = false;
-                }
-            }
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e)
-        {
-        }
     }
 
     public static void main(String[] args)
@@ -220,7 +178,7 @@ public class StageDrawingPanel extends JPanel
         entityList.add(player);
 
         // Instantiate Panel Manager
-        StageDrawingPanel myPanel = new StageDrawingPanel(entityList, player);
+        StageDrawingPanel myPanel = new StageDrawingPanel();
         JFrame frame = new JFrame("The Entity");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(myPanel);

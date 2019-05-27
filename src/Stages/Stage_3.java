@@ -23,7 +23,6 @@ public class Stage_3 extends Stage
     public Stage_3(Player player)
     {
         super(player);
-        repaint();
     }
     /*
      * Creates content for stage 3

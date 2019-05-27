@@ -7,8 +7,6 @@ package Stages;
 
 import GameEntities.Entity;
 import GameEntities.Player;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -20,8 +18,8 @@ import javax.swing.JPanel;
  */
 public abstract class Stage extends JPanel implements Serializable
 {
-    protected StageDrawingPanel stageJPanel;
-    protected ArrayList<Entity> entityList;
+    public StageDrawingPanel stageJPanel;
+    public ArrayList<Entity> entityList;
     protected int stageLevel;
 
     /**
@@ -31,7 +29,6 @@ public abstract class Stage extends JPanel implements Serializable
     public Stage(Player player) {
         this.entityList = new ArrayList<>();
         this.entityList.add(player);
-        // this.stageJPanel = new StageDrawingPanel(this.entityList);
     }
     
     /**

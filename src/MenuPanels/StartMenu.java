@@ -7,25 +7,19 @@ package MenuPanels;
 
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
+import GameEntities.Player;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -35,7 +29,7 @@ public class StartMenu extends JPanel implements ActionListener
 {
 
     private JLabel gameName;
-    public JButton continueButton, newGameButton, loadGameButton, optionsButton, creditsButton, exitButton;
+    public JButton newGameButton, loadGameButton, optionsButton, creditsButton, exitButton;
     private JPanel menuListPanel;
     private DesignAttributes designAttributes;
 
@@ -53,11 +47,6 @@ public class StartMenu extends JPanel implements ActionListener
         this.gameName.setBorder(designAttributes.createMarginBorder(0, 8, 0, 8));
 
         // Setting up the Buttons
-        // Continue Button
-        this.continueButton = UtilityMethods.generateButton("Continue", 32,
-                designAttributes.secondaryColor, null, true);
-        this.continueButton.addActionListener(this);
-
         // New Game Button
         this.newGameButton = UtilityMethods.generateButton("New Game", 32,
                 designAttributes.secondaryColor, null, true);
@@ -85,17 +74,15 @@ public class StartMenu extends JPanel implements ActionListener
 
         // Putting all the buttons into a Button Group
         ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(this.continueButton);
         buttonGroup.add(this.newGameButton);
         buttonGroup.add(this.loadGameButton);
         buttonGroup.add(this.optionsButton);
         buttonGroup.add(this.creditsButton);
         buttonGroup.add(this.exitButton);
-        
+
         // Combining all the components into a single JPanel
         this.menuListPanel = new JPanel();
         this.menuListPanel.add(this.gameName);
-        this.menuListPanel.add(this.continueButton);
         this.menuListPanel.add(this.newGameButton);
         this.menuListPanel.add(this.loadGameButton);
         this.menuListPanel.add(this.optionsButton);
@@ -110,32 +97,6 @@ public class StartMenu extends JPanel implements ActionListener
 
     /**
      *
-     */
-    public class OpaqueCellRenderer extends DefaultListCellRenderer
-    {
-
-        @Override
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus)
-        {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            setOpaque(isSelected);
-//            System.out.println("Is Selecetd: " + isSelected);
-//            System.out.println("Cell Has Focus: " + cellHasFocus);
-//            if (isSelected)
-//            {
-//                setForeground(Color.WHITE);
-//            }
-//            else
-//            {
-//                setForeground(designAttributes.secondaryColor);
-//            }
-            return this;
-        }
-
-    }
-
-    /**
-     *
      * @param e
      */
     @Override
@@ -143,18 +104,31 @@ public class StartMenu extends JPanel implements ActionListener
     {
         Object source = e.getSource();
         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-        if (source == this.continueButton)
-        {
-            cl.show(PanelManager.menuCardPanel, "CONTINUEGAME");
-        }
-        // Continues the most recent Game
-        else if (source == this.newGameButton)
-        {
-            cl.show(PanelManager.menuCardPanel, "STARTNEWGAME");
-        }
         // Creates a New Game
+        if (source == this.newGameButton)
+        {
+            String name = JOptionPane.showInputDialog(null, "What is your name? [No Spaces, Special Characters, and Numbers]", 
+                    "Character Name", JOptionPane.QUESTION_MESSAGE);
+            // Check if it was cancelled
+            if (name != null || !name.isEmpty()) 
+            {
+                // Check if it's A-Z or a-z
+                if (name.matches("[A-Za-z]*"))
+                {
+                    Player newPlayer = new Player(name);
+                    PanelManager.setCurrentPlayer(newPlayer);
+                    cl.show(PanelManager.menuCardPanel, "GAMEPANEL");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Found illegal characters! Please try again.", "Error in Name Found", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        // Goes to the Load Screen
         else if (source == this.loadGameButton)
         {
+            PanelManager.getLoadScreenPanel().updatePlayerSaves();
             PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "LOADSCREEN");
         }

@@ -26,7 +26,6 @@ public class Stage_1 extends Stage
     public Stage_1(Player player)
     {
         super(player);
-        repaint();
     }
     
     /**
