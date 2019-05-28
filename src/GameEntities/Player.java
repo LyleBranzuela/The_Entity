@@ -93,14 +93,14 @@ public class Player extends Entity
     @Override
     public void draw(Graphics g)
     {
-        g.setColor(Color.BLACK);
+        g.setColor(Color.BLUE);
         // Center of the Circle    
         int x = super.entityMovement.getXMovement();
         int y = super.entityMovement.getYMovement();
-        g.fillOval(x, y+10, 80, 30);
+        g.fillOval(x, y+10, 75, 30);
         
         //g.setColor(new Color(255,219,172));
         g.setColor(Color.WHITE);
-        g.fillOval(x+18, y, 45, 45);
+        g.fillOval(x+15, y, 45, 45);
     }
 }

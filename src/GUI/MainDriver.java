@@ -35,9 +35,10 @@ public class MainDriver
         // Instantiate Panel Manager
         PanelManager myPanel = new PanelManager();
         JFrame frame = new JFrame("The Entity");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         frame.getContentPane().add(myPanel);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setSize(1024, 768);
+        frame.setResizable(false);
         frame.pack();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));

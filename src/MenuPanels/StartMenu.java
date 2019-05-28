@@ -110,13 +110,14 @@ public class StartMenu extends JPanel implements ActionListener
             String name = JOptionPane.showInputDialog(null, "What is your name? [No Spaces, Special Characters, and Numbers]", 
                     "Character Name", JOptionPane.QUESTION_MESSAGE);
             // Check if it was cancelled
-            if (name != null || !name.isEmpty()) 
+            if (name != null) 
             {
                 // Check if it's A-Z or a-z
                 if (name.matches("[A-Za-z]*"))
                 {
                     Player newPlayer = new Player(name);
                     PanelManager.setCurrentPlayer(newPlayer);
+                    PanelManager.getStageDrawingPanel().updateStagePlayer();
                     cl.show(PanelManager.menuCardPanel, "GAMEPANEL");
                 }
                 else

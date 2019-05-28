@@ -22,7 +22,8 @@ public class PanelManager extends JPanel
     public static JPanel menuCardPanel;
     public static boolean backToMainMenu;
     public static Player player;
-    public static JPanel mainMenuPanel, midGameMenuPanel, creditsPanel, optionsPanel,loadMenuPanel, gamePanel;
+    public JPanel mainMenuPanel, midGameMenuPanel, creditsPanel, optionsPanel;
+    public static JPanel loadMenuPanel, gamePanel;
     
     /**
      * 
@@ -32,12 +33,12 @@ public class PanelManager extends JPanel
         super(new BorderLayout());
         
         // Making the Card Menu Panel
-        mainMenuPanel = new StartMenu();
-        midGameMenuPanel = new MidGameMenu();
-        loadMenuPanel = new LoadMenu();
-        optionsPanel = new Options();
-        creditsPanel = new Credits();
+        this.mainMenuPanel = new StartMenu();
+        this.midGameMenuPanel = new MidGameMenu();
+        this.optionsPanel = new Options();
+        this.creditsPanel = new Credits();
         player = new Player("Placeholder");
+        loadMenuPanel = new LoadMenu();
         gamePanel = new StageDrawingPanel();
         
         // Adding them to the Card Layout JPanel 
@@ -85,6 +86,17 @@ public class PanelManager extends JPanel
     public static LoadMenu getLoadScreenPanel()
     {
         return (LoadMenu) loadMenuPanel;
+    }
+    
+    /**
+     * The Stage Drawing Panel needs to be updated constantly.
+     * this function is just to access it easier for other JPanels.
+     * 
+     * @return the stage drawing panel to be updated.
+     */
+    public static StageDrawingPanel getStageDrawingPanel()
+    {
+        return (StageDrawingPanel) gamePanel;
     }
     
     /**

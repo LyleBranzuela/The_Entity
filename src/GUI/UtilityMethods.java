@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -35,14 +34,16 @@ public class UtilityMethods
         return x;
     }
 
+    
+    
     /**
      * Generates a button based on the parameters set.
      *
-     * @param fontName
-     * @param fontSize
-     * @param fontColor
-     * @param bgColor
-     * @param opaque
+     * @param fontName 
+     * @param fontSize 
+     * @param fontColor 
+     * @param bgColor 
+     * @param opaque 
      * @return
      */
     public static JButton generateButton(String fontName, int fontSize,

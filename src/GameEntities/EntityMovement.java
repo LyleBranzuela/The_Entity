@@ -22,7 +22,7 @@ public class EntityMovement
     public static final int RIGHT = 4;
     
     // Actual parameter of the entity's location
-    private final int PIXELMOVEMENT = 5; // How Fast They Move
+    private final int PIXELMOVEMENT = 6; // How Fast They Move
     private int x, y;
     private Point point;    
 
