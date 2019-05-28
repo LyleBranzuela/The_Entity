@@ -5,6 +5,7 @@
  */
 package GUI;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -13,12 +14,25 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import sun.audio.AudioData;
+import sun.audio.AudioStream;
+import sun.audio.AudioPlayer;
+import sun.audio.ContinuousAudioDataStream;
 
 /**
  *
  * @author lyleb and khoap
  */
-public class UtilityMethods
+public class UtilityMethods extends JFrame
 {
 
     /**
@@ -95,5 +109,59 @@ public class UtilityMethods
         {
             System.exit(0);
         }
+    }
+    
+    
+    /**
+     *
+     * @param fileLocation
+     * @param duration
+     */
+    public void playSoundtrack(String fileLocation, int duration)
+    {
+        int trackDuration = duration * 1000;
+        
+        try
+        {
+            AudioData data = new AudioStream(new FileInputStream(fileLocation)).getData();
+            ContinuousAudioDataStream soundtrack = new ContinuousAudioDataStream(data);
+            AudioPlayer.player.start(soundtrack);
+            
+            Thread.sleep(trackDuration);
+            
+            AudioPlayer.player.stop(soundtrack);
+        }
+        
+        catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "Error");
+        } 
+        
+        catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }
+    
+    
+    /**
+     *
+     * @param fileLocation
+     */
+    public void setBackground(String fileLocation)
+    {
+        ImageIcon background = new ImageIcon(fileLocation);
+        JDesktopPane dp = new JDesktopPane();
+        JLabel bgLabel = new JLabel(background);
+        JPanel transparentPanel = new JPanel();
+   
+        bgLabel.setBounds(0,0,1024,768); 
+    
+        transparentPanel.setOpaque(false);
+        transparentPanel.setBounds(0,0,100,100);
+   
+        dp.add(bgLabel,new Integer(50));
+        dp.add(transparentPanel,new Integer(350));
+     
+        setLayeredPane(dp);
     }
 }
