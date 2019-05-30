@@ -13,11 +13,13 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
@@ -28,6 +30,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 /**
  * A separate JPanel meant to handle all the painting and drawing of the
@@ -35,9 +38,8 @@ import javax.swing.KeyStroke;
  *
  * @author lyleb and khoap
  */
-public class StageDrawingPanel extends JPanel
+public class StageDrawingPanel extends JPanel 
 {
-
     public ArrayList<Entity> entityList;
     public Player currentPlayer;
     public JPanel tileGrid;
@@ -49,7 +51,7 @@ public class StageDrawingPanel extends JPanel
     private static final String MOVE_LEFT = "Move Left";
     private static final String MOVE_RIGHT = "Move Right";
     private final int GRID_AMOUNT = 10;
-
+   
     /**
      *
      */
@@ -141,12 +143,21 @@ public class StageDrawingPanel extends JPanel
      * A separate JPanel meant to handle all the painting and drawing of the
      * component.
      */
-    private class DrawingPanel extends JPanel
+    private class DrawingPanel extends JPanel implements ActionListener
     {
+        Timer timer = new Timer(4000, this);
+        int i = 0;
+        public String Stage1_story[] =  { "An evil entity appeared 10 years ago, anyone seeing this Entity becomes either...",
+                        "...a mindless slave or an insane person who would commit suicide immediately.",
+                        "You were rescued by a group of blind survivors when you ten years old.",
+                        "Taught by the group to see with sounds, you managed to survive the apocalypse...",
+                        "Until one day you were captured by a group of slaves...",
+                        "Waking up in a prison cell, you must now look for a way to escape..."};
 
         public DrawingPanel()
         {
             super();
+             
         }
 
         /**
@@ -158,25 +169,39 @@ public class StageDrawingPanel extends JPanel
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
-            if (!entityList.isEmpty())
+            if(currentPlayer.getCurrentStage() instanceof Stage_1)
             {
-                for (Entity e : entityList)
+                if(this.i < 5)
                 {
-                    e.draw(g);
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                    g.drawString(Stage1_story[this.i], 30, 280);
                 }
-
-                for (int row = 0; row < GRID_AMOUNT; row++)
+                else
                 {
-                    for (int col = 0; col < GRID_AMOUNT; col++)
-                    {
-                        int x = tileSet[row][col].getX();
-                        int y = tileSet[row][col].getY();
-                        int width = tileSet[row][col].getWidth();
-                        int height = tileSet[row][col].getHeight();
-                        g.setColor(new Color(255, 255, 255, 127)); // 50% transparent
-//                        g.fillRect(x, y, width, height);
-                        g.drawRect(x, y, width, height);
-                    }
+                    g.setColor(Color.BLACK);
+                    g.clearRect(0, 0, 1000, 600);
+                    ImageIcon image = new ImageIcon("c:\\Users\\Khoa Pham\\Desktop\\Entity\\background\\Stage1_Prison.png");
+                    
+                    image.paintIcon(this, g, 0, 0);
+                }
+            }
+            timer.start();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            if(currentPlayer.getCurrentStage() instanceof Stage_1)
+            { 
+                if(this.i < 5)
+                {
+                    this.i++;
+                    repaint();
+                }
+                else
+                {
+                    //Do nothing
                 }
             }
         }
@@ -242,23 +267,5 @@ public class StageDrawingPanel extends JPanel
 
             return check;
         }
-    }
-
-    public static void main(String[] args)
-    {
-        ArrayList<Entity> entityList = new ArrayList<>();
-        Player player = new Player("Ja Yeet");
-        entityList.add(player);
-
-        // Instantiate Panel Manager
-        StageDrawingPanel myPanel = new StageDrawingPanel();
-        JFrame frame = new JFrame("The Entity");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(myPanel);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.pack();
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));
-        frame.setVisible(true);
     }
 }

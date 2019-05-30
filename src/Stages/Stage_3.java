@@ -7,6 +7,7 @@ package Stages;
 
 import GameEntities.Player;
 import Items.*;
+import java.awt.Graphics;
 import java.util.Scanner;
 
 /**
@@ -28,7 +29,7 @@ public class Stage_3 extends Stage
      * Creates content for stage 3
      */
     @Override
-    public void initiateStage(Player player)
+    public void initiateStage(Player player, Graphics g)
     {
         // Initating the Variables
         super.stageLevel = 3;
@@ -111,11 +112,16 @@ public class Stage_3 extends Stage
             System.out.println("=============================================================================================");
 
             player.setCurrentStageLevel(new Stage_4(player));
-            player.getCurrentStage().initiateStage(player);
+            player.getCurrentStage().initiateStage(player, g);
         }
         catch (InterruptedException ex)
         {
             Thread.currentThread().interrupt(); // restore interrupted status
         }
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

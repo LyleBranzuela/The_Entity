@@ -139,26 +139,4 @@ public class UtilityMethods extends JFrame
         }
     }
     
-    
-    /**
-     *
-     * @param fileLocation
-     */
-    public void setBackground(String fileLocation)
-    {
-        ImageIcon background = new ImageIcon(fileLocation);
-        JDesktopPane dp = new JDesktopPane();
-        JLabel bgLabel = new JLabel(background);
-        JPanel transparentPanel = new JPanel();
-   
-        bgLabel.setBounds(0,0,1024,768); 
-    
-        transparentPanel.setOpaque(false);
-        transparentPanel.setBounds(0,0,100,100);
-   
-        dp.add(bgLabel,new Integer(50));
-        dp.add(transparentPanel,new Integer(350));
-     
-        setLayeredPane(dp);
-    }
 }

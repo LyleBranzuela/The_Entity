@@ -6,7 +6,6 @@
 package MenuPanels;
 
 import GameEntities.Player;
-import Stages.Stage;
 import Stages.StageDrawingPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -108,4 +107,6 @@ public class PanelManager extends JPanel
     {
         backToMainMenu = bool;
     }
+    
+
 }

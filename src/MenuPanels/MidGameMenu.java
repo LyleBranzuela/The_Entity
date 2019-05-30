@@ -8,7 +8,6 @@ package MenuPanels;
 import GUI.DatabaseManager;
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
-import Stages.StageDrawingPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;

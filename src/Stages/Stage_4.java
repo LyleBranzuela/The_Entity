@@ -10,6 +10,7 @@ import Items.Blindfold;
 import Items.Item;
 import GUI.UtilityMethods;
 import Items.Weapon;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -262,7 +263,7 @@ public class Stage_4 extends Stage
      * @param player current player playing.
      */
     @Override
-    public void initiateStage(Player player)
+    public void initiateStage(Player player, Graphics g)
     {
         try
         {
@@ -473,4 +474,9 @@ public class Stage_4 extends Stage
             Thread.currentThread().interrupt(); // restore interrupted status
         }      
    }
+
+    @Override
+    public void draw(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
