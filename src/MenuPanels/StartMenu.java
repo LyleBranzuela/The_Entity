@@ -8,6 +8,7 @@ package MenuPanels;
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
 import GameEntities.Player;
+import Stages.Stage_1;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -115,10 +116,11 @@ public class StartMenu extends JPanel implements ActionListener
                 // Check if it's A-Z or a-z
                 if (name.matches("[A-Za-z]*"))
                 {
+                    // Default Values
                     Player newPlayer = new Player(name);
+                    newPlayer.setCurrentStageLevel(new Stage_1());
                     PanelManager.setCurrentPlayer(newPlayer);
-                    PanelManager.getStageDrawingPanel().updateStagePlayer();
-                    cl.show(PanelManager.menuCardPanel, "GAMEPANEL");
+                    PanelManager.initiateStage();
                 }
                 else
                 {

@@ -15,11 +15,13 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,6 +43,7 @@ public class Credits extends JPanel implements ActionListener
     private DefaultListModel model;
     private JList creditList;
     private JScrollPane creditScrollPane;
+    private JLabel creditsLabel;
 
     /**
      *
@@ -50,16 +53,41 @@ public class Credits extends JPanel implements ActionListener
         super(new BorderLayout());
         this.designAttributes = new DesignAttributes();
 
+         // Text of Options on the Top
+        this.creditsLabel = new JLabel("Credits");
+        this.creditsLabel.setFont(new Font("Tahoma", Font.BOLD, 64));
+        this.creditsLabel.setForeground(this.designAttributes.primaryColor);
+        this.creditsLabel.setBorder(designAttributes.createMarginBorder(8, 16, 0, 16));
+        
         // Goes back to the main menu
         this.backButton = UtilityMethods.generateButton("Back", 32,
                 designAttributes.secondaryColor, null, true);
         this.backButton.addActionListener(this);
+        this.backButton.setBorder(designAttributes.createMarginBorder(16, 0, 16, 0));
 
         // Setting up the Credits List
         String[] labels =
         {
-            "\"Desplastico\" by Lyle Branzuela", "New Game", "Load Game", "Options", "Credits", "Exit"
+            "[PROGRAMMERS]",
+            "> Lyle Anthony M. Branzuela - 17982811",
+            "> Khoa Anh Pham - 17998774",
+            " ",
+            "[SOUNDS USED]",
+            "> Monster_Howl_1 : Alex Bird - CC BY 3.0",
+            "> Lockpick_Failed : Ross Bell - CC0 (No copyright)",
+            "> Lockpick_Success : tmlappelt - CC BY Sampling+ (Attribution, non-commerial)",
+            "> Radio_Chatter: Speedenza - CC BY-NC (Attribution, non-commercial)",
+            "> Rain_Ambient: Felix Blume - CC0 (No copyright)",
+            "> Ambient_Music: FoolBoyMedia - CC BY-NC 3.0 (Attribution, non-commercial)",
+            "> Spooky_Music: thebosedeity - CC BY-NC 3.0 (Attribution, non-commercial)",
+            "> Human_Footsteps: dkiller2204/Daniel Foth - CC0 (No Copyright)",
+            " ",
+            "[IMAGES USED]",
+            "> Stage 1: Prison Cell - AstroDev (CC0 Public Domain)",
+            "> Stage 2: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use)",
+            "> Stage 4: Ruins Background - ArtCoreStudios - (CC0 Public Domain)"
         };
+        // Adding the credits to the JList
         this.model = new DefaultListModel();
         for (Object p : labels)
         {
@@ -72,7 +100,7 @@ public class Credits extends JPanel implements ActionListener
         this.creditList.setForeground(this.designAttributes.secondaryColor);
         this.creditList.setOpaque(false);
         this.creditList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.creditList.setFont(new Font("Tahoma", Font.BOLD, 32));
+        this.creditList.setFont(new Font("Tahoma", Font.BOLD, 16));
         this.creditList.setCellRenderer(new OpaqueCellRenderer());
         
         // Makes the JList unselectable
@@ -84,26 +112,22 @@ public class Credits extends JPanel implements ActionListener
                 super.setSelectionInterval(-1, -1);
             }
         });
-
+        
         this.creditScrollPane = new JScrollPane(this.creditList);
         this.creditScrollPane.setOpaque(false);
-        this.creditScrollPane.setBorder(this.designAttributes.emptyBorder);
         this.creditScrollPane.getViewport().setOpaque(false);
 
-        // Making The Title Border
-        Border titledBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
-                "Credits", TitledBorder.CENTER, TitledBorder.TOP, new Font("Tahoma", Font.BOLD, 58), this.designAttributes.primaryColor);
-
-        
+        // Putting them all together
         this.creditsPanel = new JPanel();
-        this.creditsPanel.add(this.creditList);
-        this.creditsPanel.add(this.backButton);
-        this.creditsPanel.setBorder(new CompoundBorder(titledBorder,
-                this.designAttributes.createMarginBorder(16, 0, 8, 8)));
-        this.creditsPanel.setBackground(Color.BLACK);
         this.creditsPanel.setLayout(new BoxLayout(this.creditsPanel, BoxLayout.Y_AXIS));
+        this.creditsPanel.setBorder(this.designAttributes.createMarginBorder(16, 16, 0, 8));
+        this.creditsPanel.add(this.creditList);
+        this.creditsPanel.setBackground(Color.BLACK);
 
-        add(this.creditsPanel);
+        setBackground(Color.BLACK);
+        add(this.creditsLabel, BorderLayout.NORTH);
+        add(this.creditsPanel, BorderLayout.WEST);
+        add(this.backButton, BorderLayout.SOUTH);
     }
 
     public class OpaqueCellRenderer extends DefaultListCellRenderer

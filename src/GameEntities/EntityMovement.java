@@ -22,7 +22,7 @@ public class EntityMovement
     public static final int RIGHT = 4;
     
     // Actual parameter of the entity's location
-    private final int PIXELMOVEMENT = 6; // How Fast They Move
+    private int movementSpeed; // How Fast They Move
     private int x, y;
     private Point point;    
 
@@ -35,9 +35,30 @@ public class EntityMovement
     public EntityMovement(int x, int y)
     {
         this.point = new Point();
-        setLocation(x, y);
+        this.movementSpeed = 6;
+    }
+        
+     /**
+     * Sets the movement speed of the entity.
+     * 
+     * @param movementSpeed the movement speed desired by the caller.
+     */
+    public void  setMovementSpeed(int movementSpeed)
+    {
+        this.movementSpeed = movementSpeed;
     }
 
+     /**
+     * Returns the Entity's movement speed.
+     *
+     * @return Entity's movement speed.
+     */
+    public int getMovementSpeed()
+    {
+        return this.movementSpeed;
+    }
+    
+    
     /**
      * Returns the Entity's current X.
      * 
@@ -92,19 +113,19 @@ public class EntityMovement
         switch (direction)
         {
             case FORWARD:
-                this.y-=PIXELMOVEMENT;
+                this.y-=this.movementSpeed;
                 break;
                 
             case BACKWARD:
-                this.y+=PIXELMOVEMENT;
+                this.y+=this.movementSpeed;
                 break;
                 
             case LEFT:
-                this.x-=PIXELMOVEMENT;
+                this.x-=this.movementSpeed;
                 break;
                 
             case RIGHT:
-                this.x+=PIXELMOVEMENT;
+                this.x+=this.movementSpeed;
                 break;
                 
             default:

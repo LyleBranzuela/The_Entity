@@ -7,7 +7,6 @@ package GameEntities;
 
 import Items.*;
 import Stages.*;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -31,7 +30,7 @@ public class Player extends Entity
     {
         // Default attributes when a player is initalized
         super(name, 1);
-        this.playerStage = new Stage_1(this);
+        this.playerStage = new Stage_1();
         this.weaponHolding = null;
         this.hasBlindfold = false;
     }
@@ -93,7 +92,7 @@ public class Player extends Entity
     @Override
     public void draw(Graphics g)
     {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.BLACK);
         // Center of the Circle    
         int x = super.entityMovement.getXMovement();
         int y = super.entityMovement.getYMovement();

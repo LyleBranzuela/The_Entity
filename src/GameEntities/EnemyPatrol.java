@@ -14,10 +14,11 @@ import java.awt.Graphics;
  */
 public class EnemyPatrol extends Entity  
 {
-
-    public EnemyPatrol(String name, int health)
+    public int initialDirection;
+    public EnemyPatrol(String name, int health, int initialDirection)
     {
         super("Enemy Patrol", 3);
+        this.initialDirection = initialDirection;
     }
     
     /**
@@ -32,9 +33,10 @@ public class EnemyPatrol extends Entity
         // Center of the Circle    
         int x = super.entityMovement.getXMovement();
         int y = super.entityMovement.getYMovement();
-        g.fillOval(x, y+10, 60, 30);
+        g.fillOval(x, y+10, 75, 30);
         
+        //g.setColor(new Color(255,219,172));
         g.setColor(Color.BLACK);
-        g.fillOval(x+18, y, 45, 45);
+        g.fillOval(x+15, y, 45, 45);
     }
 }

@@ -5,10 +5,9 @@
  */
 package Stages;
 
-import GameEntities.Entity;
-import GameEntities.Player;
+import java.awt.BorderLayout;
+import java.awt.LayoutManager;
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -18,19 +17,12 @@ import javax.swing.JPanel;
  */
 public abstract class Stage extends JPanel implements Serializable
 {
-    public StageDrawingPanel stageJPanel;
-    public ArrayList<Entity> entityList;
     protected int stageLevel;
-
-    /**
-     * 
-     * @param player 
-     */
-    public Stage(Player player) {
-        this.entityList = new ArrayList<>();
-        this.entityList.add(player);
-    }
     
+    public Stage()
+    {
+        super(new BorderLayout());
+    }
     /**
      * Method to determine a stage level.
      *
@@ -76,5 +68,5 @@ public abstract class Stage extends JPanel implements Serializable
      * Abstract function to be filled with to initiate the stage rooms.
      *
      */
-    abstract public void initiateStage(Player player);
+    abstract public void updateStagePlayer();
 }

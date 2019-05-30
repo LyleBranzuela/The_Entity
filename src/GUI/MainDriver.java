@@ -7,6 +7,7 @@ package GUI;
 
 import GameEntities.Player;
 import MenuPanels.PanelManager;
+import Stages.*;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -37,12 +38,26 @@ public class MainDriver
         JFrame frame = new JFrame("The Entity");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
         frame.getContentPane().add(myPanel);
-        frame.setSize(1024, 768);
+        frame.setSize(1000, 600);
         frame.setResizable(false);
         frame.pack();
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));
         frame.setVisible(true);
+        
+//        Player TestPlayer1stStage = new Player("TestPlayer1stStage");
+//        TestPlayer1stStage.setCurrentStageLevel(new Stage_1());
+//        Player TestPlayer2ndStage = new Player("TestPlayer2ndStage");
+//        TestPlayer2ndStage.setCurrentStageLevel(new Stage_2());
+//        Player TestPlayer3rdStage = new Player("TestPlayer3rdStage");
+//        TestPlayer3rdStage.setCurrentStageLevel(new Stage_3());
+//        Player TestPlayer4thStage = new Player("TestPlayer4thStage");
+//        TestPlayer4thStage.setCurrentStageLevel(new Stage_4());
+        
+//         DatabaseManager.savePlayerToDatabase(TestPlayer1stStage, false);
+//         DatabaseManager.savePlayerToDatabase(TestPlayer2ndStage, false);
+//         DatabaseManager.savePlayerToDatabase(TestPlayer3rdStage, false);
+//         DatabaseManager.savePlayerToDatabase(TestPlayer4thStage, false);
     }
 
 }

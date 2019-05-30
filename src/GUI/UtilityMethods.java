@@ -49,17 +49,17 @@ public class UtilityMethods extends JFrame
     /**
      * Generates a button based on the parameters set.
      *
-     * @param fontName
-     * @param fontSize
-     * @param fontColor
-     * @param bgColor
-     * @param opaque
-     * @return
+     * @param buttonText name of the button.
+     * @param fontSize size of the button text.
+     * @param fontColor color of the font.
+     * @param bgColor color of the button.
+     * @param opaque is the button opaque.
+     * @return the generated button of the method.
      */
-    public static JButton generateButton(String fontName, int fontSize,
+    public static JButton generateButton(String buttonText, int fontSize,
             Color fontColor, Color bgColor, Boolean opaque)
     {
-        JButton generatedButton = new JButton(fontName);
+        JButton generatedButton = new JButton(buttonText);
         generatedButton.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         generatedButton.setForeground(fontColor);
         generatedButton.setFocusPainted(false);
@@ -78,6 +78,7 @@ public class UtilityMethods extends JFrame
             generatedButton.setBorderPainted(false);
         }
 
+        // Adds a mouse listener for on-hover effects
         generatedButton.addMouseListener(new MouseAdapter()
         {
             @Override
@@ -97,7 +98,7 @@ public class UtilityMethods extends JFrame
     }
 
     /**
-     *
+     * Asks for confirmation when the user exits.
      */
     public static void exitConfirmation()
     {
@@ -110,7 +111,8 @@ public class UtilityMethods extends JFrame
     
     
     /**
-     *
+     * 
+     * 
      * @param fileLocation
      * @param duration
      */

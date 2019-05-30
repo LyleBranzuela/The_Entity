@@ -8,7 +8,7 @@ package MenuPanels;
 import GUI.DatabaseManager;
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
-import Stages.StageDrawingPanel;
+import Stages.Stage_2;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -118,8 +118,7 @@ public class MidGameMenu extends JPanel implements ActionListener
         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
         if (source == this.resumeButton)
         {
-            cl.show(PanelManager.menuCardPanel, "GAMEPANEL");
-            PanelManager.gamePanel.requestFocus();
+            PanelManager.initiateStage();
         }
         // Saves the player name
         else if (source == this.saveGameButton)

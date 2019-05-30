@@ -193,7 +193,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         {
             String playerName = (String) this.tableModel.getValueAt(this.playerJTable.convertRowIndexToModel(selectedRow), 0);
             PanelManager.setCurrentPlayer(DatabaseManager.loadPlayerFromDatabase(playerName));
-            cl.show(PanelManager.menuCardPanel, "GAMEPANEL");
+            PanelManager.initiateStage();
         }
         // Deletes the Selected Save
         else if (source == this.deleteSaveButton)

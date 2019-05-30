@@ -9,10 +9,7 @@ import GameEntities.Player;
 import Items.BarbedBat;
 import Items.Daggers;
 import Items.Machete;
-import Stages.Stage_1;
-import Stages.Stage_2;
-import Stages.Stage_3;
-import Stages.Stage_4;
+import Stages.*;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -151,19 +148,19 @@ public class DatabaseManager
         switch (stageLevel)
         {
             case 1:
-                generatedPlayer.setCurrentStageLevel(new Stage_1(generatedPlayer));
+                generatedPlayer.setCurrentStageLevel(new Stage_1());
                 break;
             case 2:
-                generatedPlayer.setCurrentStageLevel(new Stage_2(generatedPlayer));
+                generatedPlayer.setCurrentStageLevel(new Stage_2());
                 break;
             case 3:
-                generatedPlayer.setCurrentStageLevel(new Stage_3(generatedPlayer));
+                generatedPlayer.setCurrentStageLevel(new Stage_3());
                 break;
             case 4:
-                generatedPlayer.setCurrentStageLevel(new Stage_4(generatedPlayer));
+                generatedPlayer.setCurrentStageLevel(new Stage_4());
                 break;
             default:
-                generatedPlayer.setCurrentStageLevel(new Stage_1(generatedPlayer));
+                generatedPlayer.setCurrentStageLevel(new Stage_1());
                 break;
         }
 
