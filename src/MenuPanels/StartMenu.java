@@ -120,7 +120,7 @@ public class StartMenu extends JPanel implements ActionListener
                     Player newPlayer = new Player(name);
                     newPlayer.setCurrentStageLevel(new Stage_1());
                     PanelManager.setCurrentPlayer(newPlayer);
-                    PanelManager.initiateStage();
+                    PanelManager.changeToStagePanel();
                 }
                 else
                 {

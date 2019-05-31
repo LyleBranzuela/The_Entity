@@ -99,7 +99,7 @@ public class GameOverMenu extends JPanel implements ActionListener
         {
             // Reinitialization by updating the player
             PanelManager.setCurrentPlayer(PanelManager.player);
-            PanelManager.initiateStage();
+            PanelManager.changeToStagePanel();
         }
         // Save Checkpoint
         else if (source == this.saveGameButton)

@@ -5,9 +5,9 @@
  */
 package Stages;
 
+import GUI.UtilityMethods;
 import GameEntities.Player;
 import MenuPanels.PanelManager;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,7 +15,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -30,10 +30,12 @@ import javax.swing.Timer;
 public class Stage_1 extends Stage
 {
     public boolean isCompleted;
+    private boolean clueFound;
     public Player currentPlayer;
     private DrawingPanel drawingPanel;
-    private int i;
-
+    private int i, lock1, lock2, lock3, unlock1, unlock2, unlock3 ;
+    JButton clue, section1, section2, section3;
+    
     /**
      *
      */
@@ -45,19 +47,57 @@ public class Stage_1 extends Stage
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
-        updateStagePlayer();
-
+                 
+        clue = new JButton();
+        clue.setOpaque(false);
+        clue.setContentAreaFilled(false);
+        clue.setBorderPainted(false);
+        clue.setBounds(50, 50, 220, 250);
+        clue.addActionListener(this.drawingPanel);
+        
+        section1 = new JButton("Section 1");
+        section1.setOpaque(false);
+        section1.setContentAreaFilled(false);
+        section1.setBorderPainted(false);
+        section1.setBounds(500, 50, 250, 300);
+        section1.addActionListener(this.drawingPanel);
+        
+        section2 = new JButton("Section 2");
+        section2.setOpaque(false);
+        section2.setContentAreaFilled(false);
+        section2.setBorderPainted(false);
+        section2.setBounds(50, 50, 250, 300);
+        section2.addActionListener(this.drawingPanel);
+        
+        section3 = new JButton("Section 3");
+        section3.setOpaque(false);
+        section3.setContentAreaFilled(false);
+        section3.setBorderPainted(false);
+        section3.setBounds(50, 50, 250, 300);
+        section3.addActionListener(this.drawingPanel);
+       
+        add(this.clue);
         add(this.drawingPanel);
+       
+        updateStagePlayer(); 
     }
 
     /**
      * 
      */
+    @Override
     public void updateStagePlayer()
     {
         this.currentPlayer = PanelManager.getCurrentPlayer();
         this.isCompleted = false;
+        this.clueFound = false;
         this.i = 0;
+        this.unlock1 = 0;
+        this.unlock2 = 0;
+        this.unlock3 = 0;
+        this.lock1 = UtilityMethods.randNum(3) + 5;
+        this.lock2 = UtilityMethods.randNum(3) + 5;
+        this.lock3 = UtilityMethods.randNum(3) + 5;
     }
 
     /**
@@ -66,13 +106,13 @@ public class Stage_1 extends Stage
      */
     private class DrawingPanel extends JPanel implements ActionListener
     {
-        private Timer timer = new Timer(4000, this);
+        private Timer timer = new Timer(3500, this);
         
         public String Stage1_story[] =
         {
-            "An evil entity appeared 10 years ago, anyone seeing this Entity becomes either...",
-            "...a mindless slave or an insane person who would commit suicide immediately.",
-            "You were rescued by a group of blind survivors when you ten years old.",
+            "An alien entity appeared 10 years ago, anyone seeing this Entity becomes either...",
+            "...a mindless slave or an insane person who would commit suicide.",
+            "You were rescued by a group of blind survivors when you were ten years old.",
             "Taught by the group to see with sounds, you managed to survive the apocalypse...",
             "Until one day you were captured by a group of slaves...",
             "Waking up in a prison cell, you must now look for a way to escape..."
@@ -93,33 +133,119 @@ public class Stage_1 extends Stage
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
-            if (i < 5)
+            timer.start();
+           
+            if (i < 6) 
             {
                 g.setColor(Color.WHITE);
-                g.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                g.setFont(new Font("Tahoma", Font.PLAIN, 18));
                 g.drawString(Stage1_story[i], 30, 280);
-            }
-            else
+            } 
+            else 
             {
                 g.setColor(Color.BLACK);
                 g.clearRect(0, 0, 1000, 600);
                 Image image = Toolkit.getDefaultToolkit().getImage("background/Stage1_Prison.png");
                 g.drawImage(image, 0, 0, this);
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                g.drawString("OBJECTIVE: Search the room and find a way to escape!", 250, 70);
             }
-            timer.start();
+
+            if (clueFound == true) 
+            {
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, 1000, 600);
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                g.drawString("You've found some clips hidden behind that brick! Perfect for picking locks!", 170, 100);
+                g.drawString("Push the right amount of pins in each section with the clips to unlock door!", 170, 400);  
+                
+                section1.setBounds(250,300,100,50);
+                section2.setBounds(450,300,100,50);
+                section3.setBounds(650,300,100,50);
+                
+                add(section1);
+                add(section2);
+                add(section3);
+                
+                section1.setOpaque(true);
+                section1.setContentAreaFilled(true);
+                section1.setBorderPainted(true);
+                
+                section2.setOpaque(true);
+                section2.setContentAreaFilled(true);
+                section2.setBorderPainted(true);
+                
+                section3.setOpaque(true);
+                section3.setContentAreaFilled(true);
+                section3.setBorderPainted(true);
+            }   
+            
+           if (isCompleted)
+            {
+                currentPlayer.setCurrentStageLevel(new Stage_2());
+                PanelManager.setCurrentPlayer(currentPlayer);
+                PanelManager.changeToStagePanel();
+            }
+           
+            
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if (i < 5)
-            {
+            Object source = e.getSource();
+            
+           
+            if (i < 6) {
                 i++;
-                repaint();
-            }
-            else
-            {
+            } else {
                 //Do nothing
+            }
+            repaint();
+            
+
+            if(source == clue)
+            {
+                clueFound = true;
+            }
+            else if(source == section1 )
+            {
+                if(unlock1 < lock1)
+                {
+                    unlock1++;
+                }
+                else if(unlock1 == lock1)
+                {
+                    //play success sound;
+                    section1.setVisible(false);
+                }
+            }
+            else if(source == section2 )
+            {
+                if(unlock2 < lock2)
+                {
+                    unlock2++;
+                }
+                else if(unlock2 == lock2)
+                {
+                    //play success sound;
+                    section2.setVisible(false);
+                }
+            }
+            else if(source == section3 )
+            {
+                 if(unlock3 < lock3)
+                {
+                    unlock3++;
+                }
+                else if(unlock3 == lock3)
+                {
+                    //play success sound;
+                    section3.setVisible(false);
+                    isCompleted = true;
+                }
             }
         }
     }

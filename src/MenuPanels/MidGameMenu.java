@@ -118,7 +118,7 @@ public class MidGameMenu extends JPanel implements ActionListener
         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
         if (source == this.resumeButton)
         {
-            PanelManager.initiateStage();
+            PanelManager.changeToStagePanel();
         }
         // Saves the player name
         else if (source == this.saveGameButton)
