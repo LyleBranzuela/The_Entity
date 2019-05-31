@@ -46,8 +46,8 @@ public class MainDriver
         frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));
         frame.setVisible(true);
         
-//        UtilityMethods utils = new UtilityMethods();
-//        utils.playSoundtrack("sound\\Ambient_Music.wav", 20);
+        UtilityMethods utils = new UtilityMethods();
+        utils.playSoundtrack("sound\\Ambient_Spooky_Music.wav", 300);
 //        Player TestPlayer1stStage = new Player("TestPlayer1stStage");
 //        TestPlayer1stStage.setCurrentStageLevel(new Stage_1());
 //        Player TestPlayer2ndStage = new Player("TestPlayer2ndStage");

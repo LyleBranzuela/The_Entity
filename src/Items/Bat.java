@@ -10,7 +10,7 @@ package Items;
  *
  * @author lyleb and khoap
  */
-public class BarbedBat extends Item implements Weapon
+public class Bat extends Item implements Weapon
 {
     private final int batDmg = 1;
     private final int batSeq = 1;
@@ -18,7 +18,7 @@ public class BarbedBat extends Item implements Weapon
     /**
      * Constructor for the Barbed Bat Weapon Item.
      */
-    public BarbedBat()
+    public Bat()
     {
         super("Barbed Bat", 1);
     }

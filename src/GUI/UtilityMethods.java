@@ -10,20 +10,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import java.io.FileInputStream;
 import java.io.IOException;
-import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import sun.audio.AudioData;
-import sun.audio.AudioStream;
-import sun.audio.AudioPlayer;
-import sun.audio.ContinuousAudioDataStream;
 
 /**
  *
@@ -111,33 +108,48 @@ public class UtilityMethods extends JFrame
     
     
     /**
-     * 
+     * Plays a track for a set duration
      * 
      * @param fileLocation
      * @param duration
      */
     public void playSoundtrack(String fileLocation, int duration)
     {
-        int trackDuration = duration * 1000;
-        
+        int trackDuration = duration*1000;
         try
         {
-            AudioData data = new AudioStream(new FileInputStream(fileLocation)).getData();
-            ContinuousAudioDataStream soundtrack = new ContinuousAudioDataStream(data);
-            AudioPlayer.player.start(soundtrack);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(fileLocation));
             
-            Thread.sleep(trackDuration);
+            Clip clip = AudioSystem.getClip();
+        
+            clip.open(ais);
+          
             
-            AudioPlayer.player.stop(soundtrack);
+            clip.start();
+            try 
+            {
+                Thread.sleep(trackDuration);
+            } 
+            catch (InterruptedException ex) 
+            {
+                JOptionPane.showMessageDialog(null, "Unexpected thread interuption error");
+            }
+            
+            clip.stop();
         }
         
         catch(IOException e)
         {
-            JOptionPane.showMessageDialog(null, "IOexception error");
+            JOptionPane.showMessageDialog(null, "Error occured while reading file!");
         } 
         
-        catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(null, "Inteerrupted Error");
+        catch (LineUnavailableException ex) 
+        {
+            JOptionPane.showMessageDialog(null, "Bitrate not supported! Please use only 8 or 16-bit audio");
+        }
+        catch(UnsupportedAudioFileException e)
+        {
+            JOptionPane.showMessageDialog(null, "Audio file type not supported!");
         }
     }
     
