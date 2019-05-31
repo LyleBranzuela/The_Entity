@@ -14,8 +14,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author lyleb
+ * Test class for Entity Movement.
+ * 
+ * @author lyleb and khoap
  */
 public class EntityMovementTest
 {
@@ -68,9 +69,10 @@ public class EntityMovementTest
     public void testGetMovementSpeed()
     {
         System.out.println("getMovementSpeed");
-        int expResult = 2;
-        int result = emt.getMovementSpeed();
-        assertEquals(expResult, result);
+        int movementSpeed = 2;
+        this.emt.setMovementSpeed(movementSpeed);
+        int result = this.emt.getMovementSpeed();
+        assertEquals(movementSpeed, result);
     }
 
     /**
@@ -118,24 +120,90 @@ public class EntityMovementTest
         System.out.println("setLocation");
         int x = 0;
         int y = 0;
-        EntityMovement instance = null;
-        instance.setLocation(x, y);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        this.emt.setLocation(x, y);
+        assertEquals(x, this.emt.getXMovement());
+        assertEquals(y, this.emt.getYMovement());
     }
 
     /**
-     * Test of moveEntity method, of class EntityMovement.
+     * Test of moveEntity method (LEFT), of class EntityMovement.
      */
     @Test
-    public void testMoveEntity()
+    public void testMoveEntityLeft()
     {
-        System.out.println("moveEntity");
-        int direction = 0;
-        EntityMovement instance = null;
-        instance.moveEntity(direction);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("moveEntityLeft");
+        int direction = EntityMovement.LEFT;
+        this.emt.setLocation(0, 0);
+        this.emt.moveEntity(direction);
+        
+        int expectedX = -6;
+        int expectedY = 0;
+        int resultX = this.emt.getXMovement();
+        int resultY = this.emt.getYMovement();
+        
+        assertEquals(expectedX, resultX);
+        assertEquals(expectedY, resultY);
+    }
+    
+    /**
+     * Test of moveEntity method (RIGHT), of class EntityMovement.
+     */
+    @Test
+    public void testMoveEntityRight()
+    {
+        System.out.println("moveEntityRight");
+        int direction = EntityMovement.RIGHT;
+        this.emt.setLocation(0, 0);
+        this.emt.moveEntity(direction);
+        
+        int expectedX = 6;
+        int expectedY = 0;
+        int resultX = this.emt.getXMovement();
+        int resultY = this.emt.getYMovement();
+        
+        assertEquals(expectedX, resultX);
+        assertEquals(expectedY, resultY);
+    }
+    
+    
+    /**
+     * Test of moveEntity (FORWARD) method, of class EntityMovement.
+     */
+    @Test
+    public void testMoveEntityForward()
+    {
+        System.out.println("moveEntityForward");
+        int direction = EntityMovement.FORWARD;
+        this.emt.setLocation(0, 0);
+        this.emt.moveEntity(direction);
+        
+        int expectedX = 0;
+        int expectedY = -6;
+        int resultX = this.emt.getXMovement();
+        int resultY = this.emt.getYMovement();
+        
+        assertEquals(expectedX, resultX);
+        assertEquals(expectedY, resultY);
+    }
+    
+    /**
+     * Test of moveEntity method (BACKWARD), of class EntityMovement.
+     */
+    @Test
+    public void testMoveEntityDownBackward()
+    {
+        System.out.println("moveEntityBackward");
+        int direction = EntityMovement.BACKWARD;
+        this.emt.setLocation(0, 0);
+        this.emt.moveEntity(direction);
+        
+        int expectedX = 0;
+        int expectedY = 6;
+        int resultX = this.emt.getXMovement();
+        int resultY = this.emt.getYMovement();
+        
+        assertEquals(expectedX, resultX);
+        assertEquals(expectedY, resultY);
     }
     
 }

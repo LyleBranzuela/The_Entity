@@ -16,8 +16,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author lyleb
+ * Test class for Entity Movement.
+ * 
+ * @author lyleb and khoap
  */
 public class PlayerTest
 {
