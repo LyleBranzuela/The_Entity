@@ -47,7 +47,7 @@ public class GameOverMenu extends JPanel implements ActionListener
         // Game over Title
         this.gameOverTitle = new JLabel("YOU DIED");
         this.gameOverTitle.setFont(new Font("Tahoma", Font.BOLD, 64));
-        this.gameOverTitle.setForeground(Color.RED);
+        this.gameOverTitle.setForeground(new Color(139,0,0)); // Dark Red
         this.gameOverTitle.setBorder(this.designAttributes.createMarginBorder(0, 8, 0, 8));
 
         // Setting up the Buttons
@@ -76,7 +76,8 @@ public class GameOverMenu extends JPanel implements ActionListener
         buttonGroup.add(this.saveGameButton);
         buttonGroup.add(this.mainMenuButton);
         buttonGroup.add(this.exitButton);
-        
+       
+        // Combining all Containers 
         this.gameOverPanel = new JPanel();
         this.gameOverPanel.add(this.gameOverTitle);
         this.gameOverPanel.add(this.retryButton);
@@ -99,7 +100,7 @@ public class GameOverMenu extends JPanel implements ActionListener
         {
             // Reinitialization by updating the player
             PanelManager.setCurrentPlayer(PanelManager.player);
-            PanelManager.initiateStage();
+            PanelManager.changeToStagePanel();
         }
         // Save Checkpoint
         else if (source == this.saveGameButton)

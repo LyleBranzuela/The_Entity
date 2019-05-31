@@ -115,9 +115,9 @@ public class PanelManager extends JPanel
     }
    
     /**
-     * Initiates the stage based on what stage level the player is in.
+     * Changes the panel into one of the stage panels.
      */
-    public static void initiateStage()
+    public static void changeToStagePanel()
     {
         CardLayout cl = (CardLayout) (menuCardPanel.getLayout());
         switch (player.getCurrentStage().getStageLevel())

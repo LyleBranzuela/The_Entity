@@ -53,11 +53,11 @@ public class MainDriver
 //        TestPlayer3rdStage.setCurrentStageLevel(new Stage_3());
 //        Player TestPlayer4thStage = new Player("TestPlayer4thStage");
 //        TestPlayer4thStage.setCurrentStageLevel(new Stage_4());
-        
-//         DatabaseManager.savePlayerToDatabase(TestPlayer1stStage, false);
-//         DatabaseManager.savePlayerToDatabase(TestPlayer2ndStage, false);
-//         DatabaseManager.savePlayerToDatabase(TestPlayer3rdStage, false);
-//         DatabaseManager.savePlayerToDatabase(TestPlayer4thStage, false);
+//
+//        DatabaseManager.savePlayerToDatabase(TestPlayer1stStage, false);
+//        DatabaseManager.savePlayerToDatabase(TestPlayer2ndStage, false);
+//        DatabaseManager.savePlayerToDatabase(TestPlayer3rdStage, false);
+//        DatabaseManager.savePlayerToDatabase(TestPlayer4thStage, false);
     }
 
 }

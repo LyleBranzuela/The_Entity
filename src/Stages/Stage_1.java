@@ -8,6 +8,7 @@ package Stages;
 import GameEntities.Player;
 import MenuPanels.PanelManager;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,8 +16,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 /**
@@ -47,6 +53,20 @@ public class Stage_1 extends Stage
         this.drawingPanel.setFocusable(true);
         updateStagePlayer();
 
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
+        // Customized Action for pressing Escape
+        Action escapeAction = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                cl.show(PanelManager.menuCardPanel, "MIDGAMEMENU");
+            }
+        };
+        
+        // Adding an escape action map to the action map
+        this.getActionMap().put("Escape", escapeAction);
         add(this.drawingPanel);
     }
 
@@ -72,7 +92,7 @@ public class Stage_1 extends Stage
         {
             "An evil entity appeared 10 years ago, anyone seeing this Entity becomes either...",
             "...a mindless slave or an insane person who would commit suicide immediately.",
-            "You were rescued by a group of blind survivors when you ten years old.",
+            "You were rescued by a group of blind survivors when you were ten years old.",
             "Taught by the group to see with sounds, you managed to survive the apocalypse...",
             "Until one day you were captured by a group of slaves...",
             "Waking up in a prison cell, you must now look for a way to escape..."

@@ -25,6 +25,9 @@ public class Stage_4 extends Stage
 {
     private Player currentPlayer;
     
+    /**
+     * Constructor for creating Stage 4.
+     */
     public Stage_4()
     {
         super();

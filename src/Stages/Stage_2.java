@@ -48,7 +48,7 @@ public class Stage_2 extends Stage
     private ArrayList<EnemyPatrol> enemyPatrol;
 
     /**
-     *
+     * Constructor for creating Stage 2.
      */
     public Stage_2()
     {
@@ -66,6 +66,17 @@ public class Stage_2 extends Stage
         this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("RIGHT"), MOVE_RIGHT);
         this.getInputMap(WIFW).put(KeyStroke.getKeyStroke("D"), MOVE_RIGHT);
 
+        // Initiate the Patrols
+        this.enemyPatrol = new ArrayList<>();
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 1", 0, EntityMovement.LEFT));
+        this.enemyPatrol.get(0).entityMovement.setMovementSpeed(1);
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 2", 0, EntityMovement.FORWARD));
+        this.enemyPatrol.get(1).entityMovement.setMovementSpeed(1);
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 3", 0, EntityMovement.BACKWARD));
+        this.enemyPatrol.get(2).entityMovement.setMovementSpeed(1);
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 4", 0, EntityMovement.RIGHT));
+        this.enemyPatrol.get(3).entityMovement.setMovementSpeed(1);
+
         // Customized Action for pressing Escape
         Action escapeAction = new AbstractAction()
         {
@@ -76,15 +87,7 @@ public class Stage_2 extends Stage
                 cl.show(PanelManager.menuCardPanel, "MIDGAMEMENU");
             }
         };
-
-        // Initiate the Patrols
-        this.enemyPatrol = new ArrayList<>();
-        for (int counter = 0; counter < 3; counter++)
-        {
-            this.enemyPatrol.add(new EnemyPatrol("Patrol " + (counter + 1), 0, EntityMovement.RIGHT));
-            this.enemyPatrol.get(counter).entityMovement.setMovementSpeed(1);
-        }
-
+        
         // Adding an action map to the input map
         this.getActionMap().put("Escape", escapeAction);
         this.getActionMap().put(MOVE_FORWARD, new MoveAction(EntityMovement.FORWARD));
@@ -92,6 +95,7 @@ public class Stage_2 extends Stage
         this.getActionMap().put(MOVE_LEFT, new MoveAction(EntityMovement.LEFT));
         this.getActionMap().put(MOVE_RIGHT, new MoveAction(EntityMovement.RIGHT));
 
+        // Create the tile set in the drawing panel
         this.tileSet = new JButton[GRID_AMOUNT][GRID_AMOUNT];
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setLayout(new GridLayout(GRID_AMOUNT, GRID_AMOUNT));
@@ -118,6 +122,7 @@ public class Stage_2 extends Stage
     public void updateStagePlayer()
     {
         this.currentPlayer = PanelManager.getCurrentPlayer();
+        
         // Starting Player Tile - Center of X at the bottom of Y
         int x = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getX() - 5;
         int y = this.tileSet[GRID_AMOUNT - 1][GRID_AMOUNT - 1].getY() + 10;
@@ -127,7 +132,7 @@ public class Stage_2 extends Stage
     }
 
     /**
-     * 
+     * Sets the initial positions of the enemy patrols
      */
     public void setEnemyPositions()
     {
@@ -136,20 +141,27 @@ public class Stage_2 extends Stage
         int y = this.tileSet[0][1].getY() + 10;
         this.enemyPatrol.get(0).entityMovement.setLocation(x, y);
 
-        // Middle
-        x = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getX() + 10;
-        y = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getY();
+        // Middle Top
+        x = this.tileSet[(GRID_AMOUNT / 2) - 1][7].getX() + 10;
+        y = this.tileSet[(GRID_AMOUNT / 2) - 1][7].getY();
         this.enemyPatrol.get(1).entityMovement.setLocation(x, y);
-
-        // Bottom Left
-        x = this.tileSet[GRID_AMOUNT - 2][0].getX() + 5;
-        y = this.tileSet[GRID_AMOUNT - 2][GRID_AMOUNT - 1].getY()
-                + this.tileSet[GRID_AMOUNT - 2][GRID_AMOUNT - 1].getHeight() + 10;
+        
+        // Middle Bottom
+        x = this.tileSet[(GRID_AMOUNT / 2) - 3][(GRID_AMOUNT / 2) - 3].getX() + 10;
+        y = this.tileSet[(GRID_AMOUNT / 2) - 3][(GRID_AMOUNT / 2) - 3].getY();
         this.enemyPatrol.get(2).entityMovement.setLocation(x, y);
+        
+        // Bottom Left
+        x = this.tileSet[GRID_AMOUNT - 4][0].getX() + 5;
+        y = this.tileSet[GRID_AMOUNT - 4][GRID_AMOUNT - 1].getY()
+                + this.tileSet[GRID_AMOUNT - 4][GRID_AMOUNT - 1].getHeight() + 10;
+        this.enemyPatrol.get(3).entityMovement.setLocation(x, y);
     }
 
     /**
      * Moves the enemy patrols.
+     * 
+     * @param ep which enemy patrol to move.
      */
     public void moveEnemyPatrol(EnemyPatrol ep)
     {
@@ -185,7 +197,25 @@ public class Stage_2 extends Stage
      */
     public boolean checkIfPlayerDetected()
     {
-        return false;
+        boolean detected = false;
+        if (!enemyPatrol.isEmpty())
+        {
+            for (EnemyPatrol ep : enemyPatrol)
+            {
+                int playerX = currentPlayer.entityMovement.getXMovement();
+                int playerY = currentPlayer.entityMovement.getYMovement();
+                int patrolX = ep.entityMovement.getXMovement();
+                int patrolY = ep.entityMovement.getYMovement();
+
+                // Check Detection
+                if (playerX >= patrolX && playerY >= patrolY
+                        && playerX <= (patrolX + 75) && playerY <= (patrolY + 75) )
+                {
+                    detected = true;
+                }
+            }
+        }
+        return detected;
     }
     
     /**
@@ -209,6 +239,7 @@ public class Stage_2 extends Stage
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
+            
             // Draw the floor
             for (int row = 0; row < GRID_AMOUNT; row++)
             {
@@ -219,7 +250,6 @@ public class Stage_2 extends Stage
                     int width = tileSet[row][col].getWidth();
                     int height = tileSet[row][col].getHeight();
                     g.setColor(new Color(56, 56, 56)); 
-//                    g.drawRect(x, y, width, height);
                     g.fillRect(x, y, width, height);
                 }
             }
@@ -230,8 +260,8 @@ public class Stage_2 extends Stage
             {
                 for (EnemyPatrol ep : enemyPatrol)
                 {
-                    ep.draw(g);
                     moveEnemyPatrol(ep);
+                    ep.draw(g);
                 }
             }
 
@@ -242,19 +272,25 @@ public class Stage_2 extends Stage
             g2.drawRect(0, 0, drawingPanel.getWidth() - 1, drawingPanel.getHeight());
             
             // The Doors
-                // First Door
+                // Top Door
             g2.setColor(new Color(222,184,135)); 
             g2.setStroke(new BasicStroke(6));
             int doorX = tileSet[0][(GRID_AMOUNT / 2) - 1].getX();
             int doorY = tileSet[0][(GRID_AMOUNT / 2) - 1].getY();
             int doorWidth = tileSet[0][(GRID_AMOUNT / 2) - 1].getWidth();
             g2.drawRect(doorX, doorY, doorWidth, 0);
-                // Second Door
+                // Bottom Door
             doorX = tileSet[GRID_AMOUNT - 1][(GRID_AMOUNT / 2) - 1].getX();
             doorY = tileSet[GRID_AMOUNT - 1][(GRID_AMOUNT / 2) - 1].getY() 
                     + tileSet[GRID_AMOUNT - 1][(GRID_AMOUNT / 2) - 1].getHeight();
             doorWidth = tileSet[GRID_AMOUNT - 1][(GRID_AMOUNT / 2) - 1].getWidth();
             g2.drawRect(doorX, doorY, doorWidth, 0);
+            
+            if (checkIfPlayerDetected())
+            {
+                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+            }
         }
     }
 
@@ -285,18 +321,16 @@ public class Stage_2 extends Stage
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if (!checkIfPlayerDetected())
+            if (checkPlayerInBoundary())
             {
-                if (checkPlayerInBoundary())
-                {
-                    currentPlayer.entityMovement.moveEntity(this.direction);
-                    repaint();
-                }
+                currentPlayer.entityMovement.moveEntity(this.direction);
+                repaint();
             }
-            else
+            if (checkIfPlayerEscaped())
             {
-                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-                cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+                currentPlayer.setCurrentStageLevel(new Stage_3());
+                PanelManager.setCurrentPlayer(currentPlayer);
+                PanelManager.changeToStagePanel();
             }
         }
 
@@ -330,6 +364,23 @@ public class Stage_2 extends Stage
             }
 
             return check;
+        }
+        
+        /**
+         * Checks whether the player has escaped or not in the JPanel.
+         *
+         * @return true if they've escaped, false if they haven't.
+         */
+        public boolean checkIfPlayerEscaped()
+        {
+            int playerX = currentPlayer.entityMovement.getXMovement();
+            int playerY = currentPlayer.entityMovement.getYMovement();
+            int doorX = tileSet[0][(GRID_AMOUNT / 2) - 1].getX();
+            int doorY = tileSet[0][(GRID_AMOUNT / 2) - 1].getY();
+            int doorWidth = tileSet[0][(GRID_AMOUNT / 2) - 1].getWidth();
+            
+            return playerX >= (doorX  - 30) && playerX <= doorX + (doorWidth - 40)
+                    && playerY <= doorY+5;
         }
     }
 }

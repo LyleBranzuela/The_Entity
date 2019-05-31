@@ -15,9 +15,10 @@ import java.awt.Graphics;
 public class EnemyPatrol extends Entity  
 {
     public int initialDirection;
+    
     public EnemyPatrol(String name, int health, int initialDirection)
     {
-        super("Enemy Patrol", 3);
+        super(name, 3);
         this.initialDirection = initialDirection;
     }
     
@@ -33,7 +34,15 @@ public class EnemyPatrol extends Entity
         // Center of the Circle    
         int x = super.entityMovement.getXMovement();
         int y = super.entityMovement.getYMovement();
-        g.fillOval(x, y+10, 75, 30);
+        if (this.initialDirection == EntityMovement.LEFT ||
+            this.initialDirection == EntityMovement.RIGHT)
+        {
+            g.fillOval(x+25, y-15, 30, 75);
+        }
+        else
+        {
+            g.fillOval(x, y + 10, 75, 30);
+        }
         
         //g.setColor(new Color(255,219,172));
         g.setColor(Color.BLACK);
