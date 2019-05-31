@@ -7,12 +7,11 @@ package Stages;
 
 import GUI.UtilityMethods;
 import GameEntities.Player;
+import GUI.DesignAttributes;
 import Items.Bat;
 import Items.Daggers;
 import Items.Machete;
-import Items.Weapon;
 import MenuPanels.PanelManager;
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -42,37 +41,48 @@ public class Stage_3 extends Stage
     private Player currentPlayer;
     public boolean lockpickCompleted, stageCompleted;
     private DrawingPanel drawingPanel;
-<<<<<<< HEAD
+    private DesignAttributes designAttributes;
     UtilityMethods utils = new UtilityMethods();
-    private int k, i, lock1, lock2, lock3, unlock1, unlock2, unlock3 ;
+    private int i, lock1, lock2, lock3, unlock1, unlock2, unlock3 ;
     JButton section1, section2, section3, batButton, dagButton, macButton;
     
-=======
-    private int i;
-
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
     public Stage_3()
     {
         super();
         super.stageLevel = 3;
-
+        
+        designAttributes = new DesignAttributes();
+        
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
         
-        section1 = new JButton("Section 1");
+        section1 = UtilityMethods.generateButton("Section 1", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section1.setBounds(500, 50, 250, 300);
+        section1.addActionListener(this.drawingPanel);
+        
+        section2 = UtilityMethods.generateButton("Section 2", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section2.setBounds(50, 50, 250, 300);
+        section2.addActionListener(this.drawingPanel);
+        
+        section3 = UtilityMethods.generateButton("Section 3", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section3.setBounds(50, 50, 250, 300);
+        section3.addActionListener(this.drawingPanel);
+        
         section1.setOpaque(false);
         section1.setContentAreaFilled(false);
         section1.setBorderPainted(false);
         section1.addActionListener(this.drawingPanel);
         
-        section2 = new JButton("Section 2");
+       
         section2.setOpaque(false);
         section2.setContentAreaFilled(false);
         section2.setBorderPainted(false);
         section2.addActionListener(this.drawingPanel);
         
-        section3 = new JButton("Section 3");
         section3.setOpaque(false);
         section3.setContentAreaFilled(false);
         section3.setBorderPainted(false);
@@ -121,7 +131,10 @@ public class Stage_3 extends Stage
 
         add(this.drawingPanel);
     }
-
+    
+    /**
+     * Updates the stage player to initialize stage.
+     */
     @Override
     public void updateStagePlayer()
     {
@@ -129,7 +142,6 @@ public class Stage_3 extends Stage
         this.lockpickCompleted = false;
         this.stageCompleted = false;
         this.i = 0;
-        this.k = 3;
         this.unlock1 = 0;
         this.unlock2 = 0;
         this.unlock3 = 0;
@@ -170,11 +182,9 @@ public class Stage_3 extends Stage
             if (i < 4)
             {
                 g.setColor(Color.WHITE);
-<<<<<<< HEAD
-                g.setFont(new Font("Tahoma", Font.PLAIN, 16));
-=======
-                g.setFont(new Font("Tahoma", Font.BOLD, 14));
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
+
+                g.setFont(new Font("Tahoma", Font.BOLD, 16));
+
                 g.drawString(Stage3_story[i], 30, 280);
             }
             else
@@ -235,6 +245,7 @@ public class Stage_3 extends Stage
                 currentPlayer.setCurrentStageLevel(new Stage_4());
                 PanelManager.setCurrentPlayer(currentPlayer);
                 PanelManager.changeToStagePanel();
+                repaint();
             }
             
         }
@@ -246,12 +257,9 @@ public class Stage_3 extends Stage
             if (i < 4)
             {
                 i++;
-                repaint();
+                
             }
-<<<<<<< HEAD
-            
-           
-            
+            repaint();
             if(source == section1 )
             {
                 if(unlock1 < lock1)
@@ -294,9 +302,9 @@ public class Stage_3 extends Stage
                 else if(unlock3 == lock3)
                 {
                     utils.playSoundtrack("sound/Lockpick_Success.wav", 2);
+                    utils.playSoundtrack("sound/MetalDoor_Opening.wav", 2);
                     section3.setVisible(false);
                     lockpickCompleted = true; 
-                    repaint();
                 }
             }
             
@@ -305,6 +313,7 @@ public class Stage_3 extends Stage
                 Bat baseballBat = new Bat();
                 currentPlayer.pickupItem(baseballBat);
                 stageCompleted = true;
+               
             }
             
             else if(source == dagButton)
@@ -312,6 +321,7 @@ public class Stage_3 extends Stage
                 Daggers saiDag = new Daggers();
                 currentPlayer.pickupItem(saiDag);
                 stageCompleted = true;
+                
             }
             
             else if(source == macButton)
@@ -319,14 +329,9 @@ public class Stage_3 extends Stage
                 Machete machete = new Machete();
                 currentPlayer.pickupItem(machete);
                 stageCompleted = true;
+               
             }
             
-            
-        
-            
-=======
-
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
         }
     }
 

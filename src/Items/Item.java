@@ -45,5 +45,6 @@ public abstract class Item implements Serializable
         return this.itemID;
     }
     
+    abstract public int attack();
     abstract public String printDescription();
 }

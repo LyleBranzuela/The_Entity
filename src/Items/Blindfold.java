@@ -44,6 +44,12 @@ public class Blindfold extends Item
 
     @Override
     public String printDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "A blindfold";
+    }
+
+    @Override
+    public int attack() {
+        //Do nothing as blindfold is not a weapon
+        return 0;
     }
 }

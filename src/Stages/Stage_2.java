@@ -118,7 +118,7 @@ public class Stage_2 extends Stage
     }
 
     /**
-     * Updates the stage player from the panel manager.
+     * Updates the stage player to initialize stage.
      */
     @Override
     public void updateStagePlayer()

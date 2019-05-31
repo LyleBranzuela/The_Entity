@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import GameEntities.Player;
 import MenuPanels.PanelManager;
+import Stages.Stage_3;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -41,10 +43,10 @@ public class MainDriver
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));
         frame.setVisible(true);
-<<<<<<< HEAD
+
         
         UtilityMethods utils = new UtilityMethods();
-        utils.playSoundtrack("sound\\Ambient_Spooky_Music.wav", 300);
+        utils.playSoundtrack("sound\\Ambient_Spooky_Music.wav", 300); // Play the ambient track for 5 mins.
 //        Player TestPlayer1stStage = new Player("TestPlayer1stStage");
 //        TestPlayer1stStage.setCurrentStageLevel(new Stage_1());
 //        Player TestPlayer2ndStage = new Player("TestPlayer2ndStage");
@@ -57,9 +59,7 @@ public class MainDriver
 //        DatabaseManager.savePlayerToDatabase(TestPlayer1stStage, false);
 //        DatabaseManager.savePlayerToDatabase(TestPlayer2ndStage, false);
 //        DatabaseManager.savePlayerToDatabase(TestPlayer3rdStage, false);
-//        DatabaseManager.savePlayerToDatabase(TestPlayer4thStage, false);
-=======
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
+//        DatabaseManager.savePlayerToDatabase(TestPlayer4thStage, false);    
     }
 
 }
