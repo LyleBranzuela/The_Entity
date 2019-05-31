@@ -25,16 +25,17 @@ import javax.swing.Timer;
  */
 public class Stage_3 extends Stage
 {
+
     private Player currentPlayer;
     public boolean isCompleted;
     private DrawingPanel drawingPanel;
     private int i;
-    
+
     public Stage_3()
     {
         super();
         super.stageLevel = 3;
-        
+
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
@@ -42,8 +43,7 @@ public class Stage_3 extends Stage
 
         add(this.drawingPanel);
     }
-    
-    
+
     @Override
     public void updateStagePlayer()
     {
@@ -51,11 +51,12 @@ public class Stage_3 extends Stage
         this.isCompleted = false;
         this.i = 0;
     }
-    
-     private class DrawingPanel extends JPanel implements ActionListener
+
+    private class DrawingPanel extends JPanel implements ActionListener
     {
+
         private Timer timer = new Timer(5000, this);
-        
+
         public String Stage3_story[] =
         {
             "After avoiding all the guards, your hear the Entity's howl.",
@@ -85,7 +86,7 @@ public class Stage_3 extends Stage
             if (i < 6)
             {
                 g.setColor(Color.WHITE);
-                g.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                g.setFont(new Font("Tahoma", Font.BOLD, 14));
                 g.drawString(Stage3_story[i], 30, 280);
             }
             else
@@ -104,13 +105,8 @@ public class Stage_3 extends Stage
                 i++;
                 repaint();
             }
-            else
-            {
-                //Do nothing
-            }
-            
+
         }
     }
-    
 
 }

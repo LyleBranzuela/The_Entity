@@ -29,7 +29,6 @@ public class DesignAttributes
     {
 
         // Setting up the Colours
-        // this.primaryColor = new Color(35, 31, 32); // Black
         this.primaryColor = new Color(245,245,245); // White Smoke
         this.secondaryColor = new Color(169,169,169); // Light Gray
         this.tertiaryColor = new Color(120, 120, 120); // Gray

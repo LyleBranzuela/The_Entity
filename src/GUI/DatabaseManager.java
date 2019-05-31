@@ -6,7 +6,7 @@
 package GUI;
 
 import GameEntities.Player;
-import Items.BarbedBat;
+import Items.Bat;
 import Items.Daggers;
 import Items.Machete;
 import Stages.*;
@@ -132,7 +132,7 @@ public class DatabaseManager
         switch (itemID)
         {
             case 1:
-                generatedPlayer.pickupItem(new BarbedBat());
+                generatedPlayer.pickupItem(new Bat());
                 break;
             case 2:
                 generatedPlayer.pickupItem(new Daggers());
