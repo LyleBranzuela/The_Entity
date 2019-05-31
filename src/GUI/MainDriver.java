@@ -36,7 +36,8 @@ public class MainDriver
         // Instantiate Panel Manager
         PanelManager myPanel = new PanelManager();
         JFrame frame = new JFrame("The Entity");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myPanel.setPreferredSize(new Dimension(1000,600));
         frame.getContentPane().add(myPanel);
         frame.setSize(1000, 600);
         frame.setResizable(false);
@@ -45,6 +46,8 @@ public class MainDriver
         frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));
         frame.setVisible(true);
         
+//        UtilityMethods utils = new UtilityMethods();
+//        utils.playSoundtrack("sound\\Ambient_Music.wav", 20);
 //        Player TestPlayer1stStage = new Player("TestPlayer1stStage");
 //        TestPlayer1stStage.setCurrentStageLevel(new Stage_1());
 //        Player TestPlayer2ndStage = new Player("TestPlayer2ndStage");

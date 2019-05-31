@@ -8,6 +8,15 @@ package Stages;
 import GameEntities.Player;
 import MenuPanels.PanelManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  * Class for the Stage 3 of the Game.
@@ -17,111 +26,91 @@ import java.awt.BorderLayout;
 public class Stage_3 extends Stage
 {
     private Player currentPlayer;
+    public boolean isCompleted;
+    private DrawingPanel drawingPanel;
+    private int i;
     
     public Stage_3()
     {
         super();
         super.stageLevel = 3;
+        
+        this.drawingPanel = new DrawingPanel();
+        this.drawingPanel.setBackground(Color.BLACK);
+        this.drawingPanel.setFocusable(true);
+        updateStagePlayer();
+
+        add(this.drawingPanel);
     }
+    
     
     @Override
     public void updateStagePlayer()
     {
-       this.currentPlayer = PanelManager.getCurrentPlayer();
+        this.currentPlayer = PanelManager.getCurrentPlayer();
+        this.isCompleted = false;
+        this.i = 0;
     }
     
-    /*
-     * Creates content for stage 3
-     */
-//    @Override
-//    public void initiateStage(Player player)
-//    {
-//        // Initating the Variables
-//        super.stageLevel = 3;
-//        Scanner scan = new Scanner(System.in);
-//        String userInput;
-//        int weaponChoice;
-//        boolean isValid = false;
-//        Item barbedBat = new BarbedBat();
-//        Item dualDag = new Daggers();
-//        Item machete = new Machete();
-//
-//        try
-//        {
-//            // Continues from stage 2 and prints weapon info
-//            System.out.println("As you walk down a long hallway, you found a room where police kept confiscated weapons.");
-//            Thread.sleep(3000);
-//            System.out.println("Knowing guns will disrupt your hearing as well as alert the Infected, you start digging for something else.");
-//            System.out.println("");
-//            Thread.sleep(3000);
-//            System.out.println("You have Found: ");
-//            System.out.println("1) Barbed Bat: " + barbedBat.printDescription());
-//            Thread.sleep(2000);
-//            System.out.println("2) Dual Daggers: " + dualDag.printDescription());
-//            Thread.sleep(2000);
-//            System.out.println("3) Heavy Machete: " + machete.printDescription());
-//            System.out.println("=============================================================================================");
-//            Thread.sleep(2000);
-//            System.out.print("Pick a Weapon [1|2|3]: ");
-//
-//            do
-//            {
-//                userInput = scan.nextLine();
-//                try
-//                {
-//                    weaponChoice = Integer.parseInt(userInput);
-//                    if (weaponChoice != 1 && weaponChoice != 2 && weaponChoice != 3)
-//                    {
-//                        System.out.println("[Invalid input! Please input a number from 1 - 3!]");
-//                        isValid = false;
-//                    }
-//                    else
-//                    {
-//                        switch (weaponChoice)
-//                        {
-//                            case 1:
-//                                player.pickupItem(barbedBat);
-//                                break;
-//                            case 2:
-//                                player.pickupItem(dualDag);
-//                                break;
-//                            case 3:
-//                                player.pickupItem(machete);
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        isValid = true;
-//                    }
-//                }
-//                catch (NumberFormatException e)
-//                {
-//
-//                    isValid = false;
-//                    System.out.println("[Invalid input! Please input a number from 1 - 3]");
-//                }
-//            } while (!isValid);  //Validates user input to make sure it is a number between 1 - 3.
-//
-//            System.out.println("");
-//            System.out.println("You hear a strange howl followed by loud, inhuman footsteps. The entity has arrived");
-//            Thread.sleep(3000);
-//            System.out.println("");
-//            System.out.println("You think to yourself: If you can kill the entity, this apocalypse will finally be over.");
-//            Thread.sleep(3000);
-//            System.out.println("");
-//            System.out.println("You then cut a piece of your clothes to make a blindfold to protect yourself from the Entity's powers.");
-//            Thread.sleep(3000);
-//            System.out.println("");
-//            System.out.println("=============================================================================================");
-//            System.out.println("With your new found determination, you walk out of the room and towards the howl.");
-//            System.out.println("=============================================================================================");
-//
-//            player.setCurrentStageLevel(new Stage_4());
-//            player.getCurrentStage().initiateStage(player);
-//        }
-//        catch (InterruptedException ex)
-//        {
-//            Thread.currentThread().interrupt(); // restore interrupted status
-//        }
-//    }
+     private class DrawingPanel extends JPanel implements ActionListener
+    {
+        private Timer timer = new Timer(5000, this);
+        
+        public String Stage3_story[] =
+        {
+            "After avoiding all the guards, your hear the Entity's howl.",
+            "You found a room where the police used to store confiscated weapons...",
+            "This is the perfect opportunity to kill the Entity, you need to arm yourself.",
+            "The door is locked. Use the clips to break in and find a weapon!",
+            "Lockpick successful. You open the door to find a room full of guns.",
+            "Knowing the guns in this room will do nothing because of the entity's power... ",
+            "...you dig around to find some melee weapons for a fight without vision...",
+        };
+
+        public DrawingPanel()
+        {
+            super();
+
+        }
+
+        /**
+         * Draws all the components of the drawing panel
+         *
+         * @param g specifies the current graphic space the panel is using.
+         */
+        @Override
+        public void paintComponent(Graphics g)
+        {
+            super.paintComponent(g);
+            if (i < 6)
+            {
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                g.drawString(Stage3_story[i], 30, 280);
+            }
+            else
+            {
+                Image image = Toolkit.getDefaultToolkit().getImage("background/Stage1_Prison.png");
+                g.drawImage(image, 0, 0, this);
+            }
+            timer.start();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if (i < 6)
+            {
+                i++;
+                repaint();
+            }
+            else
+            {
+                //Do nothing
+            }
+            
+        }
+    }
+    
+
 }

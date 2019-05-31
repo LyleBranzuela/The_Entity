@@ -133,11 +133,11 @@ public class UtilityMethods extends JFrame
         
         catch(IOException e)
         {
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "IOexception error");
         } 
         
         catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(null, "Error");
+            JOptionPane.showMessageDialog(null, "Inteerrupted Error");
         }
     }
     
