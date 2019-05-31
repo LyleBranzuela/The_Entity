@@ -5,9 +5,7 @@
  */
 package GUI;
 
-import GameEntities.Player;
 import MenuPanels.PanelManager;
-import Stages.*;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -30,8 +28,6 @@ public class MainDriver
         // Connect to the To the PlayerDatabase();
         DatabaseManager.connectToPlayerDatabase();
         DatabaseManager.createPlayerSaveDatabase();
-        DatabaseManager.savePlayerToDatabase(new Player("Lyle"), false);
-        // DatabaseManager.savePlayerToDatabase(new Player("Cody"), true);
 
         // Instantiate Panel Manager
         PanelManager myPanel = new PanelManager();
@@ -45,6 +41,7 @@ public class MainDriver
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(new Point((d.width / 2) - (frame.getWidth() / 2), (d.height / 2) - (frame.getHeight() / 2)));
         frame.setVisible(true);
+<<<<<<< HEAD
         
         UtilityMethods utils = new UtilityMethods();
         utils.playSoundtrack("sound\\Ambient_Spooky_Music.wav", 300);
@@ -61,6 +58,8 @@ public class MainDriver
 //        DatabaseManager.savePlayerToDatabase(TestPlayer2ndStage, false);
 //        DatabaseManager.savePlayerToDatabase(TestPlayer3rdStage, false);
 //        DatabaseManager.savePlayerToDatabase(TestPlayer4thStage, false);
+=======
+>>>>>>> 1104a6facbfea39631a72344687767abf9431fab
     }
 
 }

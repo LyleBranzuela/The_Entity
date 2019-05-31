@@ -12,7 +12,7 @@ import java.awt.Graphics;
  * 
  * @author lyleb and khoap.
  */
-public class Monster extends Entity implements Enemy
+public class Monster extends Entity
 {
     public Monster(String name)
     {
@@ -20,32 +20,12 @@ public class Monster extends Entity implements Enemy
     }
 
     /**
-     * 
-     * @param player 
-     */
-    @Override
-    public void attackPlayer(Player player)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * 
-     * @param damage 
-     */
-    @Override
-    public void attackedByPlayer(int damage)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * 
-     * @param g 
+     * Monster is never seen in the game.
+     * @param g graphics to be drawn on.
      */
     @Override
     public void draw(Graphics g)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Monster is never seen in the game.
     }
 }

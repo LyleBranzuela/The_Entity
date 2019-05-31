@@ -14,21 +14,21 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -84,8 +84,10 @@ public class Credits extends JPanel implements ActionListener
             " ",
             "[IMAGES USED]",
             "> Stage 1: Prison Cell - AstroDev (CC0 Public Domain)",
-            "> Stage 2: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use)",
-            "> Stage 4: Ruins Background - ArtCoreStudios - (CC0 Public Domain)"
+            "> Stage 4: Dead Monster - Ratoca (Vector Stock License, Attribution)",
+            "> Stage 4: Ruins Background - ArtCoreStudios - (CC0 Public Domain)",
+            "> Menu Screen: Ruins Background - ArtCoreStudios - (CC0 Public Domain)",
+            "> Pause Screen: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use)"
         };
         // Adding the credits to the JList
         this.model = new DefaultListModel();
@@ -100,7 +102,7 @@ public class Credits extends JPanel implements ActionListener
         this.creditList.setForeground(this.designAttributes.secondaryColor);
         this.creditList.setOpaque(false);
         this.creditList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.creditList.setFont(new Font("Tahoma", Font.BOLD, 16));
+        this.creditList.setFont(new Font("Tahoma", Font.BOLD, 14));
         this.creditList.setCellRenderer(new OpaqueCellRenderer());
         
         // Makes the JList unselectable
@@ -128,8 +130,25 @@ public class Credits extends JPanel implements ActionListener
         add(this.creditsLabel, BorderLayout.NORTH);
         add(this.creditsPanel, BorderLayout.WEST);
         add(this.backButton, BorderLayout.SOUTH);
+        
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
+        // Customized Action for pressing Escape
+        Action escapeAction = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                cl.show(PanelManager.menuCardPanel, "MAINMENU");
+            }
+        };
+        // Adding an action map to the input map
+        this.getActionMap().put("Escape", escapeAction);
     }
 
+    /**
+     * Makes the JList into opaque.
+     */
     public class OpaqueCellRenderer extends DefaultListCellRenderer
     {
 

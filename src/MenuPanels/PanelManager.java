@@ -21,7 +21,7 @@ public class PanelManager extends JPanel
     public static JPanel menuCardPanel;
     public static boolean backToMainMenu;
     public static Player player;
-    public JPanel mainMenuPanel, midGameMenuPanel, creditsPanel, optionsPanel, gameOverPanel;
+    public JPanel mainMenuPanel, midGameMenuPanel, creditsPanel, gameOverPanel;
     public static JPanel loadMenuPanel;
     public static Stage_1 stage1Panel;
     public static Stage_2 stage2Panel;
@@ -40,7 +40,6 @@ public class PanelManager extends JPanel
         player = new Player("PlaceHolder");
         this.mainMenuPanel = new StartMenu();
         this.midGameMenuPanel = new MidGameMenu();
-        this.optionsPanel = new Options();
         this.creditsPanel = new Credits();
         this.gameOverPanel = new GameOverMenu();
         loadMenuPanel = new LoadMenu();
@@ -58,7 +57,6 @@ public class PanelManager extends JPanel
         menuCardPanel.add(mainMenuPanel, "MAINMENU");
         menuCardPanel.add(midGameMenuPanel, "MIDGAMEMENU");
         menuCardPanel.add(loadMenuPanel, "LOADSCREEN");
-        menuCardPanel.add(optionsPanel, "OPTIONSCREEN");
         menuCardPanel.add(creditsPanel, "CREDITSCREEN");
         menuCardPanel.add(gameOverPanel, "GAMEOVERSCREEN");
         

@@ -13,6 +13,9 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -30,7 +33,7 @@ public class StartMenu extends JPanel implements ActionListener
 {
 
     private JLabel gameName;
-    public JButton newGameButton, loadGameButton, optionsButton, creditsButton, exitButton;
+    public JButton newGameButton, loadGameButton, creditsButton, exitButton;
     private JPanel menuListPanel;
     private DesignAttributes designAttributes;
 
@@ -40,6 +43,7 @@ public class StartMenu extends JPanel implements ActionListener
     public StartMenu()
     {
         super(new BorderLayout());
+        repaint();
         this.designAttributes = new DesignAttributes();
 
         this.gameName = new JLabel("The Entity");
@@ -58,11 +62,6 @@ public class StartMenu extends JPanel implements ActionListener
                 designAttributes.secondaryColor, null, true);
         this.loadGameButton.addActionListener(this);
 
-        // Options Button
-        this.optionsButton = UtilityMethods.generateButton("Options", 32,
-                designAttributes.secondaryColor, null, true);
-        this.optionsButton.addActionListener(this);
-
         // Credits Button
         this.creditsButton = UtilityMethods.generateButton("Credits", 32,
                 designAttributes.secondaryColor, null, true);
@@ -77,19 +76,18 @@ public class StartMenu extends JPanel implements ActionListener
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(this.newGameButton);
         buttonGroup.add(this.loadGameButton);
-        buttonGroup.add(this.optionsButton);
         buttonGroup.add(this.creditsButton);
         buttonGroup.add(this.exitButton);
 
         // Combining all the components into a single JPanel
         this.menuListPanel = new JPanel();
+        this.menuListPanel.setBackground(Color.BLACK);
+        this.menuListPanel.setOpaque(false);
         this.menuListPanel.add(this.gameName);
         this.menuListPanel.add(this.newGameButton);
         this.menuListPanel.add(this.loadGameButton);
-        this.menuListPanel.add(this.optionsButton);
         this.menuListPanel.add(this.creditsButton);
         this.menuListPanel.add(this.exitButton);
-        this.menuListPanel.setBackground(Color.BLACK);
         this.menuListPanel.setLayout(new BoxLayout(this.menuListPanel, BoxLayout.Y_AXIS));
         this.menuListPanel.setBorder(designAttributes.marginBorder);
 
@@ -135,12 +133,6 @@ public class StartMenu extends JPanel implements ActionListener
             PanelManager.setBackToMainMenu(true);
             cl.show(PanelManager.menuCardPanel, "LOADSCREEN");
         }
-        // Goes to the Options Panel
-        else if (source == this.optionsButton)
-        {
-            PanelManager.setBackToMainMenu(true);
-            cl.show(PanelManager.menuCardPanel, "OPTIONSCREEN");
-        }
         // Goes to the Credits Panel
         else if (source == this.creditsButton)
         {
@@ -152,5 +144,13 @@ public class StartMenu extends JPanel implements ActionListener
         {
             UtilityMethods.exitConfirmation();
         }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        Image image = Toolkit.getDefaultToolkit().getImage("background/Stage4_Ruins.jpg");
+        g.drawImage(image, 0, 0, this);
     }
 }

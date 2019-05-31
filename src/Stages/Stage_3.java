@@ -38,18 +38,24 @@ import javax.swing.Timer;
  */
 public class Stage_3 extends Stage
 {
+
     private Player currentPlayer;
     public boolean lockpickCompleted, stageCompleted;
     private DrawingPanel drawingPanel;
+<<<<<<< HEAD
     UtilityMethods utils = new UtilityMethods();
     private int k, i, lock1, lock2, lock3, unlock1, unlock2, unlock3 ;
     JButton section1, section2, section3, batButton, dagButton, macButton;
     
+=======
+    private int i;
+
+>>>>>>> 1104a6facbfea39631a72344687767abf9431fab
     public Stage_3()
     {
         super();
         super.stageLevel = 3;
-        
+
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
@@ -115,8 +121,7 @@ public class Stage_3 extends Stage
 
         add(this.drawingPanel);
     }
-    
-    
+
     @Override
     public void updateStagePlayer()
     {
@@ -132,11 +137,12 @@ public class Stage_3 extends Stage
         this.lock2 = UtilityMethods.randNum(3) + 1;
         this.lock3 = UtilityMethods.randNum(3) + 1;
     }
-    
-     private class DrawingPanel extends JPanel implements ActionListener
+
+    private class DrawingPanel extends JPanel implements ActionListener
     {
+
         private Timer timer = new Timer(5000, this);
-        
+
         public String Stage3_story[] =
         {
             "After avoiding all the guards, your hear the Entity's howl.",
@@ -164,7 +170,11 @@ public class Stage_3 extends Stage
             if (i < 4)
             {
                 g.setColor(Color.WHITE);
+<<<<<<< HEAD
                 g.setFont(new Font("Tahoma", Font.PLAIN, 16));
+=======
+                g.setFont(new Font("Tahoma", Font.BOLD, 14));
+>>>>>>> 1104a6facbfea39631a72344687767abf9431fab
                 g.drawString(Stage3_story[i], 30, 280);
             }
             else
@@ -238,6 +248,7 @@ public class Stage_3 extends Stage
                 i++;
                 repaint();
             }
+<<<<<<< HEAD
             
            
             
@@ -313,8 +324,10 @@ public class Stage_3 extends Stage
             
         
             
+=======
+
+>>>>>>> 1104a6facbfea39631a72344687767abf9431fab
         }
     }
-    
 
 }

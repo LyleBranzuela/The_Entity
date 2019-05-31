@@ -69,13 +69,15 @@ public class Stage_2 extends Stage
         // Initiate the Patrols
         this.enemyPatrol = new ArrayList<>();
         this.enemyPatrol.add(new EnemyPatrol("Patrol 1", 0, EntityMovement.LEFT));
-        this.enemyPatrol.get(0).entityMovement.setMovementSpeed(1);
-        this.enemyPatrol.add(new EnemyPatrol("Patrol 2", 0, EntityMovement.FORWARD));
+        this.enemyPatrol.get(0).entityMovement.setMovementSpeed(2);
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 2", 0, EntityMovement.BACKWARD));
         this.enemyPatrol.get(1).entityMovement.setMovementSpeed(1);
-        this.enemyPatrol.add(new EnemyPatrol("Patrol 3", 0, EntityMovement.BACKWARD));
-        this.enemyPatrol.get(2).entityMovement.setMovementSpeed(1);
-        this.enemyPatrol.add(new EnemyPatrol("Patrol 4", 0, EntityMovement.RIGHT));
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 3", 0, EntityMovement.RIGHT));
+        this.enemyPatrol.get(2).entityMovement.setMovementSpeed(2);
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 4", 0, EntityMovement.FORWARD));
         this.enemyPatrol.get(3).entityMovement.setMovementSpeed(1);
+        this.enemyPatrol.add(new EnemyPatrol("Patrol 5", 0, EntityMovement.RIGHT));
+        this.enemyPatrol.get(4).entityMovement.setMovementSpeed(2);
 
         // Customized Action for pressing Escape
         Action escapeAction = new AbstractAction()
@@ -124,7 +126,7 @@ public class Stage_2 extends Stage
         this.currentPlayer = PanelManager.getCurrentPlayer();
         
         // Starting Player Tile - Center of X at the bottom of Y
-        int x = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getX() - 5;
+        int x = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getX() + 10;
         int y = this.tileSet[GRID_AMOUNT - 1][GRID_AMOUNT - 1].getY() + 10;
         this.currentPlayer.entityMovement.setLocation(x, y);
         setEnemyPositions();
@@ -146,16 +148,21 @@ public class Stage_2 extends Stage
         y = this.tileSet[(GRID_AMOUNT / 2) - 1][7].getY();
         this.enemyPatrol.get(1).entityMovement.setLocation(x, y);
         
+        // Middle 
+        x = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getX() + 10;
+        y = this.tileSet[(GRID_AMOUNT / 2) - 1][(GRID_AMOUNT / 2) - 1].getY();
+        this.enemyPatrol.get(2).entityMovement.setLocation(x, y);
+        
         // Middle Bottom
         x = this.tileSet[(GRID_AMOUNT / 2) - 3][(GRID_AMOUNT / 2) - 3].getX() + 10;
         y = this.tileSet[(GRID_AMOUNT / 2) - 3][(GRID_AMOUNT / 2) - 3].getY();
-        this.enemyPatrol.get(2).entityMovement.setLocation(x, y);
+        this.enemyPatrol.get(3).entityMovement.setLocation(x, y);
         
         // Bottom Left
         x = this.tileSet[GRID_AMOUNT - 4][0].getX() + 5;
         y = this.tileSet[GRID_AMOUNT - 4][GRID_AMOUNT - 1].getY()
                 + this.tileSet[GRID_AMOUNT - 4][GRID_AMOUNT - 1].getHeight() + 10;
-        this.enemyPatrol.get(3).entityMovement.setLocation(x, y);
+        this.enemyPatrol.get(4).entityMovement.setLocation(x, y);
     }
 
     /**
@@ -207,11 +214,23 @@ public class Stage_2 extends Stage
                 int patrolX = ep.entityMovement.getXMovement();
                 int patrolY = ep.entityMovement.getYMovement();
 
-                // Check Detection
-                if (playerX >= patrolX && playerY >= patrolY
-                        && playerX <= (patrolX + 75) && playerY <= (patrolY + 75) )
+                // Check Detection and what direction is the entity patrolling to.
+                if (ep.initialDirection == EntityMovement.LEFT || 
+                        ep.initialDirection == EntityMovement.RIGHT)
                 {
-                    detected = true;
+                    if (playerX >= patrolX && playerY >= patrolY
+                            && playerX <= (patrolX + 30) && playerY <= (patrolY + 75))
+                    {
+                        detected = true;
+                    }
+                }
+                else
+                {
+                    if (playerX >= patrolX && playerY >= patrolY
+                            && playerX <= (patrolX + 75) && playerY <= (patrolY + 30))
+                    {
+                        detected = true;
+                    }
                 }
             }
         }
@@ -251,6 +270,7 @@ public class Stage_2 extends Stage
                     int height = tileSet[row][col].getHeight();
                     g.setColor(new Color(56, 56, 56)); 
                     g.fillRect(x, y, width, height);
+                    g.drawString("OBJECTIVE: Search the room and find a way to escape!", 250, 70);
                 }
             }
 

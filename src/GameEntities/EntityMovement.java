@@ -43,7 +43,7 @@ public class EntityMovement
      * 
      * @param movementSpeed the movement speed desired by the caller.
      */
-    public void  setMovementSpeed(int movementSpeed)
+    public void setMovementSpeed(int movementSpeed)
     {
         this.movementSpeed = movementSpeed;
     }

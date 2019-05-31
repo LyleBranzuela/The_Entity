@@ -1,5 +1,5 @@
 Stage 1: Prison Cell - AstroDev (CC0 Public Domain)
-Stage 2: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use, no attribution)
-Stage 4: Ruins Background - ArtCoreStudios - (CC0 Public Domain)
-
 Stage 4: Dead Monster - Ratoca (Vector Stock License, Attribution)
+Stage 4: Ruins Background - ArtCoreStudios - (CC0 Public Domain)
+Menu Screen: Ruins Background - ArtCoreStudios - (CC0 Public Domain)
+Pause Screen: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use, no attribution)

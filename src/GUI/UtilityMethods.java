@@ -100,7 +100,7 @@ public class UtilityMethods extends JFrame
     public static void exitConfirmation()
     {
         int confirmDialog = JOptionPane.showConfirmDialog(null, "Would You Like To Exit?", "Warning", JOptionPane.OK_CANCEL_OPTION);
-        if (confirmDialog == JOptionPane.YES_OPTION)
+        if (confirmDialog == JOptionPane.OK_OPTION)
         {
             System.exit(0);
         }

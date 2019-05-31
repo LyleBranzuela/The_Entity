@@ -20,7 +20,7 @@ public class Bat extends Item implements Weapon
      */
     public Bat()
     {
-        super("Barbed Bat", 1);
+        super("Bat", 1);
     }
 
     /**
