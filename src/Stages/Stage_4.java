@@ -8,13 +8,12 @@ package Stages;
 import GUI.DesignAttributes;
 import GUI.UtilityMethods;
 import GameEntities.*;
+import Items.Blindfold;
 import MenuPanels.PanelManager;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,7 +21,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
@@ -69,52 +67,42 @@ public class Stage_4 extends Stage implements ActionListener
         this.yesOption = UtilityMethods.generateButton("Yes", 16,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, false);
         this.yesOption.addActionListener(this);
-        this.yesOption.setBounds(500, 50, 250, 300);
+        this.yesOption.setLocation(400,300);
         
         // No Option
         this.noOption = UtilityMethods.generateButton("No", 16,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, false);
         this.noOption.addActionListener(this);
-        this.noOption.setBounds(50, 50, 250, 300);
+        this.noOption.setLocation(600,300);
         
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.add(this.yesOption);
         this.drawingPanel.add(this.noOption);
         this.drawingPanel.setBackground(Color.BLACK);
 
+        repaint();
         updateStagePlayer();
         add(this.drawingPanel);
     }
 
+    /**
+     * Updates the stage player.
+     */
     @Override
     public void updateStagePlayer()
     {
         this.currentPlayer = PanelManager.getCurrentPlayer();
+                /* 
+        
+        
+                    For CHECKING ONLY
+        
+        
+                */
+                this.currentPlayer.pickupItem(new Blindfold());
         this.wearingBlindfold = false;
-    }
-
-    public void startFindingPhase()
-    {
-        // Check if the current player has a blindfold
-        if (this.currentPlayer.hasBlindfold)
-        {
-            int confirmDialog = JOptionPane.showConfirmDialog(null, "Wear the Blindfold?", "Blindfold", JOptionPane.YES_NO_OPTION);
-            if (confirmDialog == JOptionPane.YES_OPTION)
-            {
-                this.wearingBlindfold = true;
-                repaint();
-            }
-            else if (confirmDialog == JOptionPane.NO_OPTION)
-            {
-                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-                cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
-            }
-        }
-        else
-        {
-            CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-            cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
-        }
+        this.yesOption.setVisible(true);
+        this.noOption.setVisible(true);
     }
 
     @Override
@@ -126,13 +114,18 @@ public class Stage_4 extends Stage implements ActionListener
             if (source == this.yesOption)
             {
                 this.wearingBlindfold = true;
-                repaint();
+                this.yesOption.setVisible(false);
+                this.noOption.setVisible(false);
             }
             else if (source == this.noOption)
             {
+                this.wearingBlindfold = false;
+                this.yesOption.setVisible(false);
+                this.noOption.setVisible(false);
                 CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                 cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
             }
+            repaint();
         }
         else
         {
@@ -162,12 +155,13 @@ public class Stage_4 extends Stage implements ActionListener
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
-            if (wearingBlindfold)
+            if (!wearingBlindfold)
             {
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Tahoma", Font.BOLD, 20));
-                g.drawString("Wear the blindfold?", 140, 100);
+                g.drawString("Wear the blindfold?", 300, 300);
                 
+                // Ending Screen
 //                Image image = Toolkit.getDefaultToolkit().getImage("background/Monster_And_Stage_Combined.jpg");
 //                g.drawImage(image, 0, 0, this);
             }

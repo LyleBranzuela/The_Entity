@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
  */
 public class EntityMovementTest
 {
+    private EntityMovement emt;
     
     public EntityMovementTest()
     {
@@ -37,6 +38,7 @@ public class EntityMovementTest
     @Before
     public void setUp()
     {
+        this.emt = new EntityMovement(0, 0); 
     }
     
     @After
@@ -51,11 +53,12 @@ public class EntityMovementTest
     public void testSetMovementSpeed()
     {
         System.out.println("setMovementSpeed");
-        int movementSpeed = 0;
-        EntityMovement instance = null;
-        instance.setMovementSpeed(movementSpeed);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int movementSpeed = 2;
+        int expResult = 2;
+        
+        emt.setMovementSpeed(movementSpeed);
+        int result = emt.getMovementSpeed();
+        assertEquals(expResult, result, 0);
     }
 
     /**
@@ -65,12 +68,9 @@ public class EntityMovementTest
     public void testGetMovementSpeed()
     {
         System.out.println("getMovementSpeed");
-        EntityMovement instance = null;
-        int expResult = 0;
-        int result = instance.getMovementSpeed();
+        int expResult = 2;
+        int result = emt.getMovementSpeed();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -80,12 +80,9 @@ public class EntityMovementTest
     public void testGetXMovement()
     {
         System.out.println("getXMovement");
-        EntityMovement instance = null;
         int expResult = 0;
-        int result = instance.getXMovement();
+        int result = emt.getXMovement();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -95,12 +92,9 @@ public class EntityMovementTest
     public void testGetYMovement()
     {
         System.out.println("getYMovement");
-        EntityMovement instance = null;
         int expResult = 0;
-        int result = instance.getYMovement();
+        int result = emt.getXMovement();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -110,12 +104,9 @@ public class EntityMovementTest
     public void testGetPointMovement()
     {
         System.out.println("getPointMovement");
-        EntityMovement instance = null;
-        Point expResult = null;
-        Point result = instance.getPointMovement();
+        Point expResult = new Point(0, 0);
+        Point result = emt.getPointMovement();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
