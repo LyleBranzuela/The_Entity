@@ -47,7 +47,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- *
+ * JPanel for the load game screen.
+ * 
  * @author lyleb and khoap
  */
 public class LoadMenu extends JPanel implements ActionListener, ListSelectionListener
@@ -60,6 +61,9 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
     private DefaultTableModel tableModel;
     private Object[][] data;
 
+    /**
+     * Constructor for the load game screen panel.
+     */
     public LoadMenu()
     {
         super(new BorderLayout());
@@ -145,6 +149,7 @@ public class LoadMenu extends JPanel implements ActionListener, ListSelectionLis
         this.loadMenuListPanel.setLayout(new BoxLayout(this.loadMenuListPanel, BoxLayout.Y_AXIS));
 
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
+        
         // Customized Action for pressing Escape
         Action escapeAction = new AbstractAction()
         {

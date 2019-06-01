@@ -39,6 +39,9 @@ public class GameOverMenu extends JPanel implements ActionListener
     private DesignAttributes designAttributes;
     private JButton retryButton, saveGameButton, mainMenuButton, exitButton;
 
+    /**
+     * Constructor for the Game Over Menu Panel.
+     */
     public GameOverMenu()
     {
         super(new BorderLayout());

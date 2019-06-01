@@ -5,9 +5,10 @@
  */
 package GameEntities;
 
-import Items.Item;
+import Items.*;
 import Stages.Stage;
-import java.awt.Graphics;
+import Stages.Stage_1;
+import Stages.Stage_2;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,7 +23,7 @@ import static org.junit.Assert.*;
  */
 public class PlayerTest
 {
-    
+    private Player testPlayer;
     public PlayerTest()
     {
     }
@@ -40,6 +41,7 @@ public class PlayerTest
     @Before
     public void setUp()
     {
+        this.testPlayer = new Player("testPlayer");
     }
     
     @After
@@ -54,12 +56,23 @@ public class PlayerTest
     public void testPickupItem()
     {
         System.out.println("pickupItem");
-        Item item = null;
-        Player instance = null;
-        instance.pickupItem(item);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Item item = new Blindfold();
+        this.testPlayer.pickupItem(item);
+        assertEquals(true, this.testPlayer.hasBlindfold);
     }
+    
+    /**
+     * Test of pickupItem (WEAPON) method, of class Player.
+     */
+    @Test
+    public void testPickupItemWeapon()
+    {
+        System.out.println("pickupWeaponItem");
+        Item item = new Bat();
+        this.testPlayer.pickupItem(item);
+        assertEquals(item, this.testPlayer.getWeapon());
+    }
+
 
     /**
      * Test of getWeapon method, of class Player.
@@ -68,12 +81,10 @@ public class PlayerTest
     public void testGetWeapon()
     {
         System.out.println("getWeapon");
-        Player instance = null;
-        Item expResult = null;
-        Item result = instance.getWeapon();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Item item = new Daggers();
+        this.testPlayer.pickupItem(item);
+        Item result = this.testPlayer.getWeapon();
+        assertEquals(item, result);
     }
 
     /**
@@ -83,11 +94,10 @@ public class PlayerTest
     public void testSetCurrentStageLevel()
     {
         System.out.println("setCurrentStageLevel");
-        Stage stage = null;
-        Player instance = null;
-        instance.setCurrentStageLevel(stage);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Stage stage = new Stage_1();
+        this.testPlayer.setCurrentStageLevel(stage);
+        Stage result = this.testPlayer.getCurrentStage();
+        assertEquals(stage, result);
     }
 
     /**
@@ -97,26 +107,9 @@ public class PlayerTest
     public void testGetCurrentStage()
     {
         System.out.println("getCurrentStage");
-        Player instance = null;
-        Stage expResult = null;
-        Stage result = instance.getCurrentStage();
+        Stage expResult = new Stage_1();
+        this.testPlayer.setCurrentStageLevel(expResult);
+        Stage result = this.testPlayer.getCurrentStage();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of draw method, of class Player.
-     */
-    @Test
-    public void testDraw()
-    {
-        System.out.println("draw");
-        Graphics g = null;
-        Player instance = null;
-        instance.draw(g);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }

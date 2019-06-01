@@ -26,7 +26,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
+ * JPanel for the Start Menu screen.
+ *  
  * @author lyleb and khoap
  */
 public class StartMenu extends JPanel implements ActionListener
@@ -38,7 +39,7 @@ public class StartMenu extends JPanel implements ActionListener
     private DesignAttributes designAttributes;
 
     /**
-     *
+     * Constructor for the start menu panel.
      */
     public StartMenu()
     {

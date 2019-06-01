@@ -31,7 +31,6 @@ import javax.swing.KeyStroke;
  */
 public class Stage_4 extends Stage implements ActionListener
 {
-
     private Player currentPlayer;
     private DrawingPanel drawingPanel;
     private JButton yesOption, noOption;

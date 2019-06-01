@@ -40,13 +40,10 @@ public class Stage_1 extends Stage
     private boolean clueFound;
     public Player currentPlayer;
     private DrawingPanel drawingPanel;
-    private int i, lock1, lock2, lock3, unlock1, unlock2, unlock3 ;
-<<<<<<< HEAD
-    UtilityMethods utils = new UtilityMethods();
-=======
+    private int i, lock1, lock2, lock3, unlock1, unlock2, unlock3;
+    private UtilityMethods utils = new UtilityMethods();
     private DesignAttributes designAttributes;
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
-    JButton clue, section1, section2, section3;
+    private JButton clue, section1, section2, section3;
     
     /**
      *
@@ -68,24 +65,6 @@ public class Stage_1 extends Stage
         clue.setBounds(50, 50, 220, 250);
         clue.addActionListener(this.drawingPanel);
         
-<<<<<<< HEAD
-        section1 = new JButton("Section 1");
-        section1.setOpaque(false);
-        section1.setContentAreaFilled(false);
-        section1.setBorderPainted(false);
-        section1.addActionListener(this.drawingPanel);
-        
-        section2 = new JButton("Section 2");
-        section2.setOpaque(false);
-        section2.setContentAreaFilled(false);
-        section2.setBorderPainted(false);
-        section2.addActionListener(this.drawingPanel);
-        
-        section3 = new JButton("Section 3");
-        section3.setOpaque(false);
-        section3.setContentAreaFilled(false);
-        section3.setBorderPainted(false);
-=======
         section1 = UtilityMethods.generateButton("Section 1", 11,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, true);
         section1.setBounds(500, 50, 250, 300);
@@ -99,7 +78,6 @@ public class Stage_1 extends Stage
         section3 = UtilityMethods.generateButton("Section 3", 11,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, true);
         section3.setBounds(50, 50, 250, 300);
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
         section3.addActionListener(this.drawingPanel);
         
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
@@ -179,11 +157,7 @@ public class Stage_1 extends Stage
             if (i < 6) 
             {
                 g.setColor(Color.WHITE);
-<<<<<<< HEAD
-                g.setFont(new Font("Tahoma", Font.PLAIN, 16));
-=======
                 g.setFont(new Font("Tahoma", Font.BOLD, 18));
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
                 g.drawString(Stage1_story[i], 30, 280);
             } 
             else 
@@ -203,8 +177,8 @@ public class Stage_1 extends Stage
                 g.fillRect(0, 0, 1000, 600);
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Tahoma", Font.BOLD, 20));
-                g.drawString("You've found some clips hidden behind that brick! Perfect for picking locks!", 170, 100);
-                g.drawString("Push the right amount of pins in each section with the clips to unlock door!", 170, 400);  
+                g.drawString("You've found some clips hidden behind that brick! Perfect for picking locks!", 130, 150);
+                g.drawString("Push the right amount of pins in each section with the clips to unlock door!", 130, 400);  
                 
                 section1.setBounds(250,250,100,50);
                 section2.setBounds(450,250,100,50);
@@ -220,16 +194,19 @@ public class Stage_1 extends Stage
                
             }   
             
-           if (isCompleted)
+            if (isCompleted)
             {
                 currentPlayer.setCurrentStageLevel(new Stage_2());
                 PanelManager.setCurrentPlayer(currentPlayer);
                 PanelManager.changeToStagePanel();
             }
-           
-            
         }
 
+        /**
+         * Listens for events from the JPanel
+         * 
+         * @param e event that happened.
+         */
         @Override
         public void actionPerformed(ActionEvent e)
         {

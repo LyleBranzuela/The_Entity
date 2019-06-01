@@ -110,8 +110,8 @@ public class UtilityMethods extends JFrame
     /**
      * Plays a track for a set duration
      * 
-     * @param fileLocation
-     * @param duration
+     * @param fileLocation location of the file
+     * @param duration how long the sound track will play.
      */
     public void playSoundtrack(String fileLocation, int duration)
     {
@@ -124,7 +124,6 @@ public class UtilityMethods extends JFrame
         
             clip.open(ais);
           
-            
             clip.start();
             try 
             {

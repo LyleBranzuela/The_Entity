@@ -205,5 +205,4 @@ public class EntityMovementTest
         assertEquals(expectedX, resultX);
         assertEquals(expectedY, resultY);
     }
-    
 }

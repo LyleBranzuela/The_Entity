@@ -5,6 +5,7 @@
  */
 package Stages;
 
+import GUI.DesignAttributes;
 import GUI.UtilityMethods;
 import GameEntities.Player;
 import Items.Bat;
@@ -42,40 +43,33 @@ public class Stage_3 extends Stage
     private Player currentPlayer;
     public boolean lockpickCompleted, stageCompleted;
     private DrawingPanel drawingPanel;
-<<<<<<< HEAD
-    UtilityMethods utils = new UtilityMethods();
-    private int k, i, lock1, lock2, lock3, unlock1, unlock2, unlock3 ;
-    JButton section1, section2, section3, batButton, dagButton, macButton;
-    
-=======
-    private int i;
-
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
+    private UtilityMethods utils = new UtilityMethods();
+    private int k, i, lock1, lock2, lock3, unlock1, unlock2, unlock3;
+    private JButton section1, section2, section3, batButton, dagButton, macButton;
+    private DesignAttributes designAttributes;
+    /**
+     * Constructor for Stage 3.
+     */
     public Stage_3()
     {
         super();
         super.stageLevel = 3;
 
+        this.designAttributes = new DesignAttributes();
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
         
-        section1 = new JButton("Section 1");
-        section1.setOpaque(false);
-        section1.setContentAreaFilled(false);
-        section1.setBorderPainted(false);
+        section1 = UtilityMethods.generateButton("Section 1", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
         section1.addActionListener(this.drawingPanel);
         
-        section2 = new JButton("Section 2");
-        section2.setOpaque(false);
-        section2.setContentAreaFilled(false);
-        section2.setBorderPainted(false);
+        section2 = UtilityMethods.generateButton("Section 2", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
         section2.addActionListener(this.drawingPanel);
         
-        section3 = new JButton("Section 3");
-        section3.setOpaque(false);
-        section3.setContentAreaFilled(false);
-        section3.setBorderPainted(false);
+        section3 = UtilityMethods.generateButton("Section 3", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
         section3.addActionListener(this.drawingPanel);
         
         Image bat = Toolkit.getDefaultToolkit().getImage("items/Baseball_Bat.png");
@@ -99,7 +93,6 @@ public class Stage_3 extends Stage
         macButton.setContentAreaFilled(false);
         macButton.setBorderPainted(false);
         macButton.addActionListener(this.drawingPanel);
-        
         
         
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
@@ -170,11 +163,11 @@ public class Stage_3 extends Stage
             if (i < 4)
             {
                 g.setColor(Color.WHITE);
-<<<<<<< HEAD
-                g.setFont(new Font("Tahoma", Font.PLAIN, 16));
-=======
-                g.setFont(new Font("Tahoma", Font.BOLD, 14));
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
+                if (i == 1)
+                {
+                    utils.playSoundtrack("sound/Monster_Howl_1.wav", 5);
+                }
+                g.setFont(new Font("Tahoma", Font.BOLD, 18));
                 g.drawString(Stage3_story[i], 30, 280);
             }
             else
@@ -182,8 +175,8 @@ public class Stage_3 extends Stage
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, 1000, 600);
                 g.setColor(Color.WHITE);
-                g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                g.drawString("Push the right amount of pins in each section with the clips to unlock door!", 170, 400);  
+                g.setFont(new Font("Tahoma", Font.BOLD, 20));
+                g.drawString("Push the right amount of pins in each section with the clips to unlock door!", 130, 400);  
                 
                 section1.setBounds(250,250,100,50);
                 section2.setBounds(450,250,100,50);
@@ -204,9 +197,9 @@ public class Stage_3 extends Stage
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, 1000, 600);
                 g.setColor(Color.WHITE);
-                g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                g.drawString("Lockpick successful! You dig around to find something for a fight without vision:", 150, 100);
-                g.drawString("You have found: ", 350, 150);
+                g.setFont(new Font("Tahoma", Font.BOLD, 20));
+                g.drawString("Lockpick successful! You dig around to find something for a fight without vision:", 80, 100);
+                g.drawString("You have found: ", 400, 150);
                 
                 
                 batButton.setLocation(220, 210);
@@ -236,7 +229,6 @@ public class Stage_3 extends Stage
                 PanelManager.setCurrentPlayer(currentPlayer);
                 PanelManager.changeToStagePanel();
             }
-            
         }
 
         @Override
@@ -248,9 +240,6 @@ public class Stage_3 extends Stage
                 i++;
                 repaint();
             }
-<<<<<<< HEAD
-            
-           
             
             if(source == section1 )
             {
@@ -299,12 +288,12 @@ public class Stage_3 extends Stage
                     repaint();
                 }
             }
-            
             else if(source == batButton)
             {
                 Bat baseballBat = new Bat();
                 currentPlayer.pickupItem(baseballBat);
                 stageCompleted = true;
+                repaint();
             }
             
             else if(source == dagButton)
@@ -312,6 +301,7 @@ public class Stage_3 extends Stage
                 Daggers saiDag = new Daggers();
                 currentPlayer.pickupItem(saiDag);
                 stageCompleted = true;
+                repaint();
             }
             
             else if(source == macButton)
@@ -319,14 +309,8 @@ public class Stage_3 extends Stage
                 Machete machete = new Machete();
                 currentPlayer.pickupItem(machete);
                 stageCompleted = true;
+                repaint();
             }
-            
-            
-        
-            
-=======
-
->>>>>>> 1104a6facbfea39631a72344687767abf9431fab
         }
     }
 

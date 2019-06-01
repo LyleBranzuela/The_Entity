@@ -36,7 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 /**
- *
+ * JPanel for the mid game menu screen or the pause screen.
  * @author lyleb and khoap
  */
 public class MidGameMenu extends JPanel implements ActionListener
@@ -48,7 +48,7 @@ public class MidGameMenu extends JPanel implements ActionListener
     private JButton resumeButton, saveGameButton, loadGameButton, mainMenuButton, exitButton;
 
     /**
-     *
+     * Constructor for the MidGameMenu panel.
      */
     public MidGameMenu()
     {

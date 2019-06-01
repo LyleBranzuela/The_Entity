@@ -31,7 +31,8 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
 /**
- *
+ * JPanel for the credits screen.
+ * 
  * @author lyleb and khoap
  */
 public class Credits extends JPanel implements ActionListener
@@ -46,7 +47,7 @@ public class Credits extends JPanel implements ActionListener
     private JLabel creditsLabel;
 
     /**
-     *
+     * Constructor for the Credits Panel.
      */
     public Credits()
     {

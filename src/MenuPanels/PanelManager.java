@@ -12,7 +12,8 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
- *
+ * Class that manages all the Menu Panels as well as the stages.
+ * 
  * @author lyleb and khoap
  */
 public class PanelManager extends JPanel
@@ -28,9 +29,8 @@ public class PanelManager extends JPanel
     public static Stage_3 stage3Panel;
     public static Stage_4 stage4Panel;
     
-    
     /**
-     * 
+     * Constructor for creating the necessary JPanels for the Card Layout.
      */
     public PanelManager()
     {

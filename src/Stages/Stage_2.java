@@ -5,6 +5,7 @@
  */
 package Stages;
 
+import GUI.UtilityMethods;
 import GameEntities.EnemyPatrol;
 import GameEntities.EntityMovement;
 import GameEntities.Player;
@@ -24,7 +25,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.Timer;
 
 /**
  * A separate JPanel meant to handle all the painting and drawing of the
@@ -46,7 +46,7 @@ public class Stage_2 extends Stage
     private static final String MOVE_RIGHT = "Move Right";
     private final int GRID_AMOUNT = 10;
     private ArrayList<EnemyPatrol> enemyPatrol;
-
+    
     /**
      * Constructor for creating Stage 2.
      */

@@ -65,7 +65,6 @@ public class DatabaseManager
             ResultSet tables = dbmd.getTables(null, null, "PLAYERSAVES", null);
             if (!tables.next())
             {
-                // statement.executeUpdate("DROP TABLE PLAYERSAVES");
                 String sqlCreateTable = "CREATE TABLE PLAYERSAVES (PLAYERNAME VARCHAR(20), CURRENTSTAGE INT, HASBLINDFOLD INT, ITEM_ID INT, SAVEDATE TIMESTAMP)";
                 statement.executeUpdate(sqlCreateTable);
             }
