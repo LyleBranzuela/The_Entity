@@ -79,6 +79,7 @@ public class Credits extends JPanel implements ActionListener
             "> Lockpick_Success : tmlappelt - CC BY Sampling+ (Attribution, non-commerial)",
             "> Ambient_Music: FoolBoyMedia - CC BY-NC 3.0 (Attribution, non-commercial)",
             "> Spooky_Music: thebosedeity - CC BY-NC 3.0 (Attribution, non-commercial)",
+            "> MetalDoor_Opening: Free for Public Use",
             " ",
             "[IMAGES USED]",
             "> Stage 1: Prison Cell - AstroDev (CC0 Public Domain)",
