@@ -275,6 +275,7 @@ public class Stage_1 extends Stage
                 else if(unlock3 == lock3)
                 {
                     utils.playSoundtrack("sound/Lockpick_Success.wav", 2);
+                    utils.playSoundtrack("sound/MetalDoor_Opening.wav", 2);
                     section3.setVisible(false);
                     isCompleted = true;
                 }

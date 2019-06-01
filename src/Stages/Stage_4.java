@@ -215,6 +215,9 @@ public class Stage_4 extends Stage
             }
             else if (step == 2)
             {
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, 1000, 600);
+                
                 if (!wearingBlindfold)
                 {
                     CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
@@ -233,6 +236,8 @@ public class Stage_4 extends Stage
             {
                 if (attackBlocked == true)
                 {
+                    g.setColor(Color.BLACK);
+                    g.fillRect(0, 0, 1000, 600);
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Tahoma", Font.BOLD, 16));
                     g.drawString("You blocked the Entity's attack. Finish it now!", 30, 280);
