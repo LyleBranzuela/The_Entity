@@ -79,7 +79,7 @@ public class Stage_4 extends Stage
         yesOption = UtilityMethods.generateButton("Yes", 16,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, false);
         yesOption.addActionListener(this.drawingPanel);
-        yesOption.setLocation(400, 300);
+        yesOption.setLocation(500, 300);
         yesOption.setSize(100, 50);
         
         
@@ -87,7 +87,7 @@ public class Stage_4 extends Stage
         noOption = UtilityMethods.generateButton("No", 16,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, false);
         noOption.addActionListener(this.drawingPanel);
-        noOption.setLocation(700, 300);
+        noOption.setLocation(800, 300);
         noOption.setSize(100, 50);
         
         blockButton = new JButton("Block");
@@ -101,14 +101,12 @@ public class Stage_4 extends Stage
         attackButton.setContentAreaFilled(true);
         attackButton.setBorderPainted(true);
         attackButton.addActionListener(this.drawingPanel);
-
         
         updateStagePlayer();
         this.drawingPanel.add(yesOption);
         this.drawingPanel.add(noOption);
         add(this.drawingPanel);
-        
-         
+  
     }
 
     /**
@@ -118,10 +116,10 @@ public class Stage_4 extends Stage
     public void updateStagePlayer()
     {
         this.monster = new Monster("Monster");
-        this.attackBlocked = true;
         this.i = 0;
         this.step = 0;
         this.blockTime = 0;
+        this.startOfAttack = 0;
         this.currentPlayer = PanelManager.getCurrentPlayer();
         this.currentPlayer.pickupItem(new Blindfold());
         this.wearingBlindfold = false;
@@ -144,8 +142,8 @@ public class Stage_4 extends Stage
         public String Stage4_story[] =
         {
             "Following the Entity's howl to a room, you get ready to engage it...",
-            "The Entity will howl each time it attacks...",
-            "Block all attacks and find opportunities to strike it down...",
+            "The Entity will howl when it attacks...",
+            "Parry its attack and strike it down...",
         };
         public DrawingPanel()
         {
@@ -162,78 +160,87 @@ public class Stage_4 extends Stage
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
+            
             timer.start();
             
             g.setColor(Color.WHITE);
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
-            g.drawString("Actions", 460, 470);
+            g.drawString("Player Actions", 430, 480);
             
             blockButton.setLocation(400, 500);
             blockButton.setSize(100, 35);
-            
+
             attackButton.setLocation(500, 500);
             attackButton.setSize(100, 35);
-            
+           
             add(blockButton);
             add(attackButton);
             
-            switch (step) {
-                case 0:
-                    if (i < 3) {
-                        g.setColor(Color.WHITE);
-                        
-                        g.setFont(new Font("Tahoma", Font.BOLD, 16));
-                        
-                        g.drawString(Stage4_story[i], 30, 280);
-                    } else if (i >= 3) {
-                        step++;
-                    }   break;
-                case 1:
-                    if (!wearingBlindfold) {
-                        g.setColor(Color.WHITE);
-                        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-                        g.drawString("Wear the blindfold?", 400, 70);
-                        yesOption.setVisible(true);
-                        noOption.setVisible(true);
-                    } else {
-                        
-                        
-                    }   break;
-                case 2:
-                    // Set player's health to 0 if attack is unblocked.
-                    
-                    //TODO: FIX LOOPING ON MONSTER ATTACK
+           
+                if (step == 0) {
+                if (i < 3) {
+                    g.setColor(Color.WHITE);
+
+                    g.setFont(new Font("Tahoma", Font.BOLD, 16));
+
+                    g.drawString(Stage4_story[i], 30, 280);
+                } else if (i >= 3) {
+                    step++;
+                }
+
+            } else if (step == 1) {
+                if (!wearingBlindfold) {
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("Tahoma", Font.BOLD, 20));
+                    g.drawString("Wear the blindfold?", 400, 70);
+                    yesOption.setVisible(true);
+                    noOption.setVisible(true);
                     blockButton.setVisible(true);
                     attackButton.setVisible(true);
-                    startOfAttack = System.currentTimeMillis();
+                }
+            } else if (step == 2) {
+                if (!wearingBlindfold) {
+                    CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                    cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+                } else {
+                    blockTime = 0;
+                    startOfAttack = 0;
+                    startOfAttack = System.currentTimeMillis() / 1000L;
                     monster.attack();
-                    if (attackBlocked == true) {
-                        g.setFont(new Font("Tahoma", Font.BOLD, 16));
-                        g.drawString("You blocked the Entity's attack. Finish it now!", 30, 280);
-                    }
-                    else 
-                    {
-                         currentPlayer.setHealth(0);
-                    }
-                        
-                      break;
-                default:
-                    break;
+                }
+
+            } else if (step >= 3) {
+                if (attackBlocked == true) {
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("Tahoma", Font.BOLD, 16));
+                    g.drawString("You blocked the Entity's attack. Finish it now!", 30, 280);
+
+                } else if (attackBlocked == false) {
+                    CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                    cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+                }
             }
-                
+  
             // Victory screen if monster dies
             if (monster.getHealth() <= 0) {
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, 1000, 600);
+                blockButton.setOpaque(false);
+                blockButton.setContentAreaFilled(false);
+                blockButton.setBorderPainted(false);
+                attackButton.setOpaque(false);
+                attackButton.setContentAreaFilled(false);
+                attackButton.setBorderPainted(false);
                 blockButton.setVisible(false);
                 attackButton.setVisible(false);
-                noOption.setVisible(false);
-                yesOption.setVisible(false);
+                        
                 Image image = Toolkit.getDefaultToolkit().getImage("background/Monster_And_Stage_Combined.jpg");
                 g.drawImage(image, 0, 0, this);
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                g.drawString("You have defeated the monster. All slaves return to normal and the apocalypse is over.", 150, 100);
+                g.drawString("You have defeated the monster. After 10 years the apocalypse is finally over.", 140, 100);
             } 
-            
+           
             // Losing screen if player dies.
             else if (currentPlayer.getHealth() <= 0) {
                 CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
@@ -248,50 +255,67 @@ public class Stage_4 extends Stage
             if(i < 3)
             {
                 i++;
-            }
-            repaint();
-            
-            if (currentPlayer.hasBlindfold) {
-                if (source == yesOption) {
-                    wearingBlindfold = true;
-                    yesOption.setVisible(false);
-                    noOption.setVisible(false);
+                repaint();
+                if(i == 3)
+                {
                     step++;
-                } else if (source == noOption) {
-                    wearingBlindfold = false;
-                    yesOption.setVisible(false);
-                    noOption.setVisible(false);
+                }
+            }
+            else
+            {
+                if (currentPlayer.hasBlindfold) {
+                    if (source == yesOption) {
+                        wearingBlindfold = true;
+                        yesOption.setVisible(false);
+                        noOption.setVisible(false);
+                        step++;
+                                 
+                    } else if (source == noOption) {
+                        wearingBlindfold = false;
+                        yesOption.setVisible(false);
+                        noOption.setVisible(false);
+                        CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                        cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+                        step++;
+                      
+                    }
+                   
+                    repaint();
+                } else {
                     CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                     cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
                 }
-                repaint();
-            } else {
-                CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
-                cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+
+                if (source == blockButton) {
+                    //Change value of attackBlocked when pressed
+                    if (startOfAttack == 0) {
+                        // Do nothing if attack not started
+                    } else if (startOfAttack != 0) {
+                        blockTime = 0;
+                        blockTime = System.currentTimeMillis() / 1000L;
+                        blockTime = (blockTime - startOfAttack);
+                        long attackDuration = monster.getAttackDur();
+
+                        System.out.println(blockTime);
+                        if (blockTime <= attackDuration) {
+                            attackBlocked = true;
+                        } else if (blockTime > attackDuration) {
+                            attackBlocked = false;
+                            currentPlayer.setHealth(0);
+                        }
+
+                        step++;
+                        repaint();
+                    }
+                } else if (source == attackButton) {
+                    if (startOfAttack == 0) {
+                        // Do nothing
+                    } else if (startOfAttack != 0) {
+                        monster.setHealth(monster.getHealth() - currentPlayer.getWeapon().attack());
+                        repaint();
+                    }
+                }
         }
-            
-            if(source == blockButton)
-            {
-                //Change value of attackBlocked when pressed
-                blockTime = System.currentTimeMillis();
-                blockTime = blockTime - startOfAttack;
-                long attackDuration = monster.getAttackDur();
-                
-                if(blockTime <= attackDuration)
-                {
-                    attackBlocked = true;    
-                }
-                
-                else if(blockTime > attackDuration)
-                {
-                    attackBlocked = false;
-                }
-            }
-            
-            else if(source == attackButton)
-            {
-                monster.setHealth(monster.getHealth() - currentPlayer.getWeapon().attack());
-            }
         }
     }
 }

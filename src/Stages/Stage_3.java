@@ -148,6 +148,8 @@ public class Stage_3 extends Stage
         this.lock1 = UtilityMethods.randNum(3) + 1;
         this.lock2 = UtilityMethods.randNum(3) + 1;
         this.lock3 = UtilityMethods.randNum(3) + 1;
+        
+        repaint();
     }
 
     private class DrawingPanel extends JPanel implements ActionListener

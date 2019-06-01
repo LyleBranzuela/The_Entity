@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class Monster extends Entity
 {
     UtilityMethods utils = new UtilityMethods();
-    long attackDuration;
+    long attackDuration  = 2L;
     
     public Monster(String name)
     {
@@ -39,15 +39,9 @@ public class Monster extends Entity
      * Function to simulate monster's attack sound
      * 
      */
-    public void attack() {
-
-        long startTime = System.currentTimeMillis();
-
+    public void attack() 
+    {
         utils.playSoundtrack("sound/Monster_Howl_1.wav", 2);
-        long endTime = System.currentTimeMillis();
-
-        this.attackDuration = startTime - endTime;
-
     }
 
     
