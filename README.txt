@@ -8,6 +8,5 @@ NOTE: Play with Sound on!!
 How to run the Game:
 =======================================
 1) Turn on your Apache Derby Server.
-2) Navigate to the folder called dist.
-3) Double click on the "The_Entity.jar".
+2) Run MainDriver.java
 
