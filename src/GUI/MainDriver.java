@@ -5,7 +5,12 @@
  */
 package GUI;
 
+import GameEntities.Player;
 import MenuPanels.PanelManager;
+import Stages.Stage_1;
+import Stages.Stage_2;
+import Stages.Stage_3;
+import Stages.Stage_4;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -15,7 +20,7 @@ import javax.swing.JFrame;
  * Main driver of the game.
  * 
  * @author lyleb and khoap
- */
+*/
 public class MainDriver 
 {
     /**

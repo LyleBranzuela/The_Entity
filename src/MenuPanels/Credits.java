@@ -88,7 +88,8 @@ public class Credits extends JPanel implements ActionListener
             "> Stage 4: Dead Monster - Ratoca (Vector Stock License, Attribution)",
             "> Stage 4: Ruins Background - ArtCoreStudios - (CC0 Public Domain)",
             "> Menu Screen: Ruins Background - ArtCoreStudios - (CC0 Public Domain)",
-            "> Pause Screen: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use)"
+            "> Pause Screen: Scary Hallway - robinsonk26 from Pixabay (Free for commercial use)",
+            "> Door Wallpaper: Door Background - Frantisek Krejci - (Free for commercial use)"
         };
         // Adding the credits to the JList
         this.model = new DefaultListModel();

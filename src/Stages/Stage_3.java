@@ -58,40 +58,13 @@ public class Stage_3 extends Stage
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
         
-        section1 = UtilityMethods.generateButton("Section 1", 11,
-                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
-        section1.addActionListener(this.drawingPanel);
-        
-        section2 = UtilityMethods.generateButton("Section 2", 11,
-                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
-        section2.addActionListener(this.drawingPanel);
-        
-        section3 = UtilityMethods.generateButton("Section 3", 11,
-                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
-        section3.addActionListener(this.drawingPanel);
-        
-        Image bat = Toolkit.getDefaultToolkit().getImage("items/Baseball_Bat.png");
-        Image dualDag = Toolkit.getDefaultToolkit().getImage("items/Dual_Daggers.png");
-        Image machete = Toolkit.getDefaultToolkit().getImage("items/Machete.jpg");
-                
-        batButton = new JButton(new ImageIcon(bat));
-        batButton.setOpaque(false);
-        batButton.setContentAreaFilled(false);
-        batButton.setBorderPainted(false);
-        batButton.addActionListener(this.drawingPanel);
-        
-        dagButton = new JButton(new ImageIcon(dualDag));
-        dagButton.setOpaque(false);
-        dagButton.setContentAreaFilled(false);
-        dagButton.setBorderPainted(false);
-        dagButton.addActionListener(this.drawingPanel);
-        
-        macButton = new JButton(new ImageIcon(machete));
-        macButton.setOpaque(false);
-        macButton.setContentAreaFilled(false);
-        macButton.setBorderPainted(false);
-        macButton.addActionListener(this.drawingPanel);
-        
+        // Set up the JButtons
+        section1 = new JButton();
+        section2 = new JButton();
+        section3 = new JButton();
+        batButton = new JButton();
+        dagButton = new JButton();
+        macButton = new JButton();
         
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         // Customized Action for pressing Escape
@@ -127,6 +100,49 @@ public class Stage_3 extends Stage
         this.lock1 = UtilityMethods.randNum(3) + 1;
         this.lock2 = UtilityMethods.randNum(3) + 1;
         this.lock3 = UtilityMethods.randNum(3) + 1;
+
+        drawingPanel.remove(section1);
+        section1 = UtilityMethods.generateButton("Section 1", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section1.setBounds(500, 50, 250, 300);
+        section1.addActionListener(this.drawingPanel);
+        
+        drawingPanel.remove(section2);
+        section2 = UtilityMethods.generateButton("Section 2", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section2.setBounds(50, 50, 250, 300);
+        section2.addActionListener(this.drawingPanel);
+        
+        drawingPanel.remove(section3);
+        section3 = UtilityMethods.generateButton("Section 3", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section3.setBounds(50, 50, 250, 300);
+        section3.addActionListener(this.drawingPanel);
+        
+        Image bat = Toolkit.getDefaultToolkit().getImage("items/Baseball_Bat.png");
+        Image dualDag = Toolkit.getDefaultToolkit().getImage("items/Dual_Daggers.png");
+        Image machete = Toolkit.getDefaultToolkit().getImage("items/Machete.jpg");
+        
+        drawingPanel.remove(batButton);
+        batButton = new JButton(new ImageIcon(bat));
+        batButton.setOpaque(false);
+        batButton.setContentAreaFilled(false);
+        batButton.setBorderPainted(false);
+        batButton.addActionListener(this.drawingPanel);
+        
+        drawingPanel.remove(dagButton);
+        dagButton = new JButton(new ImageIcon(dualDag));
+        dagButton.setOpaque(false);
+        dagButton.setContentAreaFilled(false);
+        dagButton.setBorderPainted(false);
+        dagButton.addActionListener(this.drawingPanel);
+        
+        drawingPanel.remove(macButton);
+        macButton = new JButton(new ImageIcon(machete));
+        macButton.setOpaque(false);
+        macButton.setContentAreaFilled(false);
+        macButton.setBorderPainted(false);
+        macButton.addActionListener(this.drawingPanel);
     }
 
     private class DrawingPanel extends JPanel implements ActionListener
@@ -136,7 +152,7 @@ public class Stage_3 extends Stage
 
         public String Stage3_story[] =
         {
-            "After avoiding all the guards, your hear the Entity's howl.",
+            "After avoiding all the guards, you hear the Entity's howl.",
             "You found a room where the police used to store confiscated weapons...",
             "This is the perfect opportunity to kill the Entity, you need to arm yourself.",
             "The door is locked. Use the clips to break in and find a weapon!",
@@ -170,8 +186,8 @@ public class Stage_3 extends Stage
             }
             else
             {
-                g.setColor(Color.BLACK);
-                g.fillRect(0, 0, 1000, 600);
+                Image image = Toolkit.getDefaultToolkit().getImage("background/Door_Wallpaper.jpg");
+                g.drawImage(image, 0, 0, this);
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Tahoma", Font.BOLD, 20));
                 g.drawString("Push the right amount of pins in each section with the clips to unlock door!", 130, 400);  

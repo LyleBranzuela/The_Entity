@@ -5,7 +5,6 @@
  */
 package Stages;
 
-import GUI.UtilityMethods;
 import GameEntities.EnemyPatrol;
 import GameEntities.EntityMovement;
 import GameEntities.Player;
@@ -140,7 +139,8 @@ public class Stage_2 extends Stage
     {
         // Top Right
         int x = this.tileSet[GRID_AMOUNT - 1][GRID_AMOUNT - 1].getX() - 10;
-        int y = this.tileSet[0][1].getY() + 10;
+        int y = this.tileSet[0][1].getY()
+                + this.tileSet[0][1].getHeight() + 10;
         this.enemyPatrol.get(0).entityMovement.setLocation(x, y);
 
         // Middle Top
@@ -218,7 +218,7 @@ public class Stage_2 extends Stage
                 if (ep.initialDirection == EntityMovement.LEFT || 
                         ep.initialDirection == EntityMovement.RIGHT)
                 {
-                    if (playerX >= patrolX && playerY >= patrolY
+                    if (playerX >= patrolX && playerY >= patrolY - 75 
                             && playerX <= (patrolX + 30) && playerY <= (patrolY + 75))
                     {
                         detected = true;
@@ -226,7 +226,7 @@ public class Stage_2 extends Stage
                 }
                 else
                 {
-                    if (playerX >= patrolX && playerY >= patrolY
+                    if (playerX >= patrolX - 75 && playerY >= patrolY
                             && playerX <= (patrolX + 75) && playerY <= (patrolY + 30))
                     {
                         detected = true;

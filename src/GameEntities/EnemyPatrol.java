@@ -41,7 +41,7 @@ public class EnemyPatrol extends Entity
         }
         else
         {
-            g.fillOval(x, y + 10, 75, 30);
+            g.fillOval(x, y+10, 75, 30);
         }
         
         //g.setColor(new Color(255,219,172));

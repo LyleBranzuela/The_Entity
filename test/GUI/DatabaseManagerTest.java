@@ -5,7 +5,13 @@
  */
 package GUI;
 
+import static GUI.DatabaseManager.databaseToPlayer;
 import GameEntities.Player;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,13 +43,42 @@ public class DatabaseManagerTest
     @Before
     public void setUp()
     {
+        // Connect to the To the PlayerDatabase();
+        DatabaseManager.connectToPlayerDatabase();
+        DatabaseManager.createPlayerSaveDatabase();
     }
-    
+
     @After
     public void tearDown()
     {
     }
 
+    /**
+     * Test of load player and save player from the database method, of class DatabaseManager.
+     */
+    @Test
+    public void testSaveLoadFunctionsFromDatabase()
+    {
+        System.out.println("testSaveLoadFunctionsFromDatabase");
+        // Save And Load the player
+        Player expectedPlayer = new Player("loadTestPlayer");
+        DatabaseManager.savePlayerToDatabase(expectedPlayer, true);
+        
+        Player result = DatabaseManager.loadPlayerFromDatabase(expectedPlayer.getName());
+        String playerName = result.getName();
+        int stageLevel = result.getCurrentStage().determineStageLevel(result.getCurrentStage());
+        boolean hasBlindFold = result.hasBlindfold;
+        
+        // Test if it's the same as the player that was saved.
+        assertEquals(expectedPlayer.getName(), playerName);
+        assertEquals(expectedPlayer.getCurrentStage().getStageLevel(), stageLevel);
+        assertEquals(expectedPlayer.hasBlindfold, hasBlindFold);
+        assertEquals(expectedPlayer.getWeapon(), result.getWeapon());
+        
+        // Delete player after testing
+        DatabaseManager.deletePlayerFromDatabase(playerName);
+    }
+    
     /**
      * Test of databaseToPlayer method, of class DatabaseManager.
      */

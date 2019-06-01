@@ -106,8 +106,6 @@ public class Stage_4 extends Stage
         this.drawingPanel.add(yesOption);
         this.drawingPanel.add(noOption);
         add(this.drawingPanel);
-        
-         
     }
 
     /**

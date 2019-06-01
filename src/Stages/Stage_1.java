@@ -65,20 +65,10 @@ public class Stage_1 extends Stage
         clue.setBounds(50, 50, 220, 250);
         clue.addActionListener(this.drawingPanel);
         
-        section1 = UtilityMethods.generateButton("Section 1", 11,
-                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
-        section1.setBounds(500, 50, 250, 300);
-        section1.addActionListener(this.drawingPanel);
-        
-        section2 = UtilityMethods.generateButton("Section 2", 11,
-                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
-        section2.setBounds(50, 50, 250, 300);
-        section2.addActionListener(this.drawingPanel);
-        
-        section3 = UtilityMethods.generateButton("Section 3", 11,
-                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
-        section3.setBounds(50, 50, 250, 300);
-        section3.addActionListener(this.drawingPanel);
+        // Set up the JButtons
+        section1 = new JButton();
+        section2 = new JButton();
+        section3 = new JButton();
         
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         // Customized Action for pressing Escape
@@ -95,10 +85,11 @@ public class Stage_1 extends Stage
         // Adding an escape action map to the action map
         this.getActionMap().put("Escape", escapeAction);
         
+        updateStagePlayer(); 
+        
         add(this.clue);
         add(this.drawingPanel);
         
-        updateStagePlayer(); 
     }
 
     /**
@@ -116,7 +107,25 @@ public class Stage_1 extends Stage
         this.unlock3 = 0;
         this.lock1 = UtilityMethods.randNum(3) + 1;
         this.lock2 = UtilityMethods.randNum(3) + 1;
-        this.lock3 = UtilityMethods.randNum(3) + 1;
+        this.lock3 = UtilityMethods.randNum(3) + 1; 
+        
+        drawingPanel.remove(section1);
+        section1 = UtilityMethods.generateButton("Section 1", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section1.setBounds(500, 50, 250, 300);
+        section1.addActionListener(this.drawingPanel);
+        
+        drawingPanel.remove(section2);
+        section2 = UtilityMethods.generateButton("Section 2", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section2.setBounds(50, 50, 250, 300);
+        section2.addActionListener(this.drawingPanel);
+        
+        drawingPanel.remove(section3);
+        section3 = UtilityMethods.generateButton("Section 3", 11,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, true);
+        section3.setBounds(50, 50, 250, 300);
+        section3.addActionListener(this.drawingPanel);
     }
 
     /**
@@ -173,8 +182,8 @@ public class Stage_1 extends Stage
 
             if (clueFound == true) 
             {
-                g.setColor(Color.BLACK);
-                g.fillRect(0, 0, 1000, 600);
+                Image image = Toolkit.getDefaultToolkit().getImage("background/Door_Wallpaper.jpg");
+                g.drawImage(image, 0, 0, this);
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Tahoma", Font.BOLD, 20));
                 g.drawString("You've found some clips hidden behind that brick! Perfect for picking locks!", 130, 150);
@@ -191,8 +200,7 @@ public class Stage_1 extends Stage
                 section1.setOpaque(true);
                 section1.setContentAreaFilled(true);
                 section1.setBorderPainted(true);
-               
-            }   
+            }
             
             if (isCompleted)
             {
