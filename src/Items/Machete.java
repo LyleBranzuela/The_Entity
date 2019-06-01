@@ -11,7 +11,7 @@ package Items;
  *
  * @author lyleb and khoap
  */
-public class Machete extends Item implements Weapon
+public class Machete extends Item 
 {
 
     private final int machDmg = 3;
@@ -44,19 +44,6 @@ public class Machete extends Item implements Weapon
     {
         return this.machDmg; //Returns machete damage for damage calculation
     }
-
-    /**
-     * Parry the attack of the enemy monster with a machete.
-     *
-     * @return the damage taken.
-     */
-    @Override
-    public int parrySeq()
-    {
-
-        return this.machSeq; //Returns int to adjust parry difficulty
-    }
-
 
     /**
      * Prints out the description of the machete.

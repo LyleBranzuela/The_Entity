@@ -10,9 +10,9 @@ package Items;
  * 
  * @author lyleb and khoap
  */
-public class Daggers extends Item implements Weapon
+public class Daggers extends Item 
 {
-    private final int dagDmg = 2;
+    private final int dagDmg = 3;
     private final int dagSeq = 2;
     
     /**
@@ -43,16 +43,6 @@ public class Daggers extends Item implements Weapon
         return dagDmg; //Returns damage of the dagger for use in damage calculation
     }
     
-    /**
-     * Parry the attack of the enemy monster with two daggers.
-     * 
-     * @return the damage taken.
-     */
-    @Override
-    public int parrySeq()
-    {
-        return dagSeq; //Returns int to adjust parry difficulty
-    }
     
     /**
      * Prints out the description of the daggers.

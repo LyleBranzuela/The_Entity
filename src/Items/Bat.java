@@ -10,9 +10,9 @@ package Items;
  *
  * @author lyleb and khoap
  */
-public class Bat extends Item implements Weapon
+public class Bat extends Item
 {
-    private final int batDmg = 1;
+    private final int batDmg = 3;
     private final int batSeq = 1;
     
     /**
@@ -41,17 +41,6 @@ public class Bat extends Item implements Weapon
     public int attack()
     {
         return batDmg; // Returns damage of the bat for use in damage calculation.
-    }
-
-    /**
-     * Parry the attack of the enemy monster with a barbed bat.
-     *
-     * @return the damage taken.
-     */
-    @Override
-    public int parrySeq()
-    {
-        return batSeq; //Returns int to adjust parry difficulty
     }
 
     /**
