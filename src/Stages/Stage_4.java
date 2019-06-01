@@ -248,6 +248,11 @@ public class Stage_4 extends Stage
                     CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                     cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
                 }
+                else 
+                {
+                    CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
+                    cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
+                }
             }
 
             // Victory screen if monster dies
@@ -337,8 +342,9 @@ public class Stage_4 extends Stage
                         blockTime = System.currentTimeMillis() / 1000L;
                         blockTime = (blockTime - startOfAttack);
                         long attackDuration = monster.getAttackDur();
-
+                        
                         System.out.println(blockTime);
+                        
                         if (blockTime <= attackDuration)
                         {
                             attackBlocked = true;
