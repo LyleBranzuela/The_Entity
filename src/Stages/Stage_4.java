@@ -34,7 +34,7 @@ import javax.swing.Timer;
  *
  * @author lyleb and khoap
  */
-public class Stage_4 extends Stage 
+public class Stage_4 extends Stage
 {
 
     private Player currentPlayer;
@@ -44,7 +44,7 @@ public class Stage_4 extends Stage
     private DesignAttributes designAttributes;
     private int i, step;
     private long blockTime, startOfAttack;
-    Monster monster;
+    private Monster monster;
 
     /**
      * Constructor for creating Stage 4.
@@ -54,7 +54,7 @@ public class Stage_4 extends Stage
         super();
         super.stageLevel = 4;
         this.designAttributes = new DesignAttributes();
-        
+
         this.drawingPanel = new DrawingPanel();
         this.drawingPanel.setBackground(Color.BLACK);
         this.drawingPanel.setFocusable(true);
@@ -74,39 +74,26 @@ public class Stage_4 extends Stage
         };
         this.getActionMap().put("Escape", escapeAction);
 
-        
         // Yes Option
         yesOption = UtilityMethods.generateButton("Yes", 16,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, false);
         yesOption.addActionListener(this.drawingPanel);
-        yesOption.setLocation(500, 300);
         yesOption.setSize(100, 50);
-        
-        
+
         // No Option
         noOption = UtilityMethods.generateButton("No", 16,
                 designAttributes.primaryColor, designAttributes.tertiaryColor, false);
         noOption.addActionListener(this.drawingPanel);
-        noOption.setLocation(800, 300);
         noOption.setSize(100, 50);
         
-        blockButton = new JButton("Block");
-        blockButton.setOpaque(true);
-        blockButton.setContentAreaFilled(true);
-        blockButton.setBorderPainted(true);
-        blockButton.addActionListener(this.drawingPanel);
-        
         attackButton = new JButton("Attack");
-        attackButton.setOpaque(true);
-        attackButton.setContentAreaFilled(true);
-        attackButton.setBorderPainted(true);
-        attackButton.addActionListener(this.drawingPanel);
-        
+        blockButton = new JButton("Attack");
+
         updateStagePlayer();
         this.drawingPanel.add(yesOption);
         this.drawingPanel.add(noOption);
         add(this.drawingPanel);
-  
+
     }
 
     /**
@@ -128,15 +115,32 @@ public class Stage_4 extends Stage
         this.blockButton.setVisible(true);
         this.attackButton.setVisible(true);
         
+        this.drawingPanel.remove(blockButton);
+        blockButton = UtilityMethods.generateButton("Block", 16,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, false);
+        blockButton.setOpaque(true);
+        blockButton.setContentAreaFilled(true);
+        blockButton.setBorderPainted(true);
+        blockButton.addActionListener(this.drawingPanel);
+
+        this.drawingPanel.remove(attackButton);
+        attackButton =  UtilityMethods.generateButton("Attack", 16,
+                designAttributes.primaryColor, designAttributes.tertiaryColor, false);
+        attackButton.setOpaque(true);
+        attackButton.setContentAreaFilled(true);
+        attackButton.setBorderPainted(true);
+        attackButton.addActionListener(this.drawingPanel);
+
         repaint();
     }
-    
+
     /**
      * A separate JPanel meant to handle all the painting and drawing of the
      * component.
      */
     private class DrawingPanel extends JPanel implements ActionListener
     {
+
         private Timer timer = new Timer(5000, this);
 
         public String Stage4_story[] =
@@ -145,12 +149,12 @@ public class Stage_4 extends Stage
             "The Entity will howl when it attacks...",
             "Parry its attack and strike it down...",
         };
+
         public DrawingPanel()
         {
             super();
         }
-        
-        
+
         /**
          * Draws all the components of the drawing panel
          *
@@ -160,69 +164,90 @@ public class Stage_4 extends Stage
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
-            
+
             timer.start();
-            
+            Image image = Toolkit.getDefaultToolkit().getImage("background/Stage4_Ruins.jpg");
+            g.drawImage(image, 0, 0, this);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
             g.drawString("Player Actions", 430, 480);
+
+            yesOption.setLocation(450, 300);
+            noOption.setLocation(500, 300);
             
             blockButton.setLocation(400, 500);
             blockButton.setSize(100, 35);
 
             attackButton.setLocation(500, 500);
             attackButton.setSize(100, 35);
-           
+
             add(blockButton);
             add(attackButton);
-            
-           
-                if (step == 0) {
-                if (i < 3) {
+
+            if (step == 0)
+            {
+                if (i < 3)
+                {
                     g.setColor(Color.WHITE);
 
                     g.setFont(new Font("Tahoma", Font.BOLD, 16));
 
                     g.drawString(Stage4_story[i], 30, 280);
-                } else if (i >= 3) {
+                }
+                else if (i >= 3)
+                {
                     step++;
                 }
 
-            } else if (step == 1) {
-                if (!wearingBlindfold) {
+            }
+            else if (step == 1)
+            {
+                if (!wearingBlindfold)
+                {
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Tahoma", Font.BOLD, 20));
-                    g.drawString("Wear the blindfold?", 400, 70);
+                    g.drawString("Wear the blindfold?", 400, 290);
                     yesOption.setVisible(true);
                     noOption.setVisible(true);
                     blockButton.setVisible(true);
                     attackButton.setVisible(true);
                 }
-            } else if (step == 2) {
-                if (!wearingBlindfold) {
+            }
+            else if (step == 2)
+            {
+                if (!wearingBlindfold)
+                {
                     CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                     cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
-                } else {
+                }
+                else
+                {
                     blockTime = 0;
                     startOfAttack = 0;
                     startOfAttack = System.currentTimeMillis() / 1000L;
                     monster.attack();
                 }
 
-            } else if (step >= 3) {
-                if (attackBlocked == true) {
+            }
+            else if (step >= 3)
+            {
+                if (attackBlocked == true)
+                {
                     g.setColor(Color.WHITE);
                     g.setFont(new Font("Tahoma", Font.BOLD, 16));
                     g.drawString("You blocked the Entity's attack. Finish it now!", 30, 280);
 
-                } else if (attackBlocked == false) {
+                }
+                else if (attackBlocked == false)
+                {
                     CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                     cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
                 }
             }
-  
+
             // Victory screen if monster dies
-            if (monster.getHealth() <= 0) {
+            if (monster.getHealth() <= 0)
+            {
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, 1000, 600);
                 blockButton.setOpaque(false);
@@ -233,73 +258,88 @@ public class Stage_4 extends Stage
                 attackButton.setBorderPainted(false);
                 blockButton.setVisible(false);
                 attackButton.setVisible(false);
-                        
-                Image image = Toolkit.getDefaultToolkit().getImage("background/Monster_And_Stage_Combined.jpg");
+
+                image = Toolkit.getDefaultToolkit().getImage("background/Monster_And_Stage_Combined.jpg");
                 g.drawImage(image, 0, 0, this);
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 g.drawString("You have defeated the monster. After 10 years the apocalypse is finally over.", 140, 100);
-            } 
-           
+            }
+
             // Losing screen if player dies.
-            else if (currentPlayer.getHealth() <= 0) {
+            else if (currentPlayer.getHealth() <= 0)
+            {
+                currentPlayer.setHealth(1);
                 CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                 cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
             }
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) 
+        public void actionPerformed(ActionEvent e)
         {
             Object source = e.getSource();
-            if(i < 3)
+            if (i < 3)
             {
                 i++;
                 repaint();
-                if(i == 3)
+                if (i == 3)
                 {
                     step++;
                 }
             }
             else
             {
-                if (currentPlayer.hasBlindfold) {
-                    if (source == yesOption) {
+                if (currentPlayer.hasBlindfold)
+                {
+                    if (source == yesOption)
+                    {
                         wearingBlindfold = true;
                         yesOption.setVisible(false);
                         noOption.setVisible(false);
                         step++;
-                                 
-                    } else if (source == noOption) {
+
+                    }
+                    else if (source == noOption)
+                    {
                         wearingBlindfold = false;
                         yesOption.setVisible(false);
                         noOption.setVisible(false);
                         CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                         cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
                         step++;
-                      
+
                     }
-                   
+
                     repaint();
-                } else {
+                }
+                else
+                {
                     CardLayout cl = (CardLayout) (PanelManager.menuCardPanel.getLayout());
                     cl.show(PanelManager.menuCardPanel, "GAMEOVERSCREEN");
                 }
 
-                if (source == blockButton) {
+                if (source == blockButton)
+                {
                     //Change value of attackBlocked when pressed
-                    if (startOfAttack == 0) {
+                    if (startOfAttack == 0)
+                    {
                         // Do nothing if attack not started
-                    } else if (startOfAttack != 0) {
+                    }
+                    else if (startOfAttack != 0)
+                    {
                         blockTime = 0;
                         blockTime = System.currentTimeMillis() / 1000L;
                         blockTime = (blockTime - startOfAttack);
                         long attackDuration = monster.getAttackDur();
 
                         System.out.println(blockTime);
-                        if (blockTime <= attackDuration) {
+                        if (blockTime <= attackDuration)
+                        {
                             attackBlocked = true;
-                        } else if (blockTime > attackDuration) {
+                        }
+                        else if (blockTime > attackDuration)
+                        {
                             attackBlocked = false;
                             currentPlayer.setHealth(0);
                         }
@@ -307,17 +347,20 @@ public class Stage_4 extends Stage
                         step++;
                         repaint();
                     }
-                } else if (source == attackButton) {
-                    if (startOfAttack == 0) {
+                }
+                else if (source == attackButton)
+                {
+                    if (startOfAttack == 0)
+                    {
                         // Do nothing
-                    } else if (startOfAttack != 0) {
+                    }
+                    else if (startOfAttack != 0)
+                    {
                         monster.setHealth(monster.getHealth() - currentPlayer.getWeapon().attack());
                         repaint();
                     }
                 }
-        }
+            }
         }
     }
 }
-
-                
